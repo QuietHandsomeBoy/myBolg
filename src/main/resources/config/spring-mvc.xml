@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 扫描controller（controller层注入） -->
+    <context:component-scan base-package="com.pro.test.web.controller"/>
+
+    <!-- 路径映射处理适配器，包括参数的处理 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <!--线程安全的访问session -->
+        <property name="synchronizeOnSession" value="false" />
+        <!-- 自定义参数处理器 -->
+        <property name="customArgumentResolvers">
+            <list>
+                <bean class="com.pro.test.core.common.springmvc.BolgMethodArgumentResolver" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- json转换器，主要用于json的返回 -->
+    <!--<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">-->
+        <!--<property name="supportedMediaTypes">-->
+            <!--<list>-->
+                <!--<value>text/html;charset=UTF-8</value>-->
+                <!--<value>application/json</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="features">-->
+            <!--<list value-type="com.alibaba.fastjson.serializer.SerializerFeature">-->
+                <!--<value>PrettyFormat</value>-->
+                <!--<value>WriteDateUseDateFormat</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+
+    <mvc:resources mapping="/resources/**" location="resources/" />
+
+    <!-- 开启注解 -->
+    <!--第一个是HandlerMapping的实现类，它会处理@RequestMapping 注解，并将其注册到请求映射表中。（下片文章我们会详细介绍的）-->
+    <!--第二个是HandlerAdapter的实现类，它是处理请求的适配器，说白了，就是确定调用哪个类的哪个方法，并且构造方法参数，返回值。（后面文章也会陆续详细介绍的）-->
+    <mvc:annotation-driven/>
+
+    <!--ViewResolver 视图解析器-->
+    <!--用于支持Servlet、JSP视图解析-->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+</beans>
