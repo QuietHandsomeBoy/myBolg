@@ -14,57 +14,13 @@
     <link rel="icon" type="image/png" href="images/resizeApi.png">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <script src="${_jsUrl }/jquery-1.11.3.js"></script>
-    <script src="${_jsUrl }/plugins.js"></script>
-
+    <link type="text/css" rel="stylesheet" href="${_cssUrl }/animate.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/main.css">
+    <script src="${_jsUrl }/main.js"></script>
 </head>
-<script>
-    $(function () {
-
-        $(window).resize(function(){
-            var leftPX = ($(window).width() - $('#loginBox').outerWidth()) / 2;
-            var topPX = ($(window).height() - $('#loginBox').outerHeight()) / 2 + $(document).scrollTop();
-
-            if(topPX < 70){
-                topPX = 70;
-            }
-            $('#loginBox').css({
-                position: 'absolute',
-                left: leftPX,
-                top: topPX
-            });
-        });
-        $(window).resize();
-
-//        $("#test").click(function(){
-//            $(".loadingbox").addClass("loadingbox_test");
-//        })
-        $(document).pjax("a", "#loginContentBox")
-                .on("pjax:timeout", function(event) {
-                    event.preventDefault()
-                })
-                .on("pjax:start", function() {
-                    $(".loadingbox").addClass("loadingbox_test");
-                })
-                .on("pjax:send", function() {
-                    NProgress.start();
-                    $("#loginContent").fadeTo(500, 0);
-                })
-                .on("pjax:success", function() {
-                    setTimeout(function(){NProgress.done();$(".loadingbox").removeClass("loadingbox_test");},500);
-                })
-                .on("pjax:end", function() {
-                    setTimeout(function(){NProgress.done();$(".loadingbox").removeClass("loadingbox_test");},5000);
-                })
-//                .on("click", ".forgatPasswordHref", function(e){
-//                    alert("test");
-//                })
-
-    })
-</script>
-<body style="overflow-y:scroll;box-shadow: 0px 0px 100px black inset;">
-<div id="loginContentBox">
-    <div id="loginBox">
+<body style="overflow:hidden;box-shadow: 0px 0px 100px black inset;">
+<div id="st-content">
+    <div id="loginBox" class="aniview" av-animation="bounceInUp">
         <div class="loadingbox">
             <div id="loading">
                 <div id="loading-center">
@@ -78,21 +34,27 @@
                 </div>
             </div>
         </div>
-        <div id="loginContent" style="padding: 2rem 0;">
-            <nav>
-                <a style="float: left;" class="active">Welcome<br/>please login to you account .</a>
+        <div id="loginContent">
+            <nav id="welComeLogin">
+                <p class="active loginBefor">Welcome<br/>please login to you account .</p>
             </nav>
-            <div style="overflow: auto;">
-                <form accept-charset="utf-8" action="#" class="simform">
+            <nav id="loginSuc" style="display: none;">
+                <p class="loginResut" style="line-height: 4rem;">Login Successs !</p>
+                <p class="loginResut" style="font-size:1rem">The page will be re-directed in a few seconds.</p>
+                <p class="loginResut" style="font-size:1rem">Please wait a moment...</p>
+                <%--<p class="active loginBefor">Welcome<br/>please login to you account .</p>--%>
+            </nav>
+            <div id="loginformBox" style="overflow: auto;">
+                <form accept-charset="utf-8" action="#" id="loginForm" class="simform">
                     <div class="inputsBox"></div>
                     <div class="inputsBox">
                         <div class="input">
-                            <input class="string optional" maxlength="255" id="user-email" placeholder="Email" type="email" size="50" required="required">
+                            <input autocomplete="off" class="string optional" id="userName" name="userName" placeholder="User" size="50" required="required">
                         </div>
                     </div>
                     <div class="inputsBox">
                         <div class="input full">
-                            <input class="string optional" maxlength="255" id="user-pw" placeholder="Password" type="password" size="50" required="required">
+                            <input autocomplete="off" class="string optional" id="userPwd" name="userPwd" placeholder="Password" type="password" size="50" required="required">
                         </div>
                     </div>
                     <div class="submitBtnBox">
@@ -100,14 +62,16 @@
                             <a href="index.html" id="test">Forgot your password?</a>
                         </div>
                         <div class="button-container">
-                            <button><span>Sign in</span></button>
+                            <button type="submit"><span>Sign in</span></button>
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
 
     </div>
 </div>
 </body>
+<script src="${_jsUrl }/plugins.js"></script>
 </html>

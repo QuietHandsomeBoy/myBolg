@@ -6,17 +6,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <link rel="icon" type="image/png" href="http://hal123.cn/favicon.png">
+    <link rel="icon" type="image/png" href="${_imagesUrl}/resizeApi.png">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/main.css">
-    <link type="text/css" rel="stylesheet" href="${_cssUrl }/component.css">
-    <script src="${_jsUrl }/jquery-1.11.3.js"></script>
+    <link type="text/css" rel="stylesheet" href="${_cssUrl }/animate.min.css">
+    <script src="${_jsUrl}/jquery-1.11.3.js"></script>
     <title>MyBolg</title>
 </head>
 <body>
@@ -24,7 +24,7 @@
     <div class="st-pusher">
         <nav class="st-menu st-effect-3" id="menu-3">
             <div style="padding: 25px 20px;">
-                <img src="images/logo.png">
+                <img src="${_imagesUrl}/logo.png">
             </div>
             <ul>
                 <li><a class="icon icon-data" href="#">Home</a></li>
@@ -41,7 +41,7 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -74,7 +74,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -107,7 +107,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -140,7 +140,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -173,7 +173,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -206,7 +206,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -239,7 +239,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -272,7 +272,7 @@
                                 </div>
                             </article>
 
-                            <article>
+                            <article av-animation="fadeInUp" class="aniview">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -314,12 +314,16 @@
 
                 </div>
 
-                <div id="rightBox" class="rightBox">
+                <div id="rightBox" class="rightBox aniview" av-animation="bounceInRight">
+                    <div class="hideRigthBox">
+                        <a class="hidelink">隐藏右边栏目</a>
+                    </div>
                     <section>
                         <div class="searchBox">
                             <form role="search" method="get" class="search-form" action="">
                                 <label>
-                                    <input autocomplete="off" type="search" class="search-field" placeholder="Search..."
+                                    <i class="fa fa-search"></i>
+                                    <input required="required" autocomplete="off" type="search" class="search-field" placeholder="Search..."
                                            value="" name="s" title="Search for">
                                 </label>
                                 <input type="submit" class="search-submit fa fa-search" value="Search">
@@ -389,7 +393,7 @@
                                 <ul>
                                     <li>
                                         <div class="comments">
-                                            <img src="images/head.png">
+                                            <img src="${_imagesUrl}/head.png">
                                             <h4>干锅加鲁鲁</h4>
                                             <p>
                                                 Really amazing wordpress theme list. there are many interesting themes
@@ -399,7 +403,7 @@
                                     </li>
                                     <li>
                                         <div class="comments">
-                                            <img src="images/head.png">
+                                            <img src="${_imagesUrl}/head.png">
                                             <h4>干锅加鲁鲁</h4>
                                             <p>
                                                 Really amazing wordpress theme list. there are many interesting themes
@@ -408,7 +412,7 @@
                                     </li>
                                     <li>
                                         <div class="comments">
-                                            <img src="images/head.png">
+                                            <img src="${_imagesUrl}/head.png">
                                             <h4>干锅加鲁鲁</h4>
                                             <p>
                                                 Really amazing wordpress theme list.
@@ -417,7 +421,7 @@
                                     </li>
                                     <li>
                                         <div class="comments">
-                                            <img src="images/head.png">
+                                            <img src="${_imagesUrl}/head.png">
                                             <h4>干锅加鲁鲁</h4>
                                             <p>
                                                 Really amazing wordpress theme list. there are many interesting themes
@@ -427,7 +431,7 @@
                                     </li>
                                     <li>
                                         <div class="comments">
-                                            <img src="images/head.png">
+                                            <img src="${_imagesUrl}/head.png">
                                             <h4>干锅加鲁鲁</h4>
                                             <p>
                                                 there are many interesting themes
@@ -437,7 +441,7 @@
                                     </li>
                                     <li>
                                         <div class="comments">
-                                            <img src="images/head.png">
+                                            <img src="${_imagesUrl}/head.png">
                                             <h4>干锅加鲁鲁</h4>
                                             <p>
                                                 Really amazing wordpress theme list,I will use these themes in my
@@ -448,8 +452,6 @@
                                 </ul>
                             </div>
                             <div class="comment-info_button">
-                                <!--<button class='button play' id='b-0'></button>-->
-                                <!--<button class='button play' id='b-100'></button>-->
                                 <button style="float: left;">Read Comments</button>
                                 <button style="float: right;">Leave Comments</button>
                                 <div class="clear"></div>
@@ -480,12 +482,6 @@
 <script src="${_jsUrl }/plugins.js"></script>
 <script src="${_jsUrl }/common.js"></script>
 <script>
-    $("#b-0").click(function () {
-        NProgress.start();
-    });
-    $("#b-100").click(function () {
-        NProgress.done();
-    });
+    $('.aniview').AniView();
 </script>
-
 </html>

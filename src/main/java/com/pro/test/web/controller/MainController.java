@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
@@ -28,5 +29,20 @@ public class MainController {
         System.out.println("谢特！");
         model.addAttribute("test",i);
         return "index";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        return "login";
+    }
+
+    @RequestMapping(value = "/accountLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public void accountLogin(RequestResolver requestResolver){
+        String  userName  =  requestResolver.getParameter("userName");
+        String  userPwd  =  requestResolver.getParameter("userPwd");
+
+        System.out.println(userName + "++" + userPwd);
+        System.out.println("进来了！！！");
     }
 }
