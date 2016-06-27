@@ -5,59 +5,6 @@
 
 $(function () {
 
-    var a = 0;
-    $.fn.scrolled = function (i, n) {
-        "function" == typeof i && (n = i, i = 200);
-        var t = "scrollTimer" + a++;
-        this.scroll(function () {
-            var a = $(this),
-                o = a.data(t);
-            o && clearTimeout(o),
-                o = setTimeout(function () {
-                        a.removeData(t),
-                            n.call(a[0])
-                    },
-                    i),
-                a.data(t, o)
-        })
-    },
-        $.fn.AniView = function (a) {
-            function i(a) {
-                var i = $(a).offset(),
-                    t = i.top + $(a).position().top,
-                    o = (i.top + $(a).position().top + $(a).height(), $("#st-content").position().top + $("#st-content").height());
-                if (t < o - n.animateThreshold) {
-                    return !0;
-                } else {
-                    return !1;
-                }
-            }
-
-            var n = $.extend({
-                    animateThreshold: -600,
-                    scrollPollInterval: 0
-                },
-                a),
-                t = this;
-            $(t).each(function (a, i) {
-                $(i).wrap('<div class="av-container"></div>'),
-                    $(i).css("opacity", 0)
-            }),
-                $(t).each(function (a, n) {
-                    var t = $(n).parent(".av-container");
-                    $(n).is("[av-animation]") && !$(t).hasClass("av-visible") && i(t) && ($(n).css("opacity", 1), $(t).addClass("av-visible"), $(n).addClass("animated " + $(n).attr("av-animation")))
-                }),
-                $("#st-content").scrolled(n.scrollPollInterval,
-                    function () {
-                        $(t).each(function (a, n) {
-                            var t = $(n).parent(".av-container");
-                            $(n).is("[av-animation]") && !$(t).hasClass("av-visible") && i(t) && ($(n).css("opacity", 1), $(t).addClass("av-visible"), $(n).addClass("animated " + $(n).attr("av-animation")))
-                        })
-                    })
-        }
-
-
-    $('.aniview').AniView();
     $(window).resize(function () {
         var leftPX = ($(window).width() - $('#loginBox').outerWidth()) / 2;
         var topPX = ($(window).height() - $('#loginBox').outerHeight()) / 2 + $(document).scrollTop();
@@ -73,20 +20,34 @@ $(function () {
     });
     $(window).resize();
 
+    //隐藏右侧栏
+    $(".hidelink").click(function(){
+        $("#rightBox").attr("av-animation","bounceOutRight");
+        $("#rightBox").removeClass("bounceInRight").addClass("bounceOutRight");
+        setTimeout(function(){$("#leftBox").css("width","100%");},300);
+        setTimeout(function(){$("#rightBox").css("display","none");},500);
 
-    $(document).pjax("a", "#st-content")
+    })
+    $(document).pjax('a', '#leftBox', {fragment:'#leftBox', timeout:5000})
         .on("pjax:timeout", function (event) {
             event.preventDefault()
         })
-        .on("pjax:send", function() {
-            alert("test!");
-            NProgress.start();
-            $(".loadingbox").addClass("loadingbox_test");
+        .on("pjax:start", function () {
         })
-        .on("pjax:complete", function() {
-
-            $(".loadingbox").removeClass("loadingbox_test");
-            NProgress.end();
+        .on("pjax:send", function () {
+            NProgress.start();
+        })
+        .on("pjax:success", function () {
+        })
+        .on("pjax:popstate",function(){
+        })
+        .on("pjax:end",function(){
+            $('#leftBox .aniview').AniView();
+        })
+        .on("pjax:complete0",function(){
+            setTimeout(function(){NProgress.done();}, 500);
+        })
+        .on("pjax:beforeReplace",function(){
         })
         .on("submit", "#loginForm", function() {
             event.preventDefault();
@@ -104,7 +65,7 @@ $(function () {
                 },
                 success: function(data) {
                     setTimeout(function(){$(".loadingbox").removeClass("loadingbox_test");$("#loginformBox").hide();$("#welComeLogin").hide();$("#loginSuc").show();},1500)
-                    setTimeout(function(){NProgress.done();},3000)
+                    setTimeout(function(){NProgress.done();window.location="/springDemo3";},3000)
                 }
             }); // end Ajax
 

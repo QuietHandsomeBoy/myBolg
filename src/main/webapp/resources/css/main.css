@@ -147,7 +147,14 @@ body {
 #loginBox .submitBtnBox .button-container {
     float: right;
 }
-
+#loginContent,#loginBox .submitBtnBox .button-container button,#loginBox .submitBtnBox .button-container button span,
+#loginBox .submitBtnBox .button-container button:before{
+    webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
 #loginBox .submitBtnBox .button-container button {
     outline: 0;
     cursor: pointer;
@@ -162,16 +169,12 @@ body {
     /* line-height: 1; */
     /* text-transform: uppercase; */
     overflow: hidden;
-    -webkit-transition: .3s ease;
-    transition: .3s ease
 }
 
 #loginBox .submitBtnBox .button-container button span {
     position: relative;
     z-index: 1;
     color: #2d3e50;
-    -webkit-transition: .3s ease;
-    transition: .3s ease;
 }
 
 #loginBox .submitBtnBox .button-container button:before {
@@ -186,8 +189,6 @@ body {
     border-radius: 100%;
     margin: -15px 0 0 -15px;
     opacity: 0;
-    -webkit-transition: .3s ease;
-    transition: .3s ease;
 }
 
 #loginBox .submitBtnBox .button-container button:hover, #loginBox .submitBtnBox .button-container button:active, #loginBox .submitBtnBox .button-container button:focus {

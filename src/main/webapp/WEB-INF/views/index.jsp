@@ -11,12 +11,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="icon" type="image/png" href="${_imagesUrl}/resizeApi.png">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/main.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/animate.min.css">
     <script src="${_jsUrl}/jquery-1.11.3.js"></script>
+    <script src="${_jsUrl}/main.js"></script>
     <title>MyBolg</title>
 </head>
 <body>
@@ -41,7 +42,40 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
+                                <div class="article-info">
+                                    <div class="article-content">
+                                        <h2 class="article_title"><a href="http://localhost:8084/springDemo3/article.html" rel="bookmark">There is
+                                            something
+                                            in the New York air that makes sleep useless</a></h2>
+                                        <div class="article-meta">
+                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
+                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
+                                            <span><i class="fa fa-comments"></i>3</span>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="article_about">
+                                            <p>
+                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
+
+                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
+                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
+                                                要了解当代摄影，先简单看一下“纪实”摄影
+
+                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
+                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
+
+                                            </p>
+                                        </div>
+                                        <div class="readArticle">
+                                            <p><a href="javascript:;">Read More</a></p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -74,7 +108,7 @@
                                 </div>
                             </article>
 
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -107,7 +141,7 @@
                                 </div>
                             </article>
 
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -140,7 +174,7 @@
                                 </div>
                             </article>
 
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -173,7 +207,7 @@
                                 </div>
                             </article>
 
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -206,7 +240,7 @@
                                 </div>
                             </article>
 
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -239,40 +273,7 @@
                                 </div>
                             </article>
 
-                            <article av-animation="fadeInUp" class="aniview">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
@@ -314,7 +315,7 @@
 
                 </div>
 
-                <div id="rightBox" class="rightBox aniview" av-animation="bounceInRight">
+                <div id="rightBox" class="rightBox aniview" av-animation="slideInRight">
                     <div class="hideRigthBox">
                         <a class="hidelink">隐藏右边栏目</a>
                     </div>

@@ -74,4 +74,7 @@
 </div>
 </body>
 <script src="${_jsUrl }/plugins.js"></script>
+<script>
+    $('.aniview').AniView();
+</script>
 </html>

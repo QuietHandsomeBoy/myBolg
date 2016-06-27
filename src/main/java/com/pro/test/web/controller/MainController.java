@@ -45,4 +45,11 @@ public class MainController {
         System.out.println(userName + "++" + userPwd);
         System.out.println("进来了！！！");
     }
+
+    @RequestMapping(value = "article.html")
+    public String article(RequestResolver requestResolver){
+        return "article";
+    }
+
+
 }
