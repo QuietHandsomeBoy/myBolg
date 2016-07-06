@@ -44,7 +44,7 @@ $(function () {
         .on("pjax:end",function(){
             $('#leftBox .aniview').AniView();
         })
-        .on("pjax:complete0",function(){
+        .on("pjax:complete",function(){
             setTimeout(function(){NProgress.done();}, 500);
         })
         .on("pjax:beforeReplace",function(){

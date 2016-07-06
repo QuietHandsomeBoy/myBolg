@@ -18,7 +18,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/main.css">
     <script src="${_jsUrl }/main.js"></script>
 </head>
-<body style="overflow:hidden;box-shadow: 0px 0px 100px black inset;">
+<body style="">
 <div id="st-content">
     <div id="loginBox" class="aniview" av-animation="bounceInUp">
         <div class="loadingbox">

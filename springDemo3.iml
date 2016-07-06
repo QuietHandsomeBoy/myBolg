@@ -12,10 +12,11 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/spring-mvc.xml</file>
+      <configuration process_explicitly_annotated="false">
+        <fileset id="fileset" name="Spring Application Context" removed="false" />
+        <fileset id="fileset2" name="Spring Application Context (2)" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/config/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring-mvc.xml</file>
         </fileset>
       </configuration>
     </facet>

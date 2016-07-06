@@ -1,8 +1,8 @@
-<!--<?xml version="1.0" encoding="UTF-8" ?>-->
-<!--<!DOCTYPE configuration-->
-        <!--PUBLIC "-//mybatis.org//DTD Config 3.0//EN"-->
-        <!--"http://mybatis.org/dtd/mybatis-3-config.dtd">-->
-<!--<configuration>-->
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
     <!--<properties>-->
         <!--<property name="dialectClass" value="com.eliteams.quick4j.core.feature.orm.dialect.MySql5Dialect"/>-->
     <!--</properties>-->
@@ -40,11 +40,11 @@
         <!--&lt;!&ndash; Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn. &ndash;&gt;-->
         <!--<setting name="mapUnderscoreToCamelCase" value="true"/>-->
 
-        <!--&lt;!&ndash; MyBatis uses local cache to prevent circular references and speed up repeated nested queries. By default (SESSION) all queries executed during a session are cached. If localCacheScope=STATEMENT -->
+        <!--&lt;!&ndash; MyBatis uses local cache to prevent circular references and speed up repeated nested queries. By default (SESSION) all queries executed during a session are cached. If localCacheScope=STATEMENT-->
             <!--local session will be used just for statement execution, no data will be shared between two different calls to the same SqlSession. &ndash;&gt;-->
         <!--<setting name="localCacheScope" value="SESSION"/>-->
 
-        <!--&lt;!&ndash; Specifies the JDBC type for null values when no specific JDBC type was provided for the parameter. Some drivers require specifying the column JDBC type but others work with generic values -->
+        <!--&lt;!&ndash; Specifies the JDBC type for null values when no specific JDBC type was provided for the parameter. Some drivers require specifying the column JDBC type but others work with generic values-->
             <!--like NULL, VARCHAR or OTHER. &ndash;&gt;-->
         <!--<setting name="jdbcTypeForNull" value="OTHER"/>-->
 
@@ -56,14 +56,13 @@
 
     <!--</settings>-->
 
-    <!--<typeAliases>-->
-        <!--<package name="com.eliteams.quick4j.web.model"/>-->
-        <!--<package name="com.eliteams.quick4j.web.enums"/>-->
-    <!--</typeAliases>-->
+    <typeAliases>
+        <package name="com.pro.test.web.dao.mapper"/>
+    </typeAliases>
 
     <!--<plugins>-->
         <!--<plugin interceptor="com.eliteams.quick4j.core.feature.orm.mybatis.PaginationResultSetHandlerInterceptor"/>-->
         <!--<plugin interceptor="com.eliteams.quick4j.core.feature.orm.mybatis.PaginationStatementHandlerInterceptor"/>-->
     <!--</plugins>-->
 
-<!--</configuration>-->
+</configuration>
