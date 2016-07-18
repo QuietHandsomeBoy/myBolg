@@ -57,7 +57,7 @@
     <!--</settings>-->
 
     <typeAliases>
-        <package name="com.pro.test.web.dao.mapper"/>
+        <package name="com.pro.test.web.admin.dao.mapper"/>
     </typeAliases>
 
     <!--<plugins>-->

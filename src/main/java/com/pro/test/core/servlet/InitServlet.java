@@ -20,6 +20,9 @@ public class InitServlet extends HttpServlet {
         servletContext.setAttribute("_cssUrl", resourcesPath + "/css");
         servletContext.setAttribute("_jsUrl", resourcesPath + "/js");
         servletContext.setAttribute("_imagesUrl", resourcesPath + "/images");
+        servletContext.setAttribute("_adminCssUrl", resourcesPath + "/admin/css");
+        servletContext.setAttribute("_adminJsUrl", resourcesPath + "/admin/js");
+        servletContext.setAttribute("_adminImagesUrl", resourcesPath + "/admin/images");
         System.out.println("路径等变量初始化完成！");
 
 

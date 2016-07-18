@@ -2,8 +2,8 @@ package com.pro.test.web.controller;
 
 
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
-import com.pro.test.web.entity.TbHxpArticle;
-import com.pro.test.web.service.TbHxpArticleManager;
+import com.pro.test.web.admin.entity.TbHxpArticle;
+import com.pro.test.web.admin.service.TbHxpArticleManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,7 @@ import javax.annotation.Resource;
  * Created by hxpeng on 2016/6/15.
  */
 @Controller
+@RequestMapping(value = "/")
 public class MainController {
 
 
@@ -32,7 +33,7 @@ public class MainController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
-        return "login";
+        return "work/login";
     }
 
     @RequestMapping(value = "/accountLogin", method = RequestMethod.POST)
@@ -52,6 +53,13 @@ public class MainController {
         return "article";
     }
 
+
+
+    @RequestMapping(value = "admin.html")
+    public String admin(RequestResolver requestResolver){
+
+        return "work/article/articleList";
+    }
 
 
 }

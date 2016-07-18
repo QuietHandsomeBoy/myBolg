@@ -8,7 +8,8 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- 扫描controller（controller层注入） -->
-    <context:component-scan base-package="com.pro.test.web.controller"/>
+    <context:component-scan base-package="com.pro.test.web"/>
+
 
     <!-- 路径映射处理适配器，包括参数的处理 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -54,6 +55,5 @@
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
 
 </beans>

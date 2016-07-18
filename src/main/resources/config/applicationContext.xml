@@ -66,7 +66,7 @@
           <!--p:mapperLocations="classpath*:com/pro/test/web/dao/mapper"/>-->
 
     <!-- spring与mybatis整合配置，扫描所有dao -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.pro.test.web.dao"
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.pro.test.web.admin.dao"
           p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
 
     <!-- 对dataSource 数据源进行事务管理 -->
@@ -80,7 +80,7 @@
 
     <!-- 通过扫描的模式，扫描目录下，所有的mapper都继承SqlMapper接口的接口 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.pro.test.web.dao" />
+        <property name="basePackage" value="com.pro.test.web.admin.dao" />
         <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
     </bean>
 
@@ -101,7 +101,7 @@
 
     <!-- 事务 aop 配置 -->
     <aop:config>
-        <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.service..*(..))"/>
+        <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.admin.service..*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
     </aop:config>
 
