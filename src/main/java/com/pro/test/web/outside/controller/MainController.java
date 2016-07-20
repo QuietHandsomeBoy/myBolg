@@ -1,4 +1,4 @@
-package com.pro.test.web.controller;
+package com.pro.test.web.outside.controller;
 
 
 import com.pro.test.core.common.springmvc.entity.RequestResolver;

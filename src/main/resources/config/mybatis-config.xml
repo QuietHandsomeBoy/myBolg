@@ -60,9 +60,8 @@
         <package name="com.pro.test.web.admin.dao.mapper"/>
     </typeAliases>
 
-    <!--<plugins>-->
-        <!--<plugin interceptor="com.eliteams.quick4j.core.feature.orm.mybatis.PaginationResultSetHandlerInterceptor"/>-->
-        <!--<plugin interceptor="com.eliteams.quick4j.core.feature.orm.mybatis.PaginationStatementHandlerInterceptor"/>-->
-    <!--</plugins>-->
+    <plugins>
+        <plugin interceptor="com.pro.test.core.common.mybatis.intercepts.BasicIntercepts"/>
+    </plugins>
 
 </configuration>

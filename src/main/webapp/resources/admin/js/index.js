@@ -97,3 +97,37 @@ function currentTime(){
     str += d.getSeconds()>9?d.getSeconds():'0'+d.getSeconds();
     return str;
 }
+function saveArticle(){
+
+    var tipsDiv = $("#resultTips");
+    var checkTxt = tipsDiv.find("p").html("错误：");
+    if($("input[name='articleRange']:checked").length < 1){
+        checkTxt.append("请选择笔记范围！");
+        tipsDiv.addClass("tips-show");
+        return false;
+    }
+    if($("input[name='articleTags']:checked").length < 1){
+        checkTxt.append("请为笔记选择标签！");
+        tipsDiv.addClass("tips-show");
+        return false;
+    }
+    if($("input[name='articleTitle']").val() == ""){
+        checkTxt.append("请输入笔记标题！！");
+        tipsDiv.addClass("tips-show");
+        return false;
+    }
+    if($("textarea[name='articleTitle']").val() == ""){
+        checkTxt.append("请输入笔记简介！！");
+        tipsDiv.addClass("tips-show");
+        return false;
+    }
+    if($("textarea[name='articleContent']").val() == ""){
+        checkTxt.append("请输入博客正文！");
+        tipsDiv.addClass("tips-show");
+        return false;
+    }
+    $("#articleForm").submit();
+}
+function closeTipsBox(){
+    $(".tips-div").removeClass("tips-show");
+}

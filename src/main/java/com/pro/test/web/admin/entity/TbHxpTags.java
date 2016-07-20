@@ -25,6 +25,8 @@ public class TbHxpTags {
 
     private String remark;
 
+    private Integer isDeleted;
+
     public String getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class TbHxpTags {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

@@ -166,7 +166,7 @@
             </ol>
         </div>
         <div id="content" class="content-container">
-            <form action="${_Weburl}/admin/article/saveArticle" method="post" id="">
+            <form action="${_Weburl}/admin/article/saveArticle" method="post" id="articleForm">
                 <div>
                     <div class="row">
                         <div class="col-lg-3">
@@ -198,9 +198,9 @@
                                         </ul>
                                         <h5>其他设置</h5>
                                         <div class="other-condition form-group">
-                                            <label class=""><input type="checkbox" class="i-checks" checked>公开</label>
-                                            <label class=""><input type="checkbox" class="i-checks">置顶</label>
-                                            <label class=""><input type="checkbox" class="i-checks">限制评论</label>
+                                            <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="">公开</label>
+                                            <label class=""><input type="checkbox" name="onTop" class="i-checks">置顶</label>
+                                            <label class=""><input type="checkbox" name="limitComments" class="i-checks">限制评论</label>
                                         </div>
                                         <div class="save-as-draft-box">
                                             <a href="javascript:;" id="save-as-draft">保存为草稿</a>
@@ -209,8 +209,8 @@
                                             <a href="insert.html" id="view-article">预览</a>
                                         </div>
                                         <div class="save-article-box">
-                                            <a href="javascript:;" onclick="" id="save-article">保存</a>
-                                            <button name="submit" type="submit" id="submit">保存评论</button>
+                                            <a href="javascript:;" onclick="saveArticle();" id="save-article">保存</a>
+                                            <button type="submit">submit</button>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -225,12 +225,11 @@
                                         <h5>choose the type of article and enter the title</h5>
                                         <div class="row">
                                             <div class="col-lg-2">
-                                                <select class="selectpicker">
-                                                    <option value="1">Mustard</option>
-                                                    <option value="11">Ketchup</option>
-                                                    <option value="12">Relish</option>
-                                                    <option value="13">Mustard</option>
-                                                    <option value="1124">Ketchup</option>
+                                                <select class="selectpicker" name="articleRights">
+                                                    <option value="1">原创</option>
+                                                    <option value="11">转载</option>
+                                                    <option value="12">求同存异</option>
+                                                    <option value="13">其他</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-10">
@@ -421,6 +420,16 @@
         </div>
     </div>
 </div>
+<div class="tips-div" id="resultTips">
+    <div class="tips-content">
+        <h3>Tips</h3>
+        <div>
+            <p>This is a modal window. You can do the following things with it:</p>
+            <button class="btn btn-default pull-right" onclick="closeTipsBox()">Close me!</button>
+        </div>
+    </div>
+</div>
+<div class="tips-background-div"></div>
 <script>
 </script>
 </body>

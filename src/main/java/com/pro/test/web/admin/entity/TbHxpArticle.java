@@ -1,8 +1,12 @@
 package com.pro.test.web.admin.entity;
 
+import com.pro.test.core.common.annotation.*;
+
 import java.util.Date;
 
 public class TbHxpArticle {
+
+    @TableId
     private String id;
 
     private String articleId;
@@ -39,17 +43,25 @@ public class TbHxpArticle {
 
     private Integer isContentFinish;
 
+    private String articleRights;
+
     private String articleStatus;
 
+    @CreateDate
     private Date createDate;
 
+    @CreateBy
     private String createBy;
 
+    @LastUpdateDate
     private Date updateDate;
 
+    @LastUpdateBy
     private String updateBy;
 
     private String remark;
+
+    private Integer isDeleted;
 
     public String getId() {
         return id;
@@ -195,6 +207,14 @@ public class TbHxpArticle {
         this.isContentFinish = isContentFinish;
     }
 
+    public String getArticleRights() {
+        return articleRights;
+    }
+
+    public void setArticleRights(String articleRights) {
+        this.articleRights = articleRights == null ? null : articleRights.trim();
+    }
+
     public String getArticleStatus() {
         return articleStatus;
     }
@@ -241,5 +261,13 @@ public class TbHxpArticle {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

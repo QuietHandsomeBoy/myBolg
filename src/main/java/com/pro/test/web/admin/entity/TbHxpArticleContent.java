@@ -15,6 +15,8 @@ public class TbHxpArticleContent {
 
     private String updateBy;
 
+    private Integer isDeleted;
+
     private String articleContent;
 
     public String getId() {
@@ -63,6 +65,14 @@ public class TbHxpArticleContent {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy == null ? null : updateBy.trim();
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getArticleContent() {
