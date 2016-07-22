@@ -1,6 +1,6 @@
 package com.pro.test.core.validator;
 
-import com.pro.test.web.admin.entity.TbHxpArticle;
+import com.pro.test.web.entity.TbHxpArticle;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;

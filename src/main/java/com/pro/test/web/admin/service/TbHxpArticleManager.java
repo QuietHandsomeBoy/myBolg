@@ -1,8 +1,8 @@
 package com.pro.test.web.admin.service;
 
 import com.pro.test.core.common.mybatis.service.SimpleManager;
-import com.pro.test.web.admin.dao.TbHxpArticleDao;
-import com.pro.test.web.admin.entity.TbHxpArticle;
+import com.pro.test.web.dao.TbHxpArticleDao;
+import com.pro.test.web.entity.TbHxpArticle;
 import org.springframework.stereotype.Service;
 
 /**

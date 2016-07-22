@@ -3,7 +3,7 @@ package com.pro.test.web.admin.controller;
 import com.pro.test.core.validator.ArticleValidator;
 import com.pro.test.core.enumdata.ArticleStatus;
 import com.pro.test.core.util.UUIDUtils;
-import com.pro.test.web.admin.entity.TbHxpArticle;
+import com.pro.test.web.entity.TbHxpArticle;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,12 +28,12 @@ public class ArticleController {
 
     @RequestMapping(value = "articleList.html")
     public String articleList(){
-        return "work/article/articleList";
+        return "admin/article/articleList";
     }
 
     @RequestMapping(value = "insertArticle.html")
     public String insertArticle(){
-        return "work/article/insertArticle";
+        return "admin/article/insertArticle";
     }
 
     @InitBinder
@@ -47,7 +47,7 @@ public class ArticleController {
 
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return "work/article/insertArticle";
+            return "admin/article/insertArticle";
         }
 
         tbHxpArticle.setArticleStatus(ArticleStatus.Draft.getKey());
@@ -62,7 +62,7 @@ public class ArticleController {
 //        System.out.println("ArticleContent："+articleContent);
         tbHxpArticleManager.insertArticle(tbHxpArticle);
 
-        return "work/article/articleList";
+        return "admin/article/articleList";
     }
 
 }

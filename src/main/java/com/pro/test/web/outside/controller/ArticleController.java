@@ -1,7 +1,7 @@
 package com.pro.test.web.outside.controller;
 
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
-import com.pro.test.web.admin.entity.TbHxpArticle;
+import com.pro.test.web.entity.TbHxpArticle;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ public class ArticleController {
 
         System.out.print("111111");
         tbHxpArticleManager.insertArticle(tbHxpArticle);
-        return "article/articleDetail";
+        return "outside/article/articleDetail";
 
     }
 

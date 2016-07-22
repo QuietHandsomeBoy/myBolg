@@ -2,7 +2,6 @@ package com.pro.test.web.outside.controller;
 
 
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
-import com.pro.test.web.admin.entity.TbHxpArticle;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +27,12 @@ public class MainController {
     public String index(Model model, RequestResolver requestResolver) {
         requestResolver.getAttribute("");
         System.out.println("谢特！");
-        return "index";
+        return "outside/index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
-        return "work/login";
+        return "admin/login";
     }
 
     @RequestMapping(value = "/accountLogin", method = RequestMethod.POST)
@@ -46,19 +45,9 @@ public class MainController {
         System.out.println("进来了！！！");
     }
 
-    @RequestMapping(value = "article.html")
+    @RequestMapping(value = "articleDetail.html")
     public String article(RequestResolver requestResolver){
-        TbHxpArticle entity = tbHxpArticleManager.findOneById("1111111");
-        System.out.print(entity.getArticleIntroduced());
-        return "article";
-    }
-
-
-
-    @RequestMapping(value = "admin.html")
-    public String admin(RequestResolver requestResolver){
-
-        return "work/article/articleList";
+        return "outside/article/articleDetail";
     }
 
 

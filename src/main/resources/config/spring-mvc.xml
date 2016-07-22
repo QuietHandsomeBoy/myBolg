@@ -10,7 +10,6 @@
     <!-- 扫描controller（controller层注入） -->
     <context:component-scan base-package="com.pro.test.web"/>
 
-
     <!-- 路径映射处理适配器，包括参数的处理 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <!--线程安全的访问session -->

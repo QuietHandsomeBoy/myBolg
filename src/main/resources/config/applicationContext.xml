@@ -65,24 +65,21 @@
     <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="dataSource"-->
           <!--p:mapperLocations="classpath*:com/pro/test/web/dao/mapper"/>-->
 
-    <!-- spring与mybatis整合配置，扫描所有dao -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.pro.test.web.admin.dao"
-          p:sqlSessionFactoryBeanName="sqlSessionFactory"/>
-
-    <!-- 对dataSource 数据源进行事务管理 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          p:dataSource-ref="dataSource"/>
-
     <!-- 配置Mybatis的session模板处理类 -->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
 
-    <!-- 通过扫描的模式，扫描目录下，所有的mapper都继承SqlMapper接口的接口 -->
+    <!--通过扫描的模式，扫描目录下，所有的mapper都继承SqlMapper接口的接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.pro.test.web.admin.dao" />
+        <property name="basePackage" value="com.pro.test.web.dao" />
         <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
     </bean>
+
+    <!-- 对dataSource 数据源进行事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+
 
     <!-- 事务管理 通知 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
