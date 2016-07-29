@@ -30,6 +30,11 @@ public class ContextData extends HashMap<String, Object>{
         this.pagination = pagination;
     }
 
+    public void setEntity(Object entity)
+    {
+        setEntity(MappingConvertor.toFormName(entity.getClass().getSimpleName()), entity);
+    }
+
     public void setEntity(String entityName, Object entity)
     {
         put(entityName, entity);

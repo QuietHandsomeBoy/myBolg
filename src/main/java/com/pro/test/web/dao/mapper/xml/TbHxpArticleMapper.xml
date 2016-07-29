@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpArticle" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+    <result column="article_introduced" property="articleIntroduced" jdbcType="VARCHAR" />
+    <result column="article_range" property="articleRange" jdbcType="VARCHAR" />
+    <result column="article_type" property="articleType" jdbcType="VARCHAR" />
+    <result column="article_author_id" property="articleAuthorId" jdbcType="VARCHAR" />
+    <result column="article_author_name" property="articleAuthorName" jdbcType="VARCHAR" />
+    <result column="article_tags" property="articleTags" jdbcType="VARCHAR" />
+    <result column="last_comment_date" property="lastCommentDate" jdbcType="DATE" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="likes_count" property="likesCount" jdbcType="INTEGER" />
+    <result column="read_count" property="readCount" jdbcType="INTEGER" />
+    <result column="limit_comments" property="limitComments" jdbcType="VARCHAR" />
+    <result column="is_public" property="isPublic" jdbcType="INTEGER" />
+    <result column="on_top" property="onTop" jdbcType="INTEGER" />
+    <result column="key_words" property="keyWords" jdbcType="VARCHAR" />
+    <result column="is_content_finish" property="isContentFinish" jdbcType="INTEGER" />
+    <result column="article_rights" property="articleRights" jdbcType="VARCHAR" />
+    <result column="article_status" property="articleStatus" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_hxp_article
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpArticle" >
+    insert into tb_hxp_article (id, article_id, article_title, 
+      article_introduced, article_range, article_type, 
+      article_author_id, article_author_name, article_tags, 
+      last_comment_date, comment_count, likes_count, 
+      read_count, limit_comments, is_public, 
+      on_top, key_words, is_content_finish, 
+      article_rights, article_status, create_date, 
+      create_by, update_date, update_by, 
+      remark, is_deleted)
+    values (#{id,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, #{articleTitle,jdbcType=VARCHAR}, 
+      #{articleIntroduced,jdbcType=VARCHAR}, #{articleRange,jdbcType=VARCHAR}, #{articleType,jdbcType=VARCHAR}, 
+      #{articleAuthorId,jdbcType=VARCHAR}, #{articleAuthorName,jdbcType=VARCHAR}, #{articleTags,jdbcType=VARCHAR}, 
+      #{lastCommentDate,jdbcType=DATE}, #{commentCount,jdbcType=INTEGER}, #{likesCount,jdbcType=INTEGER}, 
+      #{readCount,jdbcType=INTEGER}, #{limitComments,jdbcType=VARCHAR}, #{isPublic,jdbcType=INTEGER}, 
+      #{onTop,jdbcType=INTEGER}, #{keyWords,jdbcType=VARCHAR}, #{isContentFinish,jdbcType=INTEGER}, 
+      #{articleRights,jdbcType=VARCHAR}, #{articleStatus,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpArticle" >
+    update tb_hxp_article
+    set article_id = #{articleId,jdbcType=VARCHAR},
+      article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_introduced = #{articleIntroduced,jdbcType=VARCHAR},
+      article_range = #{articleRange,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=VARCHAR},
+      article_author_id = #{articleAuthorId,jdbcType=VARCHAR},
+      article_author_name = #{articleAuthorName,jdbcType=VARCHAR},
+      article_tags = #{articleTags,jdbcType=VARCHAR},
+      last_comment_date = #{lastCommentDate,jdbcType=DATE},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      likes_count = #{likesCount,jdbcType=INTEGER},
+      read_count = #{readCount,jdbcType=INTEGER},
+      limit_comments = #{limitComments,jdbcType=VARCHAR},
+      is_public = #{isPublic,jdbcType=INTEGER},
+      on_top = #{onTop,jdbcType=INTEGER},
+      key_words = #{keyWords,jdbcType=VARCHAR},
+      is_content_finish = #{isContentFinish,jdbcType=INTEGER},
+      article_rights = #{articleRights,jdbcType=VARCHAR},
+      article_status = #{articleStatus,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, article_id, article_title, article_introduced, article_range, article_type, 
+    article_author_id, article_author_name, article_tags, last_comment_date, comment_count, 
+    likes_count, read_count, limit_comments, is_public, on_top, key_words, is_content_finish, 
+    article_rights, article_status, create_date, create_by, update_date, update_by, remark, 
+    is_deleted
+    from tb_hxp_article
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, article_id, article_title, article_introduced, article_range, article_type, 
+    article_author_id, article_author_name, article_tags, last_comment_date, comment_count, 
+    likes_count, read_count, limit_comments, is_public, on_top, key_words, is_content_finish, 
+    article_rights, article_status, create_date, create_by, update_date, update_by, remark, 
+    is_deleted
+    from tb_hxp_article
+    order by create_date desc
+  </select>
+
+
+  <!-- 根据条件查询信息 -->
+  <select id="findPage" resultMap="BaseResultMap">
+    select id, article_id, article_title, article_introduced, article_range, article_type,
+    article_author_id, article_author_name, article_tags, last_comment_date, comment_count,
+    likes_count, read_count, limit_comments, is_public, on_top, key_words, is_content_finish,
+    article_rights, article_status, create_date, create_by, update_date, update_by, remark,
+    is_deleted from tb_hxp_article
+    <where>
+      <if test="tbHxpArticle != null and tbHxpArticle.articleTitle != null ">
+        and article_title like concat(concat('%', #{tbHxpArticle.articleTitle}), '%')
+      </if>
+    </where>
+    <if test="order != null and order != '' ">
+      order by ${order} ${sort}
+    </if>
+    <if test="order == null or order == '' ">
+      order by comment_count,likes_count,read_count desc,create_date desc
+    </if>
+  </select>
+
+
+
+</mapper>

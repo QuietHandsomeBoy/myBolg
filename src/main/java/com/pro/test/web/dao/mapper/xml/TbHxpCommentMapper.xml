@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpComment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="comment_context" property="commentContext" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_head_portrait" property="userHeadPortrait" jdbcType="VARCHAR" />
+    <result column="comment_ip" property="commentIp" jdbcType="VARCHAR" />
+    <result column="comment_likes" property="commentLikes" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_hxp_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpComment" >
+    insert into tb_hxp_comment (id, comment_id, article_id, 
+      comment_context, user_id, user_name, 
+      user_head_portrait, comment_ip, comment_likes, 
+      create_date, create_by, update_date, 
+      update_by, is_deleted)
+    values (#{id,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, 
+      #{commentContext,jdbcType=VARCHAR}, #{userId,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userHeadPortrait,jdbcType=VARCHAR}, #{commentIp,jdbcType=VARCHAR}, #{commentLikes,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, 
+      #{updateBy,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpComment" >
+    update tb_hxp_comment
+    set comment_id = #{commentId,jdbcType=VARCHAR},
+      article_id = #{articleId,jdbcType=VARCHAR},
+      comment_context = #{commentContext,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=CHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_head_portrait = #{userHeadPortrait,jdbcType=VARCHAR},
+      comment_ip = #{commentIp,jdbcType=VARCHAR},
+      comment_likes = #{commentLikes,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, comment_id, article_id, comment_context, user_id, user_name, user_head_portrait, 
+    comment_ip, comment_likes, create_date, create_by, update_date, update_by, is_deleted
+    from tb_hxp_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, comment_id, article_id, comment_context, user_id, user_name, user_head_portrait, 
+    comment_ip, comment_likes, create_date, create_by, update_date, update_by, is_deleted
+    from tb_hxp_comment
+    order by create_date desc
+  </select>
+</mapper>

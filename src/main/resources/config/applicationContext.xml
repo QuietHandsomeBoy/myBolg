@@ -58,22 +58,27 @@
         <property name="filters" value="stat"/>
     </bean>
 
-    <!--mybatis文件配置，扫描所有mapper文件-->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="dataSource"
-          p:configLocation="classpath:config/mybatis-config.xml"/>
-    <!-- mybatis文件配置，扫描所有mapper文件 -->
-    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" p:dataSource-ref="dataSource"-->
-          <!--p:mapperLocations="classpath*:com/pro/test/web/dao/mapper"/>-->
+
+    <!-- 配置Mybatis的session工厂 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/config/mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:com/pro/test/web/dao/mapper/xml/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
 
     <!-- 配置Mybatis的session模板处理类 -->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
-    <!--通过扫描的模式，扫描目录下，所有的mapper都继承SqlMapper接口的接口-->
+    <!-- 通过扫描的模式，扫描目录下，所有的mapper都继承SqlMapper接口的接口 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.pro.test.web.dao" />
-        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate" />
+        <property name="basePackage" value="com.pro.test.web.dao.mapper"/>
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/>
     </bean>
 
     <!-- 对dataSource 数据源进行事务管理 -->
@@ -98,7 +103,7 @@
 
     <!-- 事务 aop 配置 -->
     <aop:config>
-        <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.admin.service..*(..))"/>
+        <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.*.service..*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
     </aop:config>
 

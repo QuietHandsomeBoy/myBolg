@@ -57,11 +57,12 @@
     <!--</settings>-->
 
     <typeAliases>
-        <package name="com.pro.test.web.dao.mapper"/>
+        <package name="com.pro.test.web.dao.mapper.xml"/>
     </typeAliases>
 
     <plugins>
         <plugin interceptor="com.pro.test.core.common.mybatis.intercepts.BasicIntercepts"/>
+        <plugin interceptor="com.pro.test.core.common.mybatis.intercepts.PaginationtHandlerInterceptor"/>
     </plugins>
 
 </configuration>

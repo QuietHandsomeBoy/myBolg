@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpRefCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpRefComment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="ref_comment_id" property="refCommentId" jdbcType="VARCHAR" />
+    <result column="ref_comment_context" property="refCommentContext" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_head_portrait" property="userHeadPortrait" jdbcType="VARCHAR" />
+    <result column="to_user_name" property="toUserName" jdbcType="VARCHAR" />
+    <result column="to_user_id" property="toUserId" jdbcType="VARCHAR" />
+    <result column="ref_comment_ip" property="refCommentIp" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_hxp_ref_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpRefComment" >
+    insert into tb_hxp_ref_comment (id, article_id, comment_id, 
+      ref_comment_id, ref_comment_context, user_id, 
+      user_name, user_head_portrait, to_user_name, 
+      to_user_id, ref_comment_ip, create_date, 
+      create_by, update_date, update_by, 
+      is_deleted)
+    values (#{id,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, #{commentId,jdbcType=VARCHAR}, 
+      #{refCommentId,jdbcType=VARCHAR}, #{refCommentContext,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userHeadPortrait,jdbcType=VARCHAR}, #{toUserName,jdbcType=VARCHAR}, 
+      #{toUserId,jdbcType=VARCHAR}, #{refCommentIp,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, #{updateBy,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpRefComment" >
+    update tb_hxp_ref_comment
+    set article_id = #{articleId,jdbcType=VARCHAR},
+      comment_id = #{commentId,jdbcType=VARCHAR},
+      ref_comment_id = #{refCommentId,jdbcType=VARCHAR},
+      ref_comment_context = #{refCommentContext,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_head_portrait = #{userHeadPortrait,jdbcType=VARCHAR},
+      to_user_name = #{toUserName,jdbcType=VARCHAR},
+      to_user_id = #{toUserId,jdbcType=VARCHAR},
+      ref_comment_ip = #{refCommentIp,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, article_id, comment_id, ref_comment_id, ref_comment_context, user_id, 
+    user_name, user_head_portrait, to_user_name, to_user_id, ref_comment_ip, create_date, 
+    create_by, update_date, update_by, is_deleted
+    from tb_hxp_ref_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, article_id, comment_id, ref_comment_id, ref_comment_context, user_id, 
+    user_name, user_head_portrait, to_user_name, to_user_id, ref_comment_ip, create_date, 
+    create_by, update_date, update_by, is_deleted
+    from tb_hxp_ref_comment
+    order by create_date desc
+  </select>
+</mapper>

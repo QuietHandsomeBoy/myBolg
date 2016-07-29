@@ -1,8 +1,8 @@
 package com.pro.test.web.outside.controller;
 
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
-import com.pro.test.web.entity.TbHxpArticle;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
+import com.pro.test.web.entity.TbHxpArticle;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

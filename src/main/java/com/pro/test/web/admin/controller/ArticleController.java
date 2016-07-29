@@ -1,18 +1,21 @@
 package com.pro.test.web.admin.controller;
 
-import com.pro.test.core.validator.ArticleValidator;
+import com.pro.test.core.common.mybatis.ContextData;
+import com.pro.test.core.common.mybatis.entity.Pagination;
+import com.pro.test.core.common.springmvc.entity.RequestResolver;
+import com.pro.test.core.controller.BaseController;
 import com.pro.test.core.enumdata.ArticleStatus;
 import com.pro.test.core.util.UUIDUtils;
-import com.pro.test.web.entity.TbHxpArticle;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
+import com.pro.test.web.entity.TbHxpArticle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 
 /**
@@ -20,14 +23,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller("adminArticle")
 @RequestMapping(value = "/admin/article")
-public class ArticleController {
+public class ArticleController extends BaseController {
 
     @Autowired
     private TbHxpArticleManager tbHxpArticleManager;
 
 
     @RequestMapping(value = "articleList.html")
-    public String articleList(){
+    public String articleList(RequestResolver requestResolver,Pagination pagination){
+        pagination = new Pagination();
+        pagination.setPageSize(20);
+        ContextData contextData = new ContextData(pagination);
+
+        TbHxpArticle tbHxpArticle = new TbHxpArticle();
+        tbHxpArticle.setArticleTitle("测试");
+        contextData.setEntity(tbHxpArticle);
+        List<TbHxpArticle> list = tbHxpArticleManager.findPage(contextData);
+        System.out.println(list.size());
+        requestResolver.setAttribute("articleList",list);
+
+//        TbHxpArticle tbHxpArticle = new TbHxpArticle();
+//        tbHxpArticle.setArticleId(UUIDUtils.getUUID());
+//        tbHxpArticle.setArticleTitle("此次测测测测恶策测测测测测测测测测测");
+//        tbHxpArticleManager.insertArticle(tbHxpArticle);
+
+
         return "admin/article/articleList";
     }
 
@@ -35,12 +55,6 @@ public class ArticleController {
     public String insertArticle(){
         return "admin/article/insertArticle";
     }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.setValidator(new ArticleValidator());
-    }
-
 
     @RequestMapping(value = "/saveArticle", method = RequestMethod.POST)
     public String saveArticle(@Validated TbHxpArticle tbHxpArticle, BindingResult bindingResult){

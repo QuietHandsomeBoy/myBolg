@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpUserMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpUser" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="publish_count" property="publishCount" jdbcType="INTEGER" />
+    <result column="comments_count" property="commentsCount" jdbcType="INTEGER" />
+    <result column="like_tags" property="likeTags" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_hxp_user
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpUser" >
+    insert into tb_hxp_user (id, user_id, user_name, 
+      publish_count, comments_count, like_tags
+      )
+    values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{publishCount,jdbcType=INTEGER}, #{commentsCount,jdbcType=INTEGER}, #{likeTags,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpUser" >
+    update tb_hxp_user
+    set user_id = #{userId,jdbcType=CHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      publish_count = #{publishCount,jdbcType=INTEGER},
+      comments_count = #{commentsCount,jdbcType=INTEGER},
+      like_tags = #{likeTags,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, user_id, user_name, publish_count, comments_count, like_tags
+    from tb_hxp_user
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, user_id, user_name, publish_count, comments_count, like_tags
+    from tb_hxp_user
+    order by create_date desc
+  </select>
+</mapper>

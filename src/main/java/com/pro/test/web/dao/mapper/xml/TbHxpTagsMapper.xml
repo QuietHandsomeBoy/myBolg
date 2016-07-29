@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpTagsMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpTags" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tag_id" property="tagId" jdbcType="VARCHAR" />
+    <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+    <result column="tag_title" property="tagTitle" jdbcType="VARCHAR" />
+    <result column="tag_img" property="tagImg" jdbcType="VARCHAR" />
+    <result column="tag_count" property="tagCount" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_hxp_tags
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpTags" >
+    insert into tb_hxp_tags (id, tag_id, tag_name, 
+      tag_title, tag_img, tag_count, 
+      create_date, create_by, update_date, 
+      update_by, remark, is_deleted
+      )
+    values (#{id,jdbcType=VARCHAR}, #{tagId,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR}, 
+      #{tagTitle,jdbcType=VARCHAR}, #{tagImg,jdbcType=VARCHAR}, #{tagCount,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, 
+      #{updateBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpTags" >
+    update tb_hxp_tags
+    set tag_id = #{tagId,jdbcType=VARCHAR},
+      tag_name = #{tagName,jdbcType=VARCHAR},
+      tag_title = #{tagTitle,jdbcType=VARCHAR},
+      tag_img = #{tagImg,jdbcType=VARCHAR},
+      tag_count = #{tagCount,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=DATE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, tag_id, tag_name, tag_title, tag_img, tag_count, create_date, create_by, 
+    update_date, update_by, remark, is_deleted
+    from tb_hxp_tags
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, tag_id, tag_name, tag_title, tag_img, tag_count, create_date, create_by, 
+    update_date, update_by, remark, is_deleted
+    from tb_hxp_tags
+    order by create_date desc
+  </select>
+</mapper>

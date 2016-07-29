@@ -9,6 +9,7 @@ import org.apache.ibatis.plugin.*;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Properties;
 
@@ -24,7 +25,8 @@ public class BasicIntercepts implements Interceptor {
         SqlCommandType sqlCommandType = mappedStatement.getSqlCommandType();
         Object parameter = invocation.getArgs()[1];
         Field[] fields = parameter.getClass().getDeclaredFields();
-        Date currentDate = new Date();
+
+        Timestamp currentDate = new Timestamp(new Date().getTime());
         if(SqlCommandType.UPDATE==sqlCommandType) {
             for (Field field : fields) {
                 if (AnnotationUtils.getAnnotation(field, LastUpdateBy.class) != null) {
