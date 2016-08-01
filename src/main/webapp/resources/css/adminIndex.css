@@ -106,7 +106,7 @@ a:hover,a:active,a:visited,a:focus{
 }
 .nav-second-level .active > a,.nav-second-level .active > a:focus,
 .nav-second-level .active > a:active,.nav-second-level .active > a:visited{
-    color: #fafafa;
+    color: #fafafa !important;
 }
 .nav-second-level li a {
     padding: 7px 10px 7px 10px;
@@ -603,7 +603,7 @@ a:hover,a:active,a:visited,a:focus{
     -moz-transition: all .25s ease-in-out;
     transition: all .25s ease-in-out;
 }
-#navigation a:active,#navigation a:hover,#navigation a.active {
+#navigation a:active,#navigation a:hover,#navigation li.active a {
     border-left: 3px solid #1BB7A0;
     color: #1BB7A0;
     background-color: #ececec;
@@ -683,6 +683,9 @@ label:focus{
 }
 .list-header-box .pagination a{
     color: #676a6c;
+}
+.list-header-box .pagination li.disabled a{
+    color: rgb(230, 230, 230);
 }
 .list-header-box .pagination .active > a{
     color: #FFFFFF;

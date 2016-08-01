@@ -19,6 +19,17 @@
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
     <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    id, article_id, comment_id, ref_comment_id, ref_comment_context, user_id, user_name, 
+    user_head_portrait, to_user_name, to_user_id, ref_comment_ip, create_date, create_by, 
+    update_date, update_by, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_hxp_ref_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_hxp_ref_comment
     where id = #{id,jdbcType=VARCHAR}
@@ -37,6 +48,160 @@
       #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, #{updateBy,jdbcType=VARCHAR}, 
       #{isDeleted,jdbcType=INTEGER})
   </insert>
+  <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpRefComment" >
+    insert into tb_hxp_ref_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="refCommentId != null" >
+        ref_comment_id,
+      </if>
+      <if test="refCommentContext != null" >
+        ref_comment_context,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userHeadPortrait != null" >
+        user_head_portrait,
+      </if>
+      <if test="toUserName != null" >
+        to_user_name,
+      </if>
+      <if test="toUserId != null" >
+        to_user_id,
+      </if>
+      <if test="refCommentIp != null" >
+        ref_comment_ip,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null" >
+        #{commentId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCommentId != null" >
+        #{refCommentId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCommentContext != null" >
+        #{refCommentContext,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadPortrait != null" >
+        #{userHeadPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserName != null" >
+        #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCommentIp != null" >
+        #{refCommentIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpRefComment" >
+    update tb_hxp_ref_comment
+    <set >
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentId != null" >
+        comment_id = #{commentId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCommentId != null" >
+        ref_comment_id = #{refCommentId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCommentContext != null" >
+        ref_comment_context = #{refCommentContext,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadPortrait != null" >
+        user_head_portrait = #{userHeadPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserName != null" >
+        to_user_name = #{toUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null" >
+        to_user_id = #{toUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="refCommentIp != null" >
+        ref_comment_ip = #{refCommentIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpRefComment" >
     update tb_hxp_ref_comment
     set article_id = #{articleId,jdbcType=VARCHAR},
@@ -56,18 +221,4 @@
       is_deleted = #{isDeleted,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select id, article_id, comment_id, ref_comment_id, ref_comment_context, user_id, 
-    user_name, user_head_portrait, to_user_name, to_user_id, ref_comment_ip, create_date, 
-    create_by, update_date, update_by, is_deleted
-    from tb_hxp_ref_comment
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, article_id, comment_id, ref_comment_id, ref_comment_context, user_id, 
-    user_name, user_head_portrait, to_user_name, to_user_id, ref_comment_ip, create_date, 
-    create_by, update_date, update_by, is_deleted
-    from tb_hxp_ref_comment
-    order by create_date desc
-  </select>
 </mapper>

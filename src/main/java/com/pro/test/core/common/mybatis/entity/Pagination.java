@@ -9,7 +9,7 @@ public class Pagination {
     public static final String PARAMETER_NAME_OF_PAGE = "page";
     public static final String PARAMETER_NAME_OF_SIZE = "size";
     private int currentPage = 1;
-    private int pageSize = 10;
+    private int pageSize = 20;
     private int totalRecords = 0;
     private int totalPages = 0;
     private int customOffset = -1;

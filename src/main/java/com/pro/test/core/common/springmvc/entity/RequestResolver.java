@@ -1,6 +1,7 @@
 package com.pro.test.core.common.springmvc.entity;
 
-import javafx.scene.control.Pagination;
+import com.pro.test.core.common.mybatis.MappingConvertor;
+import com.pro.test.core.common.mybatis.entity.Pagination;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.ServletContext;
@@ -18,109 +19,104 @@ public class RequestResolver {
     private HttpServletResponse response;
     private HttpSession session;
 
-    public RequestResolver() {}
+    public RequestResolver() {
+    }
 
-    public RequestResolver(HttpServletRequest request)
-    {
+    public RequestResolver(HttpServletRequest request) {
         this.request = request;
         if (request != null) {
             this.session = request.getSession();
         }
     }
 
-    public RequestResolver(HttpServletRequest request, HttpServletResponse response)
-    {
+    public RequestResolver(HttpServletRequest request, HttpServletResponse response) {
         this(request);
         this.response = response;
     }
 
-    public HttpServletRequest getRequest()
-    {
+    public HttpServletRequest getRequest() {
         return this.request;
     }
 
-    public void setRequest(HttpServletRequest request)
-    {
+    public void setRequest(HttpServletRequest request) {
         this.request = request;
     }
 
-    public void setResponse(HttpServletResponse response)
-    {
+    public void setResponse(HttpServletResponse response) {
         this.response = response;
     }
 
-    public HttpServletResponse getResponse()
-    {
+    public HttpServletResponse getResponse() {
         return this.response;
     }
 
-    public HttpSession getSession()
-    {
+    public HttpSession getSession() {
         return this.session;
     }
 
-    public void setSession(HttpSession session)
-    {
+    public void setSession(HttpSession session) {
         this.session = session;
     }
 
-    public void setPagination(Pagination pagination)
-    {
+    public Pagination getPagination() {
+        Pagination pagination = null;
+        if ((pagination = (Pagination) this.request.getAttribute("requestPagination")) == null) {
+            String pageSize = getParameter("size");
+            String currentPage = getParameter("page");
+            pagination = new Pagination(pageSize, currentPage);
+
+            setAttribute(pagination);
+
+            return pagination;
+        }
+        return pagination;
+    }
+
+    public void setPagination(Pagination pagination) {
         setAttribute("requestPagination", pagination);
     }
 
-    public String getServletPath()
-    {
+    public String getServletPath() {
         return this.request.getServletPath();
     }
 
-    public ServletContext getServletContext()
-    {
+    public ServletContext getServletContext() {
         return this.session.getServletContext();
     }
 
-    public Object getSessionAttribute(String paramName)
-    {
+    public Object getSessionAttribute(String paramName) {
         return this.session.getAttribute(paramName);
     }
 
-    public void setSessionAttribute(String paramName, Object object)
-    {
+    public void setSessionAttribute(String paramName, Object object) {
         this.session.setAttribute(paramName, object);
     }
 
-    public void removeSessionAttribute(String paramName)
-    {
+    public void removeSessionAttribute(String paramName) {
         this.session.removeAttribute(paramName);
     }
 
-    public String[] getParameterValues(String paramName)
-    {
+    public String[] getParameterValues(String paramName) {
         return this.request.getParameterValues(paramName);
     }
 
-    public String getParameter(String paramName)
-    {
+    public String getParameter(String paramName) {
         return this.request.getParameter(paramName);
     }
 
-    public String getOrder()
-    {
+    public String getOrder() {
         return getParameter("order");
     }
 
-    public String getRequestURI()
-    {
+    public String getRequestURI() {
         return this.request.getRequestURI();
     }
 
-    public StringBuffer getRequestURL()
-    {
+    public StringBuffer getRequestURL() {
         return this.request.getRequestURL();
     }
 
-    public String getCurrentURL()
-    {
+    public String getCurrentURL() {
         String queryString = this.request.getQueryString();
         String currentURL = this.request.getContextPath() + this.request.getServletPath();
         currentURL = currentURL + (queryString == null ? "" : new StringBuilder("?").append(queryString).toString());
@@ -128,29 +124,33 @@ public class RequestResolver {
         return currentURL;
     }
 
-    public String getQueryString()
-    {
+    public String getQueryString() {
         return this.request.getQueryString();
     }
 
-    public Object getAttribute(String paramName)
-    {
+    public Object getAttribute(String paramName) {
         return this.request.getAttribute(paramName);
     }
 
-    public void setAttributes(Object... object) {}
+    public void setAttributes(Object... object) {
+    }
 
-    public void setAttribute(String paramName, Object object)
-    {
+    public void setAttribute(Object o) {
+        if (o == null) {
+            return;
+        }
+        this.request.setAttribute(MappingConvertor.toFormName(o.getClass().getSimpleName()), o);
+    }
+
+    public void setAttribute(String paramName, Object object) {
         setAttribute(paramName, object, true);
     }
-    public void setAttribute(String paramName, Object object, boolean escapeFlag)
-    {
+
+    public void setAttribute(String paramName, Object object, boolean escapeFlag) {
         if ((escapeFlag) && (object != null) && (
                 ((object instanceof String)) ||
                         ((object instanceof StringBuilder)) ||
-                        ((object instanceof StringBuffer))))
-        {
+                        ((object instanceof StringBuffer)))) {
             this.request.setAttribute(paramName, HtmlUtils.htmlEscape(object.toString()));
 
             return;
@@ -158,8 +158,7 @@ public class RequestResolver {
         this.request.setAttribute(paramName, object);
     }
 
-    public void setAttributeForDataList(List<?> dataList)
-    {
+    public void setAttributeForDataList(List<?> dataList) {
         this.request.setAttribute("dataList", dataList);
     }
 

@@ -31,23 +31,11 @@ public class ArticleController extends BaseController {
 
     @RequestMapping(value = "articleList.html")
     public String articleList(RequestResolver requestResolver,Pagination pagination){
-        pagination = new Pagination();
-        pagination.setPageSize(20);
         ContextData contextData = new ContextData(pagination);
-
         TbHxpArticle tbHxpArticle = new TbHxpArticle();
-        tbHxpArticle.setArticleTitle("测试");
         contextData.setEntity(tbHxpArticle);
         List<TbHxpArticle> list = tbHxpArticleManager.findPage(contextData);
-        System.out.println(list.size());
         requestResolver.setAttribute("articleList",list);
-
-//        TbHxpArticle tbHxpArticle = new TbHxpArticle();
-//        tbHxpArticle.setArticleId(UUIDUtils.getUUID());
-//        tbHxpArticle.setArticleTitle("此次测测测测恶策测测测测测测测测测测");
-//        tbHxpArticleManager.insertArticle(tbHxpArticle);
-
-
         return "admin/article/articleList";
     }
 

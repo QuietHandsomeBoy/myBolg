@@ -21,7 +21,8 @@ require.config({
         "jqueryCookie":['jQuery'],
         "icheck":['jQuery'],
         "sidebar":['jQuery','ie']
-    }
+    },
+    urlArgs: "bust=" +  (new Date()).getTime()
 });
 
 require(['nprogress'],function(NProgress){

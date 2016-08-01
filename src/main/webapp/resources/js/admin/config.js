@@ -39,7 +39,8 @@ require.config({
         "metismenu":['jQuery'],
         "bootstrapSelect":['jQuery','bootstrap'],
         "icheck":['jQuery']
-    }
+    },
+    urlArgs: "bust=" +  (new Date()).getTime()
 });
 
 

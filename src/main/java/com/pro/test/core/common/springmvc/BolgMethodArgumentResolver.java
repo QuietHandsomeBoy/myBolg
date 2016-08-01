@@ -1,5 +1,6 @@
 package com.pro.test.core.common.springmvc;
 
+import com.pro.test.core.common.mybatis.entity.Pagination;
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -18,7 +19,10 @@ public class BolgMethodArgumentResolver implements HandlerMethodArgumentResolver
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
         Class<?> parameterClass = methodParameter.getParameterType();
-        if (HttpServletRequest.class.equals(parameterClass) || HttpServletResponse.class.equals(parameterClass) || RequestResolver.class.equals(parameterClass)) {
+        if ((HttpServletRequest.class.equals(parameterClass)) ||
+                (HttpServletResponse.class.equals(parameterClass)) ||
+                (RequestResolver.class.equals(parameterClass)) ||
+                (Pagination.class.equals(parameterClass))) {
             return true;
         }
         return false;
@@ -29,14 +33,17 @@ public class BolgMethodArgumentResolver implements HandlerMethodArgumentResolver
         Class<?> paramClass = methodParameter.getParameterType();
         HttpServletRequest request = (HttpServletRequest) nativeWebRequest.getNativeRequest();
         HttpServletResponse response = (HttpServletResponse) nativeWebRequest.getNativeResponse();
-        if(HttpServletRequest.class.equals(paramClass)){
+        if (HttpServletRequest.class.equals(paramClass)) {
             return request;
         }
-        if(HttpServletResponse.class.equals(paramClass)){
+        if (HttpServletResponse.class.equals(paramClass)) {
             return response;
         }
-        if(RequestResolver.class.equals(paramClass)){
-            return new RequestResolver(request,response);
+        if (RequestResolver.class.equals(paramClass)) {
+            return new RequestResolver(request, response);
+        }
+        if (Pagination.class.equals(paramClass)) {
+            return new RequestResolver(request, response).getPagination();
         }
         return null;
     }

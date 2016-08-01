@@ -9,6 +9,15 @@
     <result column="comments_count" property="commentsCount" jdbcType="INTEGER" />
     <result column="like_tags" property="likeTags" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_name, publish_count, comments_count, like_tags
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_hxp_user
+    where id = #{id,jdbcType=CHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_hxp_user
     where id = #{id,jdbcType=CHAR}
@@ -21,6 +30,70 @@
       #{publishCount,jdbcType=INTEGER}, #{commentsCount,jdbcType=INTEGER}, #{likeTags,jdbcType=VARCHAR}
       )
   </insert>
+  <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpUser" >
+    insert into tb_hxp_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="publishCount != null" >
+        publish_count,
+      </if>
+      <if test="commentsCount != null" >
+        comments_count,
+      </if>
+      <if test="likeTags != null" >
+        like_tags,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishCount != null" >
+        #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentsCount != null" >
+        #{commentsCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeTags != null" >
+        #{likeTags,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpUser" >
+    update tb_hxp_user
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishCount != null" >
+        publish_count = #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentsCount != null" >
+        comments_count = #{commentsCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeTags != null" >
+        like_tags = #{likeTags,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpUser" >
     update tb_hxp_user
     set user_id = #{userId,jdbcType=CHAR},
@@ -30,14 +103,4 @@
       like_tags = #{likeTags,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select id, user_id, user_name, publish_count, comments_count, like_tags
-    from tb_hxp_user
-    where id = #{id,jdbcType=CHAR}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, user_id, user_name, publish_count, comments_count, like_tags
-    from tb_hxp_user
-    order by create_date desc
-  </select>
 </mapper>
