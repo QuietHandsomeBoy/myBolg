@@ -20,6 +20,13 @@
                 <bean class="com.pro.test.core.common.springmvc.BolgMethodArgumentResolver" />
             </list>
         </property>
+        <!-- 自定义数据转换处理器 -->
+        <property name="messageConverters">
+            <list>
+                <!-- 关联json转换器 -->
+                <ref bean="fastJsonHttpMessageConverter" />
+            </list>
+        </property>
     </bean>
 
     <!--json转换器，主要用于json的返回 -->

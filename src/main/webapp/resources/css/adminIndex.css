@@ -4,6 +4,7 @@ body {
     font-size: 62.5%;
     color: #676a6c;
     overflow-x: hidden;
+    overflow-y: scroll;
     background: #eaeaea;
 }
 button[disabled], html input[disabled] {
@@ -192,7 +193,7 @@ a:hover,a:active,a:visited,a:focus{
     top: 14px;
 }
 .navbar-top-links li:last-child {
-    margin-right: 40px;
+    margin-right: 70px;
 }
 .navbar-top-links .dropdown-alerts {
     width: 310px;
@@ -674,6 +675,13 @@ label:focus{
     padding: 10px 20px;
     border-radius: 2px;
     background: #FFFFFF;
+    min-height: 745px;
+    opacity: 0;
+}
+.list-main-box table tbody{
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    transition: all .25s ease-out;
 }
 .list-header-box{
     margin-bottom: 20px;
@@ -683,6 +691,43 @@ label:focus{
 }
 .list-header-box .pagination a{
     color: #676a6c;
+}
+
+.list-header-box .pagination a{
+    color: #676a6c;
+}
+.list-header-box .pagination button{
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    color: #337ab7;
+    text-decoration: none;
+    z-index: 3;
+    color: #23527c;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-right:0px;
+    outline: none;
+}
+.list-header-box .pagination li:first-child button{
+    border-bottom-left-radius: 4PX;
+    border-top-left-radius: 4PX;
+}
+.list-header-box .pagination li:last-child button{
+    border-bottom-right-radius: 4PX;
+    border-top-right-radius: 4PX;
+    border-right: 1px solid #ddd;
+}
+.list-header-box .pagination li.active button{
+    color: #fff;
+    cursor: default;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.list-header-box .pagination button[disabled] {
+    cursor: not-allowed;
+    background: rgba(227, 227, 227, 0.48);
 }
 .list-header-box .pagination li.disabled a{
     color: rgb(230, 230, 230);
@@ -1383,3 +1428,70 @@ label:focus{
 }
 
 /*    tips.css ===========end*/
+
+/*   nprogress.css ======start*/
+#nprogress {
+    pointer-events: none;
+}
+
+#nprogress .bar {
+    background: #29d;
+
+    position: fixed;
+    z-index: 1031;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+    display: block;
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+    opacity: 1.0;
+    -webkit-transform: rotate(3deg) translate(0px, -4px);
+    -ms-transform: rotate(3deg) translate(0px, -4px);
+    transform: rotate(3deg) translate(0px, -4px);
+}
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    top: 15px;
+    right: 15px;
+}
+#nprogress .spinner-icon {
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: solid 2px transparent;
+    border-top-color: #29d;
+    border-left-color: #29d;
+    border-radius: 50%;
+    -webkit-animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
+}
+.nprogress-custom-parent {
+    overflow: hidden;
+    position: relative;
+}
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+    position: absolute;
+}
+@-webkit-keyframes nprogress-spinner {
+    0%   { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes nprogress-spinner {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/*   nprogress.css ======end*/

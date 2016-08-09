@@ -3,9 +3,12 @@
  */
 
 
-define(['bootstrapDatetimepicker', 'icheck','jqueryTwbsPagination'], function() {
+define(['bootstrapDatetimepicker', 'icheck'], function () {
 
-    var first = function(){
+    var first = function () {
+
+        var srearchCondition = '';//文章查询条件
+        var paginationCondition = '';//分页查询条件
 
         $(".form-group .date").datetimepicker({
             autoclose: true,
@@ -15,6 +18,9 @@ define(['bootstrapDatetimepicker', 'icheck','jqueryTwbsPagination'], function() 
             $("#edit-one-article").attr("disabled", "disabled");
         });
         $('table input[type=checkbox]').on('ifUnchecked', function () {
+            if ($('table input[type=checkbox]').is(':checked')) {
+                return;
+            }
             $("#edit-one-article").removeAttr("disabled");
         });
 
@@ -42,7 +48,7 @@ define(['bootstrapDatetimepicker', 'icheck','jqueryTwbsPagination'], function() 
             checkboxClass: 'icheckbox_square-green'
         });
 
-        $("#navigation").find("li").on("click",function(){
+        $("#navigation").find("li").on("click", function () {
             $(this).addClass("active").siblings().removeClass("active");
             $("#articleRange").val($(this).attr("data-range-name"));
         })
@@ -61,26 +67,157 @@ define(['bootstrapDatetimepicker', 'icheck','jqueryTwbsPagination'], function() 
             }
         })
 
+        $("#searchBtn").on("click", function () {
+            srearchCondition = "";
+            $.each($("#searchArticleParam").serializeArray(), function (k, v) {
+                if ($("input[name='" + v.name + "']").attr("type") == 'text') {
+                    srearchCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
+                }
+            })
+            srearchCondition = srearchCondition.substring(0, srearchCondition.length - 1);
+            submitSearchForm(srearchCondition, "search");
+        })
 
+        var totalPages = Number($("#totalPages").val());
+        var currentPage = Number($("#page").val());
+        var lastBtn = $("#lastBtn");
+        var nextBtn = $("#nextBtn");
+        $("#articlePagination").on("click", "li", function () {
+            paginationFun($(this));
+        })
 
-    }
-
-    var initPageList = function(totalPages){
-
-        $('#pagination-demo').twbsPagination({
-            totalPages: totalPages,
-            visiblePages: 5,
-            onPageClick: function (event, page) {
-
+        var paginationFun = function (obj) {
+            var page = $(obj);
+            var pageBtn = page.find("button");
+            var pageBtnText = pageBtn.html();
+            var activeBtn = $("#articlePagination").find(".active");
+            if (!isNaN(pageBtnText)) {
+                if (pageBtnText == currentPage) {
+                    return;
+                }
+                $("#page").val(pageBtnText);
+                currentPage = pageBtnText;
+                page.addClass("active").siblings().removeClass("active");
+                resetBtnStat(currentPage, totalPages);
+            } else if (pageBtn.attr("id") == 'lastBtn') {
+                if (currentPage == 1) {
+                    return;
+                }
+                currentPage--;
+                $("#page").val(currentPage);
+                resetBtnStat(currentPage, totalPages);
+                activeBtn.prev().addClass("active").siblings().removeClass("active");
+            } else if (pageBtn.attr("id") == 'nextBtn') {
+                if (currentPage == totalPages) {
+                    return;
+                }
+                currentPage++;
+                $("#page").val(currentPage);
+                resetBtnStat(currentPage, totalPages);
+                activeBtn.next().addClass("active").siblings().removeClass("active");
             }
-        });
+
+            paginationCondition = "";
+            $.each($("#searchArticleParam").serializeArray(), function (k, v) {
+                if ($("input[name='" + v.name + "']").attr("type") == 'hidden') {
+                    paginationCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
+                }
+            })
+            paginationCondition = paginationCondition.substring(0, paginationCondition.length - 1);
+            submitSearchForm(srearchCondition + '&' + paginationCondition, "pagination");
+        }
+
+        var resetBtnStat = function (currentPage, totalPages) {
+            if (currentPage == 1) {
+                lastBtn.attr("disabled", "true");
+            }
+            if (currentPage > 1 && currentPage <= totalPages) {
+                lastBtn.removeAttr("disabled");
+            }
+            if (currentPage == totalPages) {
+                nextBtn.attr("disabled", "true");
+            }
+            if (currentPage < totalPages) {
+                nextBtn.removeAttr("disabled");
+            }
+        }
+        $(".list-main-box").addClass("animated").addClass("fadeInRight");
+
+
+        var submitSearchForm = function (condition, type) {
+            var contextBox = $(".list-content-box").find("table tbody");
+            contextBox.css("opacity", "0");
+            $.ajax({
+                type: "POST",
+                url: ctx + "/admin/article/articleList.json",
+                dataType: "json",
+                data: condition,
+                success: function (data) {
+                    var resultObj = JSON.parse(data);
+                    var articleList = resultObj.articleList;
+                    var pagination = resultObj.pagination;
+                    var resultHtml = '';
+                    if (articleList.length <= 0) {
+                        resultHtml += '<tr>';
+                        resultHtml += '<td style="text-align: center;" colspan="8">未找到相关文章！</td>';
+                        resultHtml += "</tr>";
+                    }
+                    $.each(articleList, function (k, v) {
+                        resultHtml += '<tr>';
+                        resultHtml += '<td><input type="checkbox" class="i-checks"></td>';
+                        resultHtml += '<td><a href="javascript:;" class="article-title">' + v.articleTitle + '</a></td>';
+                        resultHtml += '<td><label class="label label-biji">' + v.articleRange + '</label></td>';
+                        resultHtml += '<td>' + v.likesCount + '</td>';
+                        resultHtml += '<td>' + v.readCount + '</td>';
+                        resultHtml += '<td>' + v.commentCount + '</td>';
+                        resultHtml += '<td>' + v.articleAuthorName + '</td>';
+                        resultHtml += '<td>' + new Date(v.createDate).format("yyyy-MM-dd") + '</td>';
+                        resultHtml += "</tr>";
+                    })
+                    setTimeout(function () {
+                        contextBox.html(resultHtml);
+                        //重新绑定
+                        $('.list-content-box .i-checks').iCheck({
+                            checkboxClass: 'icheckbox_square-green'
+                        });
+                        $('table input[type=checkbox]').on('ifChecked', function () {
+                            $("#edit-one-article").attr("disabled", "disabled");
+                        });
+                        contextBox.css("opacity", "1");
+                    }, 300);
+
+                    if (type == 'search') {
+                        $("#articlePagination").html("");//清空分页div，重新添加
+                        var paginationHtml = '<li><button id="lastBtn" disabled="true">&laquo;</button></li>';
+                        for (var i = 1; i < pagination.totalPages + 1; i++) {
+                            if (pagination.currentPage == i) {
+                                paginationHtml += '<li class="active"><button class="paginationNum">' + i + '</button></li>';
+                            } else {
+                                paginationHtml += '<li><button class="paginationNum">' + i + '</button></li>';
+                            }
+                        }
+                        paginationHtml += '<li><button id="nextBtn">&raquo;</button></li>';
+                        $("#articlePagination").append(paginationHtml);
+                        lastBtn = $("#lastBtn");
+                        nextBtn = $("#nextBtn");
+                    }
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+        }
 
     }
 
+    var deleteArticle = function (articleIds) {
+
+        var tipsDiv = $("#resultTips");
+
+    }
 
     return {
-        first : first,
-        initPageList : initPageList
+        first: first,
     }
 
 })

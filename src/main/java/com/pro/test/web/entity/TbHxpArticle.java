@@ -1,8 +1,12 @@
 package com.pro.test.web.entity;
 
+import com.pro.test.core.common.annotation.*;
+
 import java.util.Date;
 
-public class TbHxpArticle {
+public class TbHxpArticle{
+
+    @TableId
     private String id;
 
     private String articleId;
@@ -43,12 +47,16 @@ public class TbHxpArticle {
 
     private String articleStatus;
 
+    @CreateDate
     private Date createDate;
 
+    @CreateBy
     private String createBy;
 
+    @LastUpdateDate
     private Date updateDate;
 
+    @LastUpdateBy
     private String updateBy;
 
     private String remark;

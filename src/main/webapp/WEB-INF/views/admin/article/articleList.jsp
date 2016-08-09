@@ -41,11 +41,12 @@
                 </div>
             </div>
             <ul class="nav metismenu" id="side-menu">
-                <li class="">
-                    <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
+                <li class="active">
+                    <a href="javascript:;"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
                             class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a></li>
+                    <ul class="nav nav-second-level collapse">
+                        <li class="active"><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span
+                                class="label label-warning pull-right">24</span></a></li>
                         <li><a href="${_Weburl}/admin/article/insertArticle.html">写笔记</a></li>
                     </ul>
                 </li>
@@ -166,36 +167,47 @@
                         <div id="left-box" class="animated fadeInUp">
                             <div class="left-box-content">
                                 <div class="file-manager">
-                                    <form id="searchArticleParam" method="post">
+                                    <form id="searchArticleParam" method="post"
+                                          action="${_Weburl}/admin/article/articleList.html">
                                         <input type="hidden" id="articleRange" value="all">
+                                        <input type="hidden" id="totalPages" value="${pagination.totalPages}">
                                         <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
                                         <input type="hidden" id="page" name="page" value="${pagination.currentPage}">
                                         <input type="hidden" id="size" name="size" value="${pagination.pageSize}">
                                         <input type="hidden" id="order" name="order" value="${order}">
                                         <div class="left-box-tab-header">
                                             <ul id="navigation">
-                                                <li class="active" data-range-name="all"><a href="javascript:;">全部<span class="label label-info pull-right">34</span></a></li>
-                                                <li data-range-name="note"><a href="javascript:;">笔记<span class="label label-info pull-right">18</span></a></li>
-                                                <li data-range-name="diary"><a href="javascript:;">日记<span class="label label-info pull-right">11</span></a></li>
-                                                <li data-range-name="other"><a href="javascript:;">其他<span class="label label-info pull-right">5</span></a></li>
-                                                <li data-range-name="draft"><a href="javascript:;">草稿<span class="label label-info pull-right">5</span></a></li>
+                                                <li class="active" data-range-name="all"><a href="javascript:;">全部<span
+                                                        class="label label-info pull-right">34</span></a></li>
+                                                <li data-range-name="note"><a href="javascript:;">笔记<span
+                                                        class="label label-info pull-right">18</span></a></li>
+                                                <li data-range-name="diary"><a href="javascript:;">日记<span
+                                                        class="label label-info pull-right">11</span></a></li>
+                                                <li data-range-name="other"><a href="javascript:;">其他<span
+                                                        class="label label-info pull-right">5</span></a></li>
+                                                <li data-range-name="draft"><a href="javascript:;">草稿<span
+                                                        class="label label-info pull-right">5</span></a></li>
                                             </ul>
                                         </div>
                                         <h5>Title Like</h5>
                                         <div class="form-group">
-                                            <input type='text' class="form-control search-title-input" name="articleTitle"/>
+                                            <input type='text' class="form-control search-title-input"
+                                                   name="articleTitle"/>
                                         </div>
                                         <h5>Time Frame</h5>
                                         <div class="form-group">
                                             <span>startDate：</span>
                                             <div class='input-group date'>
-                                                <input type='text' class="form-control" readonly/>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                <input type='text' class="form-control" readonly
+                                                       name="createDateBegin"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                             <span>endDate：</span>
                                             <div class='input-group date'>
-                                                <input type='text' class="form-control" readonly/>
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                <input type='text' class="form-control" readonly name="createDateEnd"/>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
                                         <!--<h5>Categories</h5>-->
@@ -220,7 +232,8 @@
                                             <a href="javascript:;" id="searchBtn">Search</a>
                                         </div>
                                         <div class="add-article-box">
-                                            <a href="insert.html" id="addArticleBtn">ADD </a>
+                                            <a href="${_Weburl}/admin/article/insertArticle.html"
+                                               id="addArticleBtn">ADD </a>
                                         </div>
                                         <div class="clearfix"></div>
                                     </form>
@@ -229,18 +242,40 @@
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="list-main-box animated fadeInRight">
+                        <div class="list-main-box">
                             <div class="list-header-box">
                                 <h2> 全部<span style="font-size: 16px;">(共查找出${pagination.totalRecords}条记录)</span></h2>
                                 <div class="list-pagination-box pull-right">
-                                    <label>共有${pagination.totalPages}页</label>
-                                    <ul id="pagination-demo" class="pagination-sm"></ul>
+                                    <ul class="pagination" id="articlePagination">
+                                        <li>
+                                            <button id="lastBtn" disabled="true">&laquo;</button>
+                                        </li>
+                                        <li class="active">
+                                            <button class="paginationNum">1</button>
+                                        </li>
+                                        <c:forEach begin="2" end="${pagination.totalPages}" var="page">
+                                            <li>
+                                                <button class="paginationNum">${page}</button>
+                                            </li>
+                                        </c:forEach>
+                                        <li>
+                                            <button id="nextBtn">&raquo;</button>
+                                        </li>
+                                    </ul>
+                                    <ul id="pagination-demo" class="pagination-sm">
+
+                                    </ul>
                                 </div>
                                 <div class="header-tool-box">
-                                    <button id="toggle-all" class="btn-white btn-sm"><input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle All</button>
-                                    <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh</button>
-                                    <button id="edit-one-article" class="btn-white btn-sm"><i class="fa fa-edit"></i>Edit</button>
-                                    <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete</button>
+                                    <button id="toggle-all" class="btn-white btn-sm"><input type="hidden" value="0"/><i
+                                            class="fa fa-check-square-o"></i> Toggle All
+                                    </button>
+                                    <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh
+                                    </button>
+                                    <button id="edit-one-article" class="btn-white btn-sm"><i class="fa fa-edit"></i>Edit
+                                    </button>
+                                    <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
+                                    </button>
                                     <button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>
                                 </div>
                             </div>
@@ -270,22 +305,22 @@
                                             <td>${article.readCount}</td>
                                             <td>${article.commentCount}</td>
                                             <td>${article.articleAuthorName}</td>
-                                            <td><fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                            <td><fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd"/></td>
                                         </tr>
                                     </c:forEach>
-                                    <%--<tr>--%>
-                                        <%--<td>--%>
-                                            <%--<input type="checkbox" class="i-checks">--%>
-                                        <%--</td>--%>
-                                        <%--<td><a href="javascript:;" class="article-title">There is something in the New--%>
-                                            <%--York air that makes sleep useless</a></td>--%>
-                                        <%--<td><label class="label label-biji">笔记</label></td>--%>
-                                        <%--<td>120</td>--%>
-                                        <%--<td>310</td>--%>
-                                        <%--<td>70</td>--%>
-                                        <%--<td>干锅加鲁鲁</td>--%>
-                                        <%--<td>2016-07-12</td>--%>
-                                    <%--</tr>--%>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="i-checks">
+                                        </td>
+                                        <td><a href="javascript:;" class="article-title">There is something in the New
+                                            York air that makes sleep useless</a></td>
+                                        <td><label class="label label-biji">笔记</label></td>
+                                        <td>120</td>
+                                        <td>310</td>
+                                        <td>70</td>
+                                        <td>干锅加鲁鲁</td>
+                                        <td>2016-07-12</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -294,13 +329,24 @@
                     </div>
                 </div>
             </div>
-            <script>require(["articleList"], function (common) {
-                common.first();
-                common.initPageList(${pagination.totalPages});
-            });
-        </script>
+            <script>
+                var ctx = '${_Weburl}';
+                require(["articleList"], function (common) {
+                    common.first();
+                });
+            </script>
         </div>
     </div>
 </div>
+<div class="tips-div" id="resultTips">
+    <div class="tips-content">
+        <h3>Tips</h3>
+        <div>
+            <p>This is a modal window. You can do the following things with it:</p>
+            <button class="btn btn-default pull-right" id="closeTipsBox">Close me!</button>
+        </div>
+    </div>
+</div>
+<div class="tips-background-div"></div>
 </body>
 </html>

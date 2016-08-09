@@ -168,7 +168,7 @@
                                         <h5>所属分类</h5>
                                         <div class="type-confition form-group">
                                             <input type="radio" name="articleRange" value="diary" class="i-checks"><label class="">日记</label>
-                                            <input type="radio" name="articleRange" value="note" class="i-checks"><label class="">笔记</label>
+                                            <input type="radio" name="articleRange" value="note" class="i-checks" checked><label class="">笔记</label>
                                             <input type="radio" name="articleRange" value="other" class="i-checks"><label class="">其他</label>
                                         </div>
                                         <h5>关键字设置<label class="label label-gray">用&nbsp;|&nbsp;字符隔开&nbsp;;&nbsp;最多设置四个关键字</label></h5>
@@ -190,7 +190,7 @@
                                         </ul>
                                         <h5>其他设置</h5>
                                         <div class="other-condition form-group">
-                                            <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="">公开</label>
+                                            <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="1">公开</label>
                                             <label class=""><input type="checkbox" name="onTop" class="i-checks">置顶</label>
                                             <label class=""><input type="checkbox" name="limitComments" class="i-checks">限制评论</label>
                                         </div>
@@ -201,7 +201,7 @@
                                             <a href="insert.html" id="view-article">预览</a>
                                         </div>
                                         <div class="save-article-box">
-                                            <a href="javascript:;" onclick="saveArticle();" id="save-article">保存</a>
+                                            <a href="javascript:;" id="save-article">保存</a>
                                             <button type="submit">submit</button>
                                         </div>
                                         <div class="clearfix"></div>
@@ -244,162 +244,8 @@
                 </div>
             </form>
             <script>
-                require(["insertArticle"],function(){
-                    $('.selectpicker').selectpicker({
-                        size: 4,
-                        showIcon: true,
-                        showTick: true,
-                        style: 'select-btn'
-                    });
-
-                    $('.other-condition .i-checks').iCheck({
-                        checkboxClass: 'icheckbox_flat-orange'
-                    });
-                    $('.tags-list .i-checks').iCheck({
-                        checkboxClass: 'icheckbox_flat-blue'
-                    });
-                    $('.type-confition .i-checks').each(function(){
-                        var self = $(this),
-                                label = self.next(),
-                                label_text = label.text();
-
-                        label.remove();
-                        self.iCheck({
-                            radioClass: 'icheckbox_line-blue',
-                            insert: '<div class="icheck_line-icon"></div>' + label_text
-                        });
-                    });
-
-                    $('#article-content').each(function(index, element) {
-                        $(element).wysiwyg({
-                            classes: 'some-more-classes',
-                            // 'selection'|'top'|'top-selection'|'bottom'|'bottom-selection'
-                            toolbar: index == 0 ? 'top-selection': (index == 1 ? 'bottom': 'selection'),
-                            buttons: {
-                                //insertimage: {
-                                //    title: '插入图片',
-                                //    image: '<i class="fa fa-photo"></i>',
-                                //    //showstatic: true,    // wanted on the toolbar
-                                //    showselection: false // wanted on selection
-                                //},
-                                insertlink: {
-                                    title: '插入链接',
-                                    image: '<i id="font_link" class="fa fa-link"></i>',
-                                    showselection: false
-                                },
-                                // Fontsize plugin
-                                fontsize: index == 1 ? false: {
-                                    title: '字体大小',
-                                    image: '\uf034',
-                                    popup: function($popup, $button) {
-                                        var list_fontsizes = {
-                                            // Name : Size
-                                            'Huge': 7,
-                                            'Larger': 6,
-                                            'Large': 5,
-                                            'Normal': 4,
-                                            'Small': 3,
-                                            'Smaller': 2,
-                                            'Tiny': 1
-                                        };
-                                        var $list = $('<div/>').addClass('wysiwyg-toolbar-list').attr('unselectable', 'on');
-                                        $.each(list_fontsizes,
-                                                function(name, size) {
-                                                    var $link = $('<a/>').attr('href', '#').css('font-size', (8 + (size * 3)) + 'px').html(name).click(function(event) {
-                                                        $(element).wysiwyg('shell').fontSize(size).closePopup();
-                                                        // prevent link-href-#
-                                                        event.stopPropagation();
-                                                        event.preventDefault();
-                                                        return false;
-                                                    });
-                                                    $list.append($link);
-                                                });
-                                        $popup.append($list);
-                                    }
-                                    //showstatic: true,    // wanted on the toolbar
-                                    //showselection: true    // wanted on selection
-                                },
-                                bold: {
-                                    title: '字体加粗(Ctrl+B)',
-                                    image: '<i id="font_bold" class="fa fa-bold"></i>',
-                                    hotkey: 'b'
-                                },
-                                italic: {
-                                    title: '字体斜体(Ctrl+I)',
-                                    image: '<i id="font_italic" class="fa fa-italic"></i>',
-                                    hotkey: 'i'
-                                },
-                                underline: {
-                                    title: '下划线 (Ctrl+U)',
-                                    image: '<i id="font_underline" class="fa fa-underline"></i>',
-                                    hotkey: 'u'
-                                },
-                                strikethrough: {
-                                    title: '中线 (Ctrl+S)',
-                                    image: '<i id="font_strikethrough" class="fa fa-strikethrough"></i>',
-                                    hotkey: 's'
-                                },
-                                forecolor: {
-                                    title: '字体颜色',
-                                    image: '\uf1fc'
-                                },
-                                alignleft: index != 0 ? false: {
-                                    title: '居左',
-                                    image: '<i id="font_align_left" class="fa fa-align-left"></i>',
-                                    //showstatic: true,    // wanted on the toolbar
-                                    showselection: false // wanted on selection
-                                },
-                                aligncenter: index != 0 ? false: {
-                                    title: '居中',
-                                    image: '<i id="font_align_center" class="fa fa-align-center"></i>',
-                                    //showstatic: true,    // wanted on the toolbar
-                                    showselection: false // wanted on selection
-                                },
-                                alignright: index != 0 ? false: {
-                                    title: '居右',
-                                    image: '<i id="font_align_right" class="fa fa-align-right"></i>',
-                                    //showstatic: true,    // wanted on the toolbar
-                                    showselection: false // wanted on selection
-                                },
-                                orderedList: index != 0 ? false: {
-                                    title: '有序列表',
-                                    image: '<i id="font_list_ol" class="fa fa-list-ol"></i>',
-                                    //showstatic: true,    // wanted on the toolbar
-                                    showselection: false // wanted on selection
-                                },
-                                unorderedList: index != 0 ? false: {
-                                    title: '无序列表',
-                                    image: '<i id="font_list_ul" class="fa fa-list-ul"></i>',
-                                    //showstatic: true,    // wanted on the toolbar
-                                    showselection: false // wanted on selection
-                                },
-                                indent: {
-                                    title: '左缩进',
-                                    image: '<i id="font_list_ul" class="fa fa-indent"></i>'
-                                },
-                                outdent: {
-                                    title: '右缩进',
-                                    image: '<i id="font_list_ul" class="fa fa-dedent"></i>'
-                                }
-                            },
-                            // Submit-Button
-                            submit: {
-                                title: 'Submit',
-                                image: '\uf00c'
-                            },
-                            // Other properties
-                            dropfileclick: ' 插入图片 ',
-                            placeholderUrl: 'www.xxxxxx.com',
-                            maxImageSize: [600, 200]
-                        });
-                    });
-
-                    $(".wysiwyg-editor").blur();
-                    // 加入自定义功能   【全屏/插入代码/插入图片】
-                    var orderBtn = "<a onclick='insertCode()' href='javascript:;' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
-                    //orderBtn += "<a onclick='changeStyle(this)' href='javascript:;' class='wysiwyg-toolbar-icon' title='全屏' style='float:right;'><i class='fa fa-expand'></i></a>";
-                    $(".wysiwyg-toolbar").append(orderBtn);
-                    $(".wysiwyg-toolbar").prepend("<a id='showUploadBox' href='javascript:showUploadBox()' class='wysiwyg-toolbar-icon' title='插入图片'><i class='fa fa-photo'></i></a>");
+                require(["insertArticle"],function(common){
+                    common.init();
                 });
             </script>
         </div>
@@ -410,12 +256,10 @@
         <h3>Tips</h3>
         <div>
             <p>This is a modal window. You can do the following things with it:</p>
-            <button class="btn btn-default pull-right" onclick="closeTipsBox()">Close me!</button>
+            <button class="btn btn-default pull-right" id="closeTipsBox">Close me!</button>
         </div>
     </div>
 </div>
 <div class="tips-background-div"></div>
-<script>
-</script>
 </body>
 </html>

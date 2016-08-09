@@ -149,7 +149,9 @@
             </ol>
         </div>
         <div id="content" class="content-container">
-            <script>require(["index"]);</script>
+            <script>require(["index"],function(index){
+                index.init();
+            });</script>
             <div class="animated fadeInUp">
                 <div class="welcome-message-box">
                     <!--<h2>晚上好&nbsp;,&nbsp;<span>干锅加鲁鲁</span></h2>-->

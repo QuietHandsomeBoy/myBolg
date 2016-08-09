@@ -6,7 +6,6 @@
     <!--<properties>-->
         <!--<property name="dialectClass" value="com.eliteams.quick4j.core.feature.orm.dialect.MySql5Dialect"/>-->
     <!--</properties>-->
-
     <!--&lt;!&ndash; 配置mybatis的缓存，延迟加载等等一系列属性 &ndash;&gt;-->
     <!--<settings>-->
 

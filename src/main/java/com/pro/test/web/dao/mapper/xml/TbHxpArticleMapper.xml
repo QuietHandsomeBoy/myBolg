@@ -345,8 +345,14 @@
     <include refid="Base_Column_List"/>
     from tb_hxp_article
     <where>
-      <if test="tbHxpArticle != null and tbHxpArticle.articleTitle != null ">
+      <if test="tbHxpArticle != null and tbHxpArticle.articleTitle != null  and tbHxpArticle.articleTitle != '' ">
         and article_title like concat(concat('%', #{tbHxpArticle.articleTitle}), '%')
+      </if>
+      <if test="createDateBegin != null and createDateBegin != ''">
+        and CREATE_DATE <![CDATA[ >= ]]>   #{createDateBegin}
+      </if>
+      <if test="createDateEnd != null and createDateEnd != ''">
+        and CREATE_DATE <![CDATA[ <= ]]> #{createDateEnd}
       </if>
     </where>
     <if test="order != null and order != '' ">
