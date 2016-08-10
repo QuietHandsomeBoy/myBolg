@@ -76,7 +76,7 @@ require(['nprogress'], function (NProgress) {
 
             })
             .on("pjax:complete",function(){
-                setTimeout(function(){NProgress.done();}, 500);
+                //setTimeout(function(){NProgress.done();}, 500);
             })
             .on("pjax:end", function () {
             })

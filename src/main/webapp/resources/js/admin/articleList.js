@@ -82,7 +82,7 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
         var currentPage = Number($("#page").val());
         var lastBtn = $("#lastBtn");
         var nextBtn = $("#nextBtn");
-        $("#articlePagination").on("click", "li", function () {
+        $("#articlePagination").on("click", ".page", function () {
             paginationFun($(this));
         })
 
@@ -188,16 +188,23 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
 
                     if (type == 'search') {
                         $("#articlePagination").html("");//清空分页div，重新添加
-                        var paginationHtml = '<li><button id="lastBtn" disabled="true">&laquo;</button></li>';
+                        var paginationHtml = '<li class="page"><button id="lastBtn" disabled="true">&laquo;</button></li>';
                         for (var i = 1; i < pagination.totalPages + 1; i++) {
                             if (pagination.currentPage == i) {
-                                paginationHtml += '<li class="active"><button class="paginationNum">' + i + '</button></li>';
+                                paginationHtml += '<li class="active page"><button class="paginationNum">' + i + '</button></li>';
                             } else {
-                                paginationHtml += '<li><button class="paginationNum">' + i + '</button></li>';
+                                paginationHtml += '<li class="page"><button class="paginationNum">' + i + '</button></li>';
                             }
                         }
-                        paginationHtml += '<li><button id="nextBtn">&raquo;</button></li>';
+                        paginationHtml += '<li class="page"><button id="nextBtn"';
+                        if(pagination.totalPages == pagination.currentPage){
+                            paginationHtml += 'disabled="true"';
+                        }
+                        paginationHtml += '>&raquo;</button></li>';
+
                         $("#articlePagination").append(paginationHtml);
+                        currentPage = 1;
+                        totalPages = pagination.totalPages;
                         lastBtn = $("#lastBtn");
                         nextBtn = $("#nextBtn");
                     }

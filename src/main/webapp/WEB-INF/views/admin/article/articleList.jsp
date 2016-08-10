@@ -247,20 +247,12 @@
                                 <h2> 全部<span style="font-size: 16px;">(共查找出${pagination.totalRecords}条记录)</span></h2>
                                 <div class="list-pagination-box pull-right">
                                     <ul class="pagination" id="articlePagination">
-                                        <li>
-                                            <button id="lastBtn" disabled="true">&laquo;</button>
-                                        </li>
-                                        <li class="active">
-                                            <button class="paginationNum">1</button>
-                                        </li>
+                                        <li class="page"><button id="lastBtn" disabled="true">&laquo;</button></li>
+                                        <li class="active page"><button class="paginationNum">1</button></li>
                                         <c:forEach begin="2" end="${pagination.totalPages}" var="page">
-                                            <li>
-                                                <button class="paginationNum">${page}</button>
-                                            </li>
+                                            <li class="page"><button class="paginationNum">${page}</button></li>
                                         </c:forEach>
-                                        <li>
-                                            <button id="nextBtn">&raquo;</button>
-                                        </li>
+                                        <li class="page"><button id="nextBtn">&raquo;</button></li>
                                     </ul>
                                     <ul id="pagination-demo" class="pagination-sm">
 

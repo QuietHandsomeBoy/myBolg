@@ -4,7 +4,6 @@ body {
     font-size: 62.5%;
     color: #676a6c;
     overflow-x: hidden;
-    overflow-y: scroll;
     background: #eaeaea;
 }
 button[disabled], html input[disabled] {
