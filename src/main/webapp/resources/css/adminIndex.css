@@ -4,6 +4,7 @@ body {
     font-size: 62.5%;
     color: #676a6c;
     overflow-x: hidden;
+    overflow-y: scroll;
     background: #eaeaea;
 }
 button[disabled], html input[disabled] {
@@ -690,6 +691,21 @@ label:focus{
     background: #FFFFFF;
     min-height: 745px;
     opacity: 0;
+    position: relative;
+}
+.pagination-loading{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: solid 2px transparent;
+    border-top-color: #29d;
+    border-left-color: #29d;
+    border-radius: 50%;
+    -webkit-animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
 }
 .list-main-box table tbody{
     -webkit-transition: all .25s ease-out;

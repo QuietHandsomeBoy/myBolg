@@ -125,15 +125,15 @@ var tips = function (msg) {
 
 //关闭弹出框
 var closeTips = function (objName) {
-    if(objName != null && objName != ''){
-        $("#"+objName).removeClass("tips-show");
-    }else{
+    if (objName != null && objName != '') {
+        $("#" + objName).removeClass("tips-show");
+    } else {
         $("#resultTips").removeClass("tips-show");
     }
     setTimeout(function () {
-        if(objName != null && objName != ''){
-            $("#"+objName).remove();
-        }else{
+        if (objName != null && objName != '') {
+            $("#" + objName).remove();
+        } else {
             $("#resultTips").remove();
         }
         $(".tips-background-div").remove();
@@ -157,7 +157,7 @@ var confimTips = function (params) {
     });
     var html = '<div class="tips-div" id="confimTips">';
     html += '<div class="tips-content">';
-    html += '<h3>'+params.title+'</h3>';
+    html += '<h3>' + params.title + '</h3>';
     html += '<div>';
     html += '<p>' + params.message + '</p>';
     //html += '<button class="btn btn-default pull-right">NO</button>';
@@ -168,7 +168,9 @@ var confimTips = function (params) {
     html += '</div>';
     html += '<div class="tips-background-div"></div>';
     $("body").append(html);
-    setTimeout(function () {$("#confimTips").addClass("tips-show");}, 100);
+    setTimeout(function () {
+        $("#confimTips").addClass("tips-show");
+    }, 100);
 
     var buttons = $('#confimTips .btn'), i = 0;
     $.each(params.buttons, function (name, obj) {
@@ -183,9 +185,8 @@ var confimTips = function (params) {
 }
 
 //文章类型枚举
-var changeArticleTag = function(articleRange){
-    switch (articleRange)
-    {
+var changeArticleTag = function (articleRange) {
+    switch (articleRange) {
         case "note":
             return "笔记";
         case "diary":
