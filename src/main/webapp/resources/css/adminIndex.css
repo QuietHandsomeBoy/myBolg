@@ -266,6 +266,7 @@ a:hover,a:active,a:visited,a:focus{
 }
 #content{
     padding:0px 15px 15px;
+    overflow: hidden;
 }
 .link-block {
     font-size: 12px;
@@ -644,6 +645,19 @@ label:focus{
     cursor: pointer;
     margin: 3px 5px;
 }
+.other-condition .select-btn{
+    background-color: #F5F5F5;
+    border: 1px solid #dddddd;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #b7b7b7;
+    box-shadow: 0 1px 1px #d3d1d1;
+    height: 49px;
+    width: 100px;
+}
+.other-condition .bootstrap-select{
+    width: 100px!important;
+}
+
 .search-box a ,.add-article-box a,.save-as-draft-box a,.view-article-box a,.save-article-box a{
     text-align: center;
     display: inline-block;
@@ -765,6 +779,9 @@ label:focus{
 .list-content-box .table > tbody > tr{
     border-top: 1px solid #d6d6d6;
     cursor: pointer;
+    -webkit-transition: all .25s ease-in-out;
+    -moz-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
 }
 .list-content-box .table > tbody > tr > td label{
     line-height: normal;
@@ -933,7 +950,7 @@ label:focus{
     color:#1c375b;
     font-size:14px;
     position: relative;
-    min-height: 650px;
+    min-height: 420px;
     padding: 20px 30px;
     overflow: auto;
     outline: none;
@@ -1406,14 +1423,18 @@ label:focus{
     visibility: visible;
 }
 .tips-content h3{
-    margin: 0;
-    padding: 10PX;
-    text-align: center;
     font-size: 18PX;
+    margin: 0;
+    padding: 10PX 10px 10px 20px;
     font-weight: bold;
-    background: rgba(112, 128, 134, 0.82);
+    background: rgb(214, 214, 214);
     border-radius: 3px 3px 0 0;
-    COLOR: #FFF;
+}
+.tips-content button{
+    margin: 0px 10px;
+}
+.tips-content button:active,.tips-content button:active:focus,.tips-content button:visited{
+    outline: none;
 }
 .tips-content > div{
     padding: 15px 40px;

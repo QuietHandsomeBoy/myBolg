@@ -65,7 +65,7 @@
         <property name="configLocation" value="classpath:/config/mybatis-config.xml"/>
         <property name="mapperLocations">
             <list>
-                <value>classpath:com/pro/test/web/dao/mapper/xml/*Mapper.xml</value>
+                <value>classpath:/xml/*Mapper.xml</value>
             </list>
         </property>
     </bean>
@@ -84,7 +84,6 @@
     <!-- 对dataSource 数据源进行事务管理 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="dataSource"/>
-
 
     <!-- 事务管理 通知 -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">

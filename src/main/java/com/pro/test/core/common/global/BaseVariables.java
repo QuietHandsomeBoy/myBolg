@@ -5,4 +5,7 @@ package com.pro.test.core.common.global;
  */
 public class BaseVariables {
     public static boolean global_sql_log_flag = false;
+
+    public static final String ARTICLE_RANGE = "articleRange";
+    public static final String ARTICLE_RANGE_COUNT = "count";
 }

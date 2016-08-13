@@ -75,8 +75,10 @@ require(['nprogress'], function (NProgress) {
             .on("click", function () {
 
             })
-            .on("pjax:complete",function(){
-                //setTimeout(function(){NProgress.done();}, 500);
+            .on("pjax:complete", function () {
+                setTimeout(function () {
+                    NProgress.done();
+                }, 500);
             })
             .on("pjax:end", function () {
             })
@@ -101,4 +103,97 @@ Date.prototype.format = function (format) {
             RegExp.$1.length == 1 ? o[k] :
                 ("00" + o[k]).substr(("" + o[k]).length));
     return format;
+}
+
+//普通提示弹出框
+var tips = function (msg) {
+    var html = '<div class="tips-div" id="resultTips">';
+    html += '<div class="tips-content">';
+    html += '<h3>提示</h3>';
+    html += '<div>';
+    html += '<p>' + msg + '</p>';
+    html += '<button class="btn btn-default pull-right" onclick="closeTips()">Close me!</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '<div class="tips-background-div"></div>';
+    $("body").append(html);
+    setTimeout(function () {
+        $("#resultTips").addClass("tips-show");
+    }, 100);
+}
+
+//关闭弹出框
+var closeTips = function (objName) {
+    if(objName != null && objName != ''){
+        $("#"+objName).removeClass("tips-show");
+    }else{
+        $("#resultTips").removeClass("tips-show");
+    }
+    setTimeout(function () {
+        if(objName != null && objName != ''){
+            $("#"+objName).remove();
+        }else{
+            $("#resultTips").remove();
+        }
+        $(".tips-background-div").remove();
+    }, 100);
+}
+
+//确认提示弹出框
+var confimTips = function (params) {
+    if ($('#confimTips').length) {
+        return false;
+    }
+    var buttonHTML = '';
+    $.each(params.buttons, function (name, obj) {
+        // Generating the markup for the buttons:
+        buttonHTML += '<button class="' + obj['class'] + '">' + name + '</button>';
+        //buttonHTML += '<a href="#" class="button ' + obj['class'] + '">' + name + '<span></span></a>';
+        if (!obj.action) {
+            obj.action = function () {
+            };
+        }
+    });
+    var html = '<div class="tips-div" id="confimTips">';
+    html += '<div class="tips-content">';
+    html += '<h3>'+params.title+'</h3>';
+    html += '<div>';
+    html += '<p>' + params.message + '</p>';
+    //html += '<button class="btn btn-default pull-right">NO</button>';
+    //html += '<button class="btn btn-default pull-right">Yes</button>';
+    html += buttonHTML;
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '<div class="tips-background-div"></div>';
+    $("body").append(html);
+    setTimeout(function () {$("#confimTips").addClass("tips-show");}, 100);
+
+    var buttons = $('#confimTips .btn'), i = 0;
+    $.each(params.buttons, function (name, obj) {
+        buttons.eq(i++).click(function () {
+            // Calling the action attribute when a
+            // click occurs, and hiding the confirm.
+            obj.action();
+            closeTips("confimTips");
+            return false;
+        });
+    });
+}
+
+//文章类型枚举
+var changeArticleTag = function(articleRange){
+    switch (articleRange)
+    {
+        case "note":
+            return "笔记";
+        case "diary":
+            return "日记";
+        case "tabloid":
+            return "文摘";
+        case "other":
+            return "其他";
+    }
+    return "文章"
 }

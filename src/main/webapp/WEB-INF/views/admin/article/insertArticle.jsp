@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/WEB-INF/views/common/top.jsp"%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -38,13 +39,11 @@
                 </div>
             </div>
             <ul class="nav metismenu" id="side-menu">
-                <li class="">
-                    <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a>
-                        </li>
-                        <li><a href="javascript:;">写笔记</a></li>
+                <li class="active">
+                    <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a></li>
+                        <li class="active"><a href="javascript:;">写笔记</a></li>
                     </ul>
                 </li>
                 <li>
@@ -167,9 +166,10 @@
                                     <div class="file-manager">
                                         <h5>所属分类</h5>
                                         <div class="type-confition form-group">
-                                            <input type="radio" name="articleRange" value="diary" class="i-checks"><label class="">日记</label>
-                                            <input type="radio" name="articleRange" value="note" class="i-checks" checked><label class="">笔记</label>
-                                            <input type="radio" name="articleRange" value="other" class="i-checks"><label class="">其他</label>
+                                            <c:forEach items="${articleRangeEnumMap}" var="articleRangeEnum">
+                                                <input type="radio" name="articleRange" value="${articleRangeEnum.key}" class="i-checks">
+                                                <label class="">${articleRangeEnum.value}</label>
+                                            </c:forEach>
                                         </div>
                                         <h5>关键字设置<label class="label label-gray">用&nbsp;|&nbsp;字符隔开&nbsp;;&nbsp;最多设置四个关键字</label></h5>
                                         <div class="key-words form-group">

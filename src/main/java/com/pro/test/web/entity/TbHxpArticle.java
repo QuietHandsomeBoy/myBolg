@@ -2,9 +2,12 @@ package com.pro.test.web.entity;
 
 import com.pro.test.core.common.annotation.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TbHxpArticle{
+public class TbHxpArticle implements Serializable {
+
+    private static final long serialVersionUID = 2718384724784571908L;
 
     @TableId
     private String id;

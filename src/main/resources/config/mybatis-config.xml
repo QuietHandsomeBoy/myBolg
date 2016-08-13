@@ -8,7 +8,6 @@
     <!--</properties>-->
     <!--&lt;!&ndash; 配置mybatis的缓存，延迟加载等等一系列属性 &ndash;&gt;-->
     <!--<settings>-->
-
         <!--&lt;!&ndash; 全局映射器启用缓存 &ndash;&gt;-->
         <!--<setting name="cacheEnabled" value="true"/>-->
 
@@ -56,7 +55,7 @@
     <!--</settings>-->
 
     <typeAliases>
-        <package name="com.pro.test.web.dao.mapper.xml"/>
+        <package name="xml"/>
     </typeAliases>
 
     <plugins>

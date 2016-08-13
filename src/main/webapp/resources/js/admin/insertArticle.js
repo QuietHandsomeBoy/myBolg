@@ -9,7 +9,6 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
     var init = function () {
 
         $('.selectpicker').selectpicker({
-            size: 4,
             showIcon: true,
             showTick: true,
             style: 'select-btn'
@@ -213,7 +212,7 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
     }
 
     $("#closeTipsBox").on("click",function(){
-        $(".tips-div").removeClass("tips-show");
+
     })
 
     return {

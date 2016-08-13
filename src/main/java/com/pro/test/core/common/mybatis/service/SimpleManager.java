@@ -107,7 +107,7 @@ public class SimpleManager<E, D extends GenericDAO<E, ?>>
         return this.dao.update(condition);
     }
 
-    public int deleteById(Object id)
+    public int deleteById(String id)
     {
         if (id == null) {
             return 0;
@@ -115,7 +115,7 @@ public class SimpleManager<E, D extends GenericDAO<E, ?>>
         return this.dao.deleteByPrimaryKey(id);
     }
 
-    public int deleteByIds(List<Object> ids)
+    public int deleteByIds(List<String> ids)
     {
         if (ids == null) {
             return 0;

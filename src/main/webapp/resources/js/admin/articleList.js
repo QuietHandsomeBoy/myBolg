@@ -3,9 +3,11 @@
  */
 
 
-define(['bootstrapDatetimepicker', 'icheck'], function () {
+define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
 
-    var first = function () {
+    var init = function () {
+
+        $(".datetimepicker ").remove();//清除旧的时间选择器
 
         var srearchCondition = '';//文章查询条件
         var paginationCondition = '';//分页查询条件
@@ -14,14 +16,20 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
             autoclose: true,
             todayBtn: true
         });
+        $('.selectpicker').selectpicker({
+            showIcon: true,
+            showTick: true,
+            style: 'select-btn'
+        });
         $('table input[type=checkbox]').on('ifChecked', function () {
-            $("#edit-one-article").attr("disabled", "disabled");
+            if ($('table input[type=checkbox]').is(':checked').length > 1) {
+                $("#edit-one-article").attr("disabled", "disabled");
+            }
         });
         $('table input[type=checkbox]').on('ifUnchecked', function () {
-            if ($('table input[type=checkbox]').is(':checked')) {
-                return;
+            if ($('table input[type=checkbox]').is(':checked').length < 2) {
+                $("#edit-one-article").removeAttr("disabled");
             }
-            $("#edit-one-article").removeAttr("disabled");
         });
 
         $('.category-list .i-checks').iCheck({
@@ -62,9 +70,43 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
             } else {
                 $(".list-content-box table tr").each(function (i, z) {
                     $(z).find("input[type=checkbox]").iCheck('uncheck');
+                    $("#edit-one-article").removeAttr("disabled");
                 })
                 $(this).find("input[type=hidden]").val(0)
             }
+        })
+
+        $("#delete-some").on("click",function(){
+            if (!$('table input[type=checkbox]').is(':checked')) {
+                tips("请选择要删除的文章！");
+                return;
+            }
+            confimTips({
+                'title'     : '确认提示',
+                'message'   : '是否确认删除文章？',
+                'buttons'   : {
+                    'Yes'   : {
+                        'class' : 'btn btn-default pull-right',
+                        'action': function(){
+                            var articleIds = '';
+                            var articleArray = new Array();
+                            $('table input[type=checkbox]:checked').each(function(){
+                                articleIds += $(this).val()+';';
+                                articleArray.push($(this).closest("tr"));
+                            });
+                            deleteArticle(articleIds,articleArray);
+                        }
+                    },
+                    'No'    : {
+                        'class' : 'btn btn-default pull-right',
+                        'action': function(){}
+                    }
+                }
+            });
+        })
+
+        $("#refresh-all").on("click",function(){
+            submitSearchForm(srearchCondition + '&' + paginationCondition, "pagination");
         })
 
         $("#searchBtn").on("click", function () {
@@ -72,6 +114,12 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
             $.each($("#searchArticleParam").serializeArray(), function (k, v) {
                 if ($("input[name='" + v.name + "']").attr("type") == 'text') {
                     srearchCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
+                }
+                if ($("input[name='" + v.name + "']").attr("type") == 'checkbox') {
+                    srearchCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
+                }
+                if ($("select[name='" + v.name + "']").length == 1) {
+                    srearchCondition += v.name + "=" + $("select[name='" + v.name + "']").val() + "&";
                 }
             })
             srearchCondition = srearchCondition.substring(0, srearchCondition.length - 1);
@@ -82,7 +130,7 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
         var currentPage = Number($("#page").val());
         var lastBtn = $("#lastBtn");
         var nextBtn = $("#nextBtn");
-        $("#articlePagination").on("click", ".page", function () {
+        $("#articlePagination").on("click", "li", function () {
             paginationFun($(this));
         })
 
@@ -152,6 +200,7 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
                 url: ctx + "/admin/article/articleList.json",
                 dataType: "json",
                 data: condition,
+                async:false,
                 success: function (data) {
                     var resultObj = JSON.parse(data);
                     var articleList = resultObj.articleList;
@@ -164,9 +213,9 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
                     }
                     $.each(articleList, function (k, v) {
                         resultHtml += '<tr>';
-                        resultHtml += '<td><input type="checkbox" class="i-checks"></td>';
+                        resultHtml += '<td><input type="checkbox" class="i-checks" value="'+ v.id+'"></td>';
                         resultHtml += '<td><a href="javascript:;" class="article-title">' + v.articleTitle + '</a></td>';
-                        resultHtml += '<td><label class="label label-biji">' + v.articleRange + '</label></td>';
+                        resultHtml += '<td><label class="label label-biji">' + changeArticleTag(v.articleRange) + '</label></td>';
                         resultHtml += '<td>' + v.likesCount + '</td>';
                         resultHtml += '<td>' + v.readCount + '</td>';
                         resultHtml += '<td>' + v.commentCount + '</td>';
@@ -188,15 +237,15 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
 
                     if (type == 'search') {
                         $("#articlePagination").html("");//清空分页div，重新添加
-                        var paginationHtml = '<li class="page"><button id="lastBtn" disabled="true">&laquo;</button></li>';
+                        var paginationHtml = '<li><button id="lastBtn" disabled="true">&laquo;</button></li>';
                         for (var i = 1; i < pagination.totalPages + 1; i++) {
                             if (pagination.currentPage == i) {
-                                paginationHtml += '<li class="active page"><button class="paginationNum">' + i + '</button></li>';
+                                paginationHtml += '<li class="active"><button class="paginationNum">' + i + '</button></li>';
                             } else {
-                                paginationHtml += '<li class="page"><button class="paginationNum">' + i + '</button></li>';
+                                paginationHtml += '<li><button class="paginationNum">' + i + '</button></li>';
                             }
                         }
-                        paginationHtml += '<li class="page"><button id="nextBtn"';
+                        paginationHtml += '<li><button id="nextBtn"';
                         if(pagination.totalPages == pagination.currentPage){
                             paginationHtml += 'disabled="true"';
                         }
@@ -205,9 +254,11 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
                         $("#articlePagination").append(paginationHtml);
                         currentPage = 1;
                         totalPages = pagination.totalPages;
+                        $("#totalRecordsSpan").html(pagination.totalRecords);
                         lastBtn = $("#lastBtn");
                         nextBtn = $("#nextBtn");
                     }
+                    $("#edit-one-article").removeAttr("disabled");//除去edit按钮的禁用元素
                 },
                 error: function () {
                     alert('error');
@@ -215,16 +266,33 @@ define(['bootstrapDatetimepicker', 'icheck'], function () {
             });
         }
 
-    }
-
-    var deleteArticle = function (articleIds) {
-
-        var tipsDiv = $("#resultTips");
+        var deleteArticle = function(articleIds,articleArray){
+            $.ajax({
+                type: "POST",
+                url: ctx + "/admin/article/deleteArticleByIds.json",
+                dataType: "json",
+                data: {"articleIds":articleIds},
+                success:function(data){
+                    if(data == 'success'){
+                        $.each(articleArray, function () {
+                            $(this).addClass("animated").addClass("fadeOutRight");
+                            setTimeout(function(){$("table").find(".animated").remove();},500);
+                        })
+                    }else if(data == 'null'){
+                        tips("请选择要删除的文章！");
+                        return;
+                    }else if(data == 'err'){
+                        tips("后台异常.....");
+                        return;
+                    }
+                }
+            })
+        }
 
     }
 
     return {
-        first: first,
+        init: init,
     }
 
 })

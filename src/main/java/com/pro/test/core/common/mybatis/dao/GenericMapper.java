@@ -47,7 +47,7 @@ public abstract interface GenericMapper{
     public abstract int deleteByPrimaryKey(Object paramObject)
             throws DataAccessException;
 
-    public abstract int deleteByIds(List<Object> paramList)
+    public abstract int deleteByIds(List<String> paramList)
             throws DataAccessException;
 
     public abstract <E> int delete(E paramE)

@@ -6,9 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@include file="/WEB-INF/views/common/top.jsp"%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -169,24 +167,31 @@
                                 <div class="file-manager">
                                     <form id="searchArticleParam" method="post"
                                           action="${_Weburl}/admin/article/articleList.html">
-                                        <input type="hidden" id="articleRange" value="all">
                                         <input type="hidden" id="totalPages" value="${pagination.totalPages}">
                                         <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
                                         <input type="hidden" id="page" name="page" value="${pagination.currentPage}">
                                         <input type="hidden" id="size" name="size" value="${pagination.pageSize}">
                                         <input type="hidden" id="order" name="order" value="${order}">
+                                        <input type="hidden" value="${tbHxpArticle.articleRange}" name="articleRange"/>
                                         <div class="left-box-tab-header">
                                             <ul id="navigation">
-                                                <li class="active" data-range-name="all"><a href="javascript:;">全部<span
-                                                        class="label label-info pull-right">34</span></a></li>
-                                                <li data-range-name="note"><a href="javascript:;">笔记<span
-                                                        class="label label-info pull-right">18</span></a></li>
-                                                <li data-range-name="diary"><a href="javascript:;">日记<span
-                                                        class="label label-info pull-right">11</span></a></li>
-                                                <li data-range-name="other"><a href="javascript:;">其他<span
-                                                        class="label label-info pull-right">5</span></a></li>
-                                                <li data-range-name="draft"><a href="javascript:;">草稿<span
-                                                        class="label label-info pull-right">5</span></a></li>
+                                                <c:forEach items="${articleRangeCount}" var="range">
+                                                    <c:choose>
+                                                        <c:when test="${tbHxpArticle.articleRange eq null and range.articleRange eq 'all'}">
+                                                            <li class="active">
+                                                        </c:when>
+                                                        <c:when test="${tbHxpArticle.articleRange eq range.articleRange}">
+                                                            <li class="active">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <a href="${_Weburl}/admin/article/articleList.html<c:if test='${range.articleRange ne "all"}'>?articleRange=${range.articleRange}</c:if>">
+                                                            ${range.articleRangeName}<span class="label label-info pull-right">${range.articleRangeCount}</span>
+                                                    </a>
+                                                    </li>
+                                                </c:forEach>
                                             </ul>
                                         </div>
                                         <h5>Title Like</h5>
@@ -210,23 +215,27 @@
                                                         class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
-                                        <!--<h5>Categories</h5>-->
-                                        <!--<ul class="category-list">-->
-                                        <!--<li><label class=""><input type="checkbox" class="i-checks">Work</label></li>-->
-                                        <!--<li><label class=""><input type="checkbox" class="i-checks">Documents</label>-->
-                                        <!--</li>-->
-                                        <!--<li><label class=""><input type="checkbox" class="i-checks">Social</label></li>-->
-                                        <!--<li><label class=""><input type="checkbox" class="i-checks">Advertising</label>-->
-                                        <!--</li>-->
-                                        <!--<li><label class=""><input type="checkbox" class="i-checks">Clients</label></li>-->
-                                        <!--</ul>-->
-                                        <h5>Others</h5>
                                         <div class="other-condition form-group">
-                                            <label class=""><input type="checkbox" class="i-checks">原创</label>
-                                            <label class=""><input type="checkbox" class="i-checks">转载</label>
-                                            <label class=""><input type="checkbox" class="i-checks">公开</label>
-                                            <label class=""><input type="checkbox" class="i-checks">置顶</label>
-                                            <label class=""><input type="checkbox" class="i-checks">限制评论</label>
+                                            <div class="row">
+                                                <div class="col-lg-3 pull-left">
+                                                    <h5>Rights</h5>
+                                                    <select class="selectpicker" name="articleRights">
+                                                        <option value="ORIGINAL">原创</option>
+                                                        <option value="REPRINT">转载</option>
+                                                        <option value="XXXX">求同存异</option>
+                                                        <option value="OTHERS">其他</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-8 pull-right">
+                                                    <h5>Others</h5>
+                                                    <label class=""><input type="checkbox" class="i-checks"
+                                                                           name="isPublic" value="1">公开</label>
+                                                    <label class=""><input type="checkbox" class="i-checks"
+                                                                           name="limitComments" value="1">置顶</label>
+                                                    <label class=""><input type="checkbox" class="i-checks"
+                                                                           name="limitComments" value="1">限制评论</label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="search-box">
                                             <a href="javascript:;" id="searchBtn">Search</a>
@@ -244,23 +253,34 @@
                     <div class="col-lg-9">
                         <div class="list-main-box">
                             <div class="list-header-box">
-                                <h2> 全部<span style="font-size: 16px;">(共查找出${pagination.totalRecords}条记录)</span></h2>
+                                <h2><span id="articleRangeSpan">全部</span>
+                                    <span style="font-size: 16px;">(共查找出<span
+                                            id="totalRecordsSpan">${pagination.totalRecords}</span>条记录)</span>
+                                </h2>
                                 <div class="list-pagination-box pull-right">
                                     <ul class="pagination" id="articlePagination">
-                                        <li class="page"><button id="lastBtn" disabled="true">&laquo;</button></li>
-                                        <li class="active page"><button class="paginationNum">1</button></li>
+                                        <li class="page">
+                                            <button id="lastBtn" disabled="true">&laquo;</button>
+                                        </li>
+                                        <li class="active page">
+                                            <button class="paginationNum">1</button>
+                                        </li>
                                         <c:forEach begin="2" end="${pagination.totalPages}" var="page">
-                                            <li class="page"><button class="paginationNum">${page}</button></li>
+                                            <li class="page">
+                                                <button class="paginationNum">${page}</button>
+                                            </li>
                                         </c:forEach>
-                                        <li class="page"><button id="nextBtn">&raquo;</button></li>
+                                        <li class="page">
+                                            <button id="nextBtn">&raquo;</button>
+                                        </li>
                                     </ul>
                                     <ul id="pagination-demo" class="pagination-sm">
 
                                     </ul>
                                 </div>
                                 <div class="header-tool-box">
-                                    <button id="toggle-all" class="btn-white btn-sm"><input type="hidden" value="0"/><i
-                                            class="fa fa-check-square-o"></i> Toggle All
+                                    <button id="toggle-all" class="btn-white btn-sm">
+                                        <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle All
                                     </button>
                                     <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh
                                     </button>
@@ -268,7 +288,7 @@
                                     </button>
                                     <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
                                     </button>
-                                    <button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>
+                                    <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
                                 </div>
                             </div>
                             <div class="list-content-box">
@@ -289,10 +309,14 @@
                                     <tbody>
                                     <c:forEach items="${articleList}" var="article">
                                         <tr>
-                                            <td><input type="checkbox" class="i-checks"></td>
+                                            <td><input type="checkbox" class="i-checks" value="${article.id}"></td>
                                             <td><a href="javascript:;" class="article-title">${article.articleTitle}</a>
                                             </td>
-                                            <td><label class="label label-biji">${article.articleRange}</label></td>
+                                            <td>
+                                                <label class="label label-biji">
+                                                <t:translate source="${articleRangeCount}" value="${article.articleRange}" sourceKey="articleRange,articleRangeName"/>
+                                                </label>
+                                            </td>
                                             <td>${article.likesCount}</td>
                                             <td>${article.readCount}</td>
                                             <td>${article.commentCount}</td>
@@ -300,19 +324,6 @@
                                             <td><fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd"/></td>
                                         </tr>
                                     </c:forEach>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="i-checks">
-                                        </td>
-                                        <td><a href="javascript:;" class="article-title">There is something in the New
-                                            York air that makes sleep useless</a></td>
-                                        <td><label class="label label-biji">笔记</label></td>
-                                        <td>120</td>
-                                        <td>310</td>
-                                        <td>70</td>
-                                        <td>干锅加鲁鲁</td>
-                                        <td>2016-07-12</td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -324,21 +335,11 @@
             <script>
                 var ctx = '${_Weburl}';
                 require(["articleList"], function (common) {
-                    common.first();
+                    common.init();
                 });
             </script>
         </div>
     </div>
 </div>
-<div class="tips-div" id="resultTips">
-    <div class="tips-content">
-        <h3>Tips</h3>
-        <div>
-            <p>This is a modal window. You can do the following things with it:</p>
-            <button class="btn btn-default pull-right" id="closeTipsBox">Close me!</button>
-        </div>
-    </div>
-</div>
-<div class="tips-background-div"></div>
 </body>
 </html>

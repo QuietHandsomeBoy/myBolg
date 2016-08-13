@@ -180,7 +180,7 @@ public abstract class GenericDAO<E, M extends GenericMapper>
         return this.mapper.deleteByPrimaryKey(id);
     }
 
-    public int deleteByIds(List<Object> ids)
+    public int deleteByIds(List<String> ids)
     {
         if (ids == null) {
             return 0;
