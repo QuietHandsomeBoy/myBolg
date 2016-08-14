@@ -32,20 +32,21 @@
                                   placeholder_url, max_imagesize, onImageUpload, onKeyEnter )
     {
         // Content: Insert link
-        var wysiwygeditor_insertLink = function( wysiwygeditor, url )
+        var wysiwygeditor_insertLink = function( wysiwygeditor, url , name)
         {
             if( ! url )
                 return wysiwygeditor;
             var selectedhtml = wysiwygeditor.getSelectedHTML();
             if( selectedhtml )
                 return wysiwygeditor.insertLink( url );
-            var html = '<a href="' + url.replace(/"/,'&quot;') + '">' + url + '</a>';
+            var html = '<a target="_blank" href="' + url.replace(/"/,'&quot;') + '">' + name + '</a>';
             return wysiwygeditor.insertHTML( html );
         };
         var content_insertlink = function(wysiwygeditor, $modify_link)
         {
             var $button = toolbar_button( toolbar_submit );
-            var $inputurl = $('<input type="text" value="' + ($modify_link ? $modify_link.attr('href') : '') + '"' + (placeholder_url ? ' placeholder="'+placeholder_url+'"' : '') + ' />').addClass('wysiwyg-input')
+            var $inputName = $('<input type="text" value="" placeholder="è¯·è¾“å…¥ç½‘å€åç§°..." style="display: block;width: 23em;margin: 5px 0px;">').addClass('wysiwyg-input');
+            var $inputurl = $('<input type="text" value="' + ($modify_link ? $modify_link.attr('href') : '') + '" placeholder="è¯·è¾“å…¥ç½‘å€...." />').addClass('wysiwyg-input')
                                 .keypress(function(event){
                                     if( event.which != 10 && event.which != 13 )
                                         return ;
@@ -58,7 +59,7 @@
                                     {
                                         // Catch 'NS_ERROR_FAILURE' on Firefox 34
                                         try {
-                                            wysiwygeditor_insertLink(wysiwygeditor,$inputurl.val()).closePopup().collapseSelection();
+                                            wysiwygeditor_insertLink(wysiwygeditor,$inputurl.val(),$inputName.val()).closePopup().collapseSelection();
                                         }
                                         catch( e ) {
                                             wysiwygeditor.closePopup();
@@ -72,14 +73,14 @@
                                         wysiwygeditor.closePopup().collapseSelection();
                                     }
                                     else
-                                        wysiwygeditor_insertLink(wysiwygeditor,$inputurl.val()).closePopup().collapseSelection();
+                                        wysiwygeditor_insertLink(wysiwygeditor,$inputurl.val(),$inputName.val()).closePopup().collapseSelection();
                                     event.stopPropagation();
                                     event.preventDefault();
                                     return false;
                                 });
             var $content = $('<div/>').addClass('wysiwyg-toolbar-form')
                                       .attr('unselectable','on');
-            $content.append($inputurl).append($okaybutton);
+            $content.append($inputName).append($inputurl).append($okaybutton);
             return $content;
         };
 
@@ -457,7 +458,7 @@
                 onselection: function( collapsed, rect, nodes, rightclick )
                     {
                 	
-                		// ÔÚÕâÀïreturn false Ö®ºó£¬¸»ÎÄ±¾±à¼­¿òÀïÃæÑ¡ÖÐÖ®ºó½«²»»áÓÐÑ¡ÖÐÐü¸¡¿òÏÔÊ¾
+                		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½return false Ö®ï¿½ó£¬¸ï¿½ï¿½Ä±ï¿½ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ö®ï¿½ó½«²ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
                 		return false;
                         var show_toolbar = true,
                             $special_toolbar = null;

@@ -48,12 +48,12 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
                 // 'selection'|'top'|'top-selection'|'bottom'|'bottom-selection'
                 toolbar: index == 0 ? 'top-selection' : (index == 1 ? 'bottom' : 'selection'),
                 buttons: {
-                    //insertimage: {
-                    //    title: '插入图片',
-                    //    image: '<i class="fa fa-photo"></i>',
-                    //    //showstatic: true,    // wanted on the toolbar
-                    //    showselection: false // wanted on selection
-                    //},
+                    insertimage: {
+                        title: '插入图片',
+                        image: '<i class="fa fa-photo"></i>',
+                        //showstatic: true,    // wanted on the toolbar
+                        showselection: false // wanted on selection
+                    },
                     insertlink: {
                         title: '插入链接',
                         image: '<i id="font_link" class="fa fa-link"></i>',
@@ -171,49 +171,67 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
         var orderBtn = "<a onclick='insertCode()' href='javascript:;' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
         //orderBtn += "<a onclick='changeStyle(this)' href='javascript:;' class='wysiwyg-toolbar-icon' title='全屏' style='float:right;'><i class='fa fa-expand'></i></a>";
         $(".wysiwyg-toolbar").append(orderBtn);
-        $(".wysiwyg-toolbar").prepend("<a id='showUploadBox' href='javascript:showUploadBox()' class='wysiwyg-toolbar-icon' title='插入图片'><i class='fa fa-photo'></i></a>");
+        $(".wysiwyg-toolbar").prepend("<a id='showUploadBox' href='javascript:$(\"#uploadFile_box\").show();' class='wysiwyg-toolbar-icon' title='插入图片'><i class='fa fa-photo'></i></a>");
+
 
         $("#save-article").on("click",function(){
             saveArticle();
         })
 
-        function saveArticle(){
+        document.onclick = function(event) {
+            var e = event || window.event;
+            var elem = e.srcElement || e.target;
 
-            var tipsDiv = $("#resultTips");
-            var checkTxt = tipsDiv.find("p").html("错误：");
-            if($("input[name='articleRange']:checked").length < 1){
-                checkTxt.append("请选择笔记范围！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("input[name='articleTags']:checked").length < 1){
-                checkTxt.append("请为笔记选择标签！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("input[name='articleTitle']").val() == ""){
-                checkTxt.append("请输入笔记标题！！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("textarea[name='articleTitle']").val() == ""){
-                checkTxt.append("请输入笔记简介！！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("textarea[name='articleContent']").val() == ""){
-                checkTxt.append("请输入博客正文！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            $("#articleForm").submit();
+            while (elem) {
+                if (elem.id == "uploadFile_box") {
+                    return;
+                };
+                elem = elem.parentNode;
+            };
+            $("#uploadFile_box").hide();
         }
 
     }
 
-    $("#closeTipsBox").on("click",function(){
 
-    })
+
+    var saveArticle = function(){
+        if($("input[name='articleRange']:checked").length < 1){
+            tips("请选择笔记范围！");
+            return;
+        }
+        if($("input[name='articleTags']:checked").length < 1){
+            tips("请为笔记选择标签！");
+            return;
+        }
+        if($("input[name='articleTitle']").val() == ""){
+            tips("请输入笔记标题！");
+            return;
+        }
+        if($("textarea[name='articleIntroduced']").val() == ""){
+            tips("请输入笔记简介！");
+            return;
+        }
+        if($("textarea[name='articleContent']").val() == ""){
+            tips("请输入博客正文！");
+            return;
+        }
+        $("#articleForm").submit();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return {
         init:init
@@ -221,25 +239,3 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
 
 
 })
-
-
-//全屏切换
-//function changeStyle(sysiwyg) {
-//    var box = $(sysiwyg).parents(".wysiwyg-container").parent();
-//    if (box && box.hasClass("full-screen-style")) {
-//        $("#fullscreenBox").removeClass("full-screen-style");
-//        $("#myWorld").css("visibility","visible").css("height","auto");
-//        $("#article-content-box").html($("#fullscreenBox").clone());
-//        $("#article-content-box").html($("#fullscreenBox").html());
-//        $("#article-content-box").find(".fullscreenBtn").attr("title", "全屏模式").html("<i class='fa fa-expand'></i>");
-//        $("#article-content-box").find(".wysiwyg-container").css("min-height", "350px");
-//        $("#fullscreenBox").html("");
-//    } else {
-//        $("#myWorld").css("visibility","hidden").css("height","0px");
-//        $("#fullscreenBox").html($("#article-content-box").clone());
-//        $("#fullscreenBox").find(".fullscreenBtn").attr("title", "正常模式").html("<i class='fa fa-compress'></i>");
-//        $("#fullscreenBox").addClass("full-screen-style");
-//        $("#fullscreenBox").find(".wysiwyg-container").css("min-height", document.documentElement.clientHeight);
-//        $("#article-content-box").html("");
-//    }
-//};

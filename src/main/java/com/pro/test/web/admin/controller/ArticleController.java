@@ -6,6 +6,7 @@ import com.pro.test.core.common.mybatis.ContextData;
 import com.pro.test.core.common.mybatis.entity.Pagination;
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
 import com.pro.test.core.controller.BaseController;
+import com.pro.test.core.enumdata.ArticleRange;
 import com.pro.test.core.util.EhcacheUtils;
 import com.pro.test.core.vo.ArticleRangeVo;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
@@ -85,6 +86,10 @@ public class ArticleController extends BaseController {
     @RequestMapping(value = "insertArticle.html")
     public String insertArticle(RequestResolver requestResolver) throws Exception {
         Map<String,Object> map = (Map<String,Object>) EhcacheUtils.getValue("articleRangeEnumCache","articleRangeEnum");
+        if(map == null){
+            map = ArticleRange.getArticleRangeEnum();
+            EhcacheUtils.setValue("articleRangeEnumCache","articleRaarticleRangeEnumngeEnum",map);
+        }
         requestResolver.setAttribute("articleRangeEnumMap",map);
         return "admin/article/insertArticle";
     }

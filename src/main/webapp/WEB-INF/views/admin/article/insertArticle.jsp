@@ -202,7 +202,6 @@
                                         </div>
                                         <div class="save-article-box">
                                             <a href="javascript:;" id="save-article">保存</a>
-                                            <button type="submit">submit</button>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -235,6 +234,17 @@
                                     </div>
                                 </div>
                                 <div id="article-content-box" class="article-content-box">
+                                    <div id="uploadFile_box" class="uploadFile_box">
+                                        <div style="width:100%;padding: 10px;">
+                                            <i id="removeImage" class="fa fa-close" style="display: none;"></i>
+                                            <input type="file" style="display:none;" id="uploadImg" name="uploadImg" data-max_size="3145728"/>
+                                            <div class="fileIcon" id="uploadimgbtn">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+
+                                            <button id="confimbtn" class="confimbtn"> 确 认 </button>
+                                        </div>
+                                    </div>
                                     <textarea id="article-content" name="articleContent">在此输入正文...</textarea>
                                 </div>
                                 <div class="clearfix"></div>
