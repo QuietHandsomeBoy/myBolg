@@ -20,6 +20,8 @@ require.config({
         "jqueryCookie": "js/common/jquery.cookie",
         "metismenu": "js/admin/metismenu/jquery.metisMenu",
         "icheck": "js/common/icheck",
+        "toastr": "js/common/toastr.min",
+        "ajaxfileupload":"js/common/ajaxfileupload",
         "index": "js/admin/index",
         "articleList": "js/admin/articleList",
         "insertArticle": 'js/admin/insertArticle'
@@ -38,14 +40,26 @@ require.config({
         "jqueryCookie": ['jQuery'],
         "metismenu": ['jQuery'],
         "bootstrapSelect": ['jQuery', 'bootstrap'],
-        "icheck": ['jQuery']
+        "icheck": ['jQuery'],
+        "ajaxfileupload":['jQuery'],
+        "toastr":['jQuery'],
     },
     urlArgs: "bust=" + (new Date()).getTime()
 });
 
 
+
+var toastr;
 require(['nprogress'], function (NProgress) {
-    require(['jQuery', 'jqueryAniview', 'jqueryMetisMenu', 'bootstrap', 'pjax'], function () {
+    require(['jQuery', 'jqueryAniview', 'jqueryMetisMenu', 'bootstrap', 'pjax','toastr'], function () {
+
+        toastr = require('toastr');
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            timeOut: 4000
+        };
 
         $('#side-menu').metisMenu();
         $(document).pjax("a", "#content", {fragment: '#content'})
@@ -84,7 +98,6 @@ require(['nprogress'], function (NProgress) {
             })
     });
 })
-
 
 Date.prototype.format = function (format) {
     var o = {
@@ -125,15 +138,15 @@ var tips = function (msg) {
 
 //关闭弹出框
 var closeTips = function (objName) {
-    if(objName != null && objName != ''){
-        $("#"+objName).removeClass("tips-show");
-    }else{
+    if (objName != null && objName != '') {
+        $("#" + objName).removeClass("tips-show");
+    } else {
         $("#resultTips").removeClass("tips-show");
     }
     setTimeout(function () {
-        if(objName != null && objName != ''){
-            $("#"+objName).remove();
-        }else{
+        if (objName != null && objName != '') {
+            $("#" + objName).remove();
+        } else {
             $("#resultTips").remove();
         }
         $(".tips-background-div").remove();
@@ -157,7 +170,7 @@ var confimTips = function (params) {
     });
     var html = '<div class="tips-div" id="confimTips">';
     html += '<div class="tips-content">';
-    html += '<h3>'+params.title+'</h3>';
+    html += '<h3>' + params.title + '</h3>';
     html += '<div>';
     html += '<p>' + params.message + '</p>';
     //html += '<button class="btn btn-default pull-right">NO</button>';
@@ -168,7 +181,9 @@ var confimTips = function (params) {
     html += '</div>';
     html += '<div class="tips-background-div"></div>';
     $("body").append(html);
-    setTimeout(function () {$("#confimTips").addClass("tips-show");}, 100);
+    setTimeout(function () {
+        $("#confimTips").addClass("tips-show");
+    }, 100);
 
     var buttons = $('#confimTips .btn'), i = 0;
     $.each(params.buttons, function (name, obj) {
@@ -183,9 +198,8 @@ var confimTips = function (params) {
 }
 
 //文章类型枚举
-var changeArticleTag = function(articleRange){
-    switch (articleRange)
-    {
+var changeArticleTag = function (articleRange) {
+    switch (articleRange) {
         case "note":
             return "笔记";
         case "diary":
@@ -196,4 +210,73 @@ var changeArticleTag = function(articleRange){
             return "其他";
     }
     return "文章"
+}
+
+
+//消息通知框
+var toastrTips = function(msg,type){
+    switch (type) {
+        case "success":
+            toastr.success(msg);
+            return;
+        case "warning":
+            toastr.warning(msg);
+            return;
+        case "error":
+            toastr.error(msg);
+            return;
+    }
+    toastr.info(msg);
+}
+
+
+//操作弹出框
+var operateTips = function(obj){
+
+    if(obj == null){
+        return ;
+    }
+    //obj = {
+    //    tipsId : "",
+    //    operateType : "",
+    //}
+    var html =
+        '<div class="tips-div" id="'+obj.tipsId+'">' +
+        '<div class="operate-content">' +
+        '<h3>选择标签</h3>' +
+        '<div>' +
+        '<div class="choose-tags-input-box">' +
+        '<p>已选择标签：</p>' +
+        '<input/>' +
+        '</div>' +
+        '<div class="choose-tags-sources-box">' +
+        '<p>已选择标签：</p>' +
+        '<div>' +
+        '<input placeholder="请输入标签名字"/>' +
+        '<select class="selectpicker" name="tagType">' +
+        '<option value="">-请选择-</option>' +
+        '<option value=" ">技术标签</option>' +
+        '<option value=" ">日记标签</option>' +
+        '<option value=" ">文摘标签</option>' +
+        '</select>' +
+        '<button type="button">查询</button>' +
+        '</div>' +
+        '<div class="tags-sources-box"></div>' +
+        '</div>' +
+        '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips('+"'"+obj.tipsId+"'"+')">Close me!</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="tips-background-div"></div>';
+
+    $("body").append(html);
+    $('.selectpicker').selectpicker({
+        showIcon: true,
+        showTick: true,
+        style: 'select-btn'
+    });
+
+    setTimeout(function () {
+        $("#"+obj.tipsId).addClass("tips-show");
+    }, 100);
 }

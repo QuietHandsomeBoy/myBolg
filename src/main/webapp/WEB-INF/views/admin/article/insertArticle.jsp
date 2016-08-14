@@ -42,8 +42,8 @@
                 <li class="active">
                     <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a></li>
-                        <li class="active"><a href="javascript:;">写笔记</a></li>
+                        <li><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a></li>
+                        <li class="active"><a data-a-href="${_Weburl}/admin/article/insertArticle.html" href="javascript:;">写笔记</a></li>
                     </ul>
                 </li>
                 <li>
@@ -166,28 +166,37 @@
                                     <div class="file-manager">
                                         <h5>所属分类</h5>
                                         <div class="type-confition form-group">
-                                            <c:forEach items="${articleRangeEnumMap}" var="articleRangeEnum">
-                                                <input type="radio" name="articleRange" value="${articleRangeEnum.key}" class="i-checks">
-                                                <label class="">${articleRangeEnum.value}</label>
-                                            </c:forEach>
+                                            <select class="selectpicker" name="articleRange">
+                                                <option value="">-请选择-</option>
+                                                <c:forEach items="${articleRangeEnumMap}" var="articleRangeEnum">
+                                                    <option value="${articleRangeEnum.key}">${articleRangeEnum.value}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                         <h5>关键字设置<label class="label label-gray">用&nbsp;|&nbsp;字符隔开&nbsp;;&nbsp;最多设置四个关键字</label></h5>
                                         <div class="key-words form-group">
-                                            <input type='text' name="keyWords" class="form-control key-words-input"/>
+                                            <div style="position: relative;">
+                                                <div id="key-words-list">
+                                                </div>
+                                                <input type='text' name="keyWords" class="form-control key-words-input"/>
+                                            </div>
                                         </div>
-                                        <h5>标签设置</h5>
-                                        <ul class="tags-list">
-                                            <li><label class=""><input type="checkbox" value="work" name="articleTags" class="i-checks">Work</label></li>
-                                            <li><label class=""><input type="checkbox" value="1" name="articleTags" class="i-checks">Documents</label></li>
-                                            <li><label class=""><input type="checkbox" value="2" name="articleTags" class="i-checks">Social</label></li>
-                                            <li><label class=""><input type="checkbox" value="3" name="articleTags" class="i-checks">Advertising</label></li>
-                                            <li><label class=""><input type="checkbox" value="4" name="articleTags" class="i-checks">Clients</label></li>
-                                            <li><label class=""><input type="checkbox" value="5" name="articleTags" class="i-checks">Work</label></li>
-                                            <li><label class=""><input type="checkbox" value="6" name="articleTags" class="i-checks">Documents</label></li>
-                                            <li><label class=""><input type="checkbox" value="7" name="articleTags" class="i-checks">Social</label></li>
-                                            <li><label class=""><input type="checkbox" value="8" name="articleTags" class="i-checks">Advertising</label></li>
-                                            <li><label class=""><input type="checkbox" value="9" name="articleTags" class="i-checks">Clients</label></li>
-                                        </ul>
+                                        <h5>标签设置<label class="label label-gray">常用标签</label></h5>
+                                        <div class="article-tags-box">
+                                            <ul class="tags-list">
+                                                <li><label class=""><input type="checkbox" value="work" name="articleTags" class="i-checks">Work</label></li>
+                                                <li><label class=""><input type="checkbox" value="1" name="articleTags" class="i-checks">Documents</label></li>
+                                                <li><label class=""><input type="checkbox" value="2" name="articleTags" class="i-checks">Social</label></li>
+                                                <li><label class=""><input type="checkbox" value="3" name="articleTags" class="i-checks">Advertising</label></li>
+                                                <li><label class=""><input type="checkbox" value="4" name="articleTags" class="i-checks">Clients</label></li>
+                                                <li><label class=""><input type="checkbox" value="5" name="articleTags" class="i-checks">Work</label></li>
+                                                <li><label class=""><input type="checkbox" value="6" name="articleTags" class="i-checks">Documents</label></li>
+                                                <li><label class=""><input type="checkbox" value="7" name="articleTags" class="i-checks">Social</label></li>
+                                                <li><label class=""><input type="checkbox" value="8" name="articleTags" class="i-checks">Advertising</label></li>
+                                                <li><label class=""><input type="checkbox" value="9" name="articleTags" class="i-checks">Clients</label></li>
+                                            </ul>
+                                            <button type="button" id="choosArticleTagsBtn">添加标签</button>
+                                        </div>
                                         <h5>其他设置</h5>
                                         <div class="other-condition form-group">
                                             <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="1">公开</label>
@@ -202,7 +211,6 @@
                                         </div>
                                         <div class="save-article-box">
                                             <a href="javascript:;" id="save-article">保存</a>
-                                            <button type="submit">submit</button>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -211,6 +219,7 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="right-main-box animated fadeInRight">
+                                <div class="pagination-loading" style="display: none;"></div>
                                 <div class="article-info-box">
                                     <h3> Compose A New Article </h3>
                                     <div class="article-title-box">
@@ -218,10 +227,10 @@
                                         <div class="row">
                                             <div class="col-lg-2">
                                                 <select class="selectpicker" name="articleRights">
-                                                    <option value="1">原创</option>
-                                                    <option value="11">转载</option>
-                                                    <option value="12">求同存异</option>
-                                                    <option value="13">其他</option>
+                                                    <option value="">-请选择-</option>
+                                                    <c:forEach items="${articleRightsEnumMap}" var="articleRightsEnum">
+                                                        <option value="${articleRightsEnum.key}">${articleRightsEnum.value}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="col-lg-10">
@@ -235,6 +244,16 @@
                                     </div>
                                 </div>
                                 <div id="article-content-box" class="article-content-box">
+                                    <div id="uploadFile_box" class="uploadFile_box">
+                                        <div style="width:100%;padding: 10px;">
+                                            <i id="removeImage" class="fa fa-close" style="display: none;"></i>
+                                            <input type="file" style="display:none;" id="uploadImg" name="uploadImg" data-max_size="3145728"/>
+                                            <div class="fileIcon" id="uploadimgbtn">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                            <button id="confimbtn" class="confimbtn"> 确 认 </button>
+                                        </div>
+                                    </div>
                                     <textarea id="article-content" name="articleContent">在此输入正文...</textarea>
                                 </div>
                                 <div class="clearfix"></div>
@@ -244,6 +263,7 @@
                 </div>
             </form>
             <script>
+                var ctx = '${_Weburl}';
                 require(["insertArticle"],function(common){
                     common.init();
                 });
@@ -251,15 +271,32 @@
         </div>
     </div>
 </div>
-<div class="tips-div" id="resultTips">
-    <div class="tips-content">
-        <h3>Tips</h3>
-        <div>
-            <p>This is a modal window. You can do the following things with it:</p>
-            <button class="btn btn-default pull-right" id="closeTipsBox">Close me!</button>
-        </div>
-    </div>
-</div>
-<div class="tips-background-div"></div>
+<%--<div class="tips-div" id="choosArticleTags">--%>
+    <%--<div class="operate-content">--%>
+        <%--<h3>选择标签</h3>--%>
+        <%--<div>--%>
+            <%--<div class="choose-tags-input-box">--%>
+                <%--<p>已选择标签：</p>--%>
+                <%--<input/>--%>
+            <%--</div>--%>
+            <%--<div class="choose-tags-sources-box">--%>
+                <%--<p>已选择标签：</p>--%>
+                <%--<div>--%>
+                    <%--<input placeholder="请输入标签名字"/>--%>
+                    <%--<select class="selectpicker" name="tagType">--%>
+                        <%--<option value="">-请选择-</option>--%>
+                        <%--<option value=" ">技术标签</option>--%>
+                        <%--<option value=" ">日记标签</option>--%>
+                        <%--<option value=" ">文摘标签</option>--%>
+                    <%--</select>--%>
+                    <%--<button type="button">查询</button>--%>
+                <%--</div>--%>
+                <%--<div class="tags-sources-box"></div>--%>
+            <%--</div>--%>
+            <%--<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips('choosArticleTags')">Close me!</button>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+<%--<div class="tips-background-div"></div>--%>
 </body>
 </html>

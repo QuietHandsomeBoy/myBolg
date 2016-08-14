@@ -1,6 +1,7 @@
 package com.pro.test.core.servlet;
 
 import com.pro.test.core.enumdata.ArticleRange;
+import com.pro.test.core.enumdata.ArticleRights;
 import com.pro.test.core.util.EhcacheUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,8 @@ public class InitServlet extends HttpServlet {
 
         logger.info("================================开始缓存常用枚举等资源！");
         try {
-            EhcacheUtils.setValue("articleRangeEnumCache","articleRangeEnum", ArticleRange.getArticleRangeEnum());
+            EhcacheUtils.setValue("articleEnumCache","articleRangeEnum", ArticleRange.getArticleRangeEnum());
+            EhcacheUtils.setValue("articleEnumCache","articleRightsEnum", ArticleRights.getArticleRightsEnum());
             logger.info("================================常用枚举等资源缓存完成！");
         } catch (Exception e) {
             e.printStackTrace();

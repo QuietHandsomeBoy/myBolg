@@ -1,5 +1,8 @@
 package com.pro.test.web.test;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Random;
  */
 public class test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 //        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 //        Validator validator = factory.getValidator();
 //
@@ -20,9 +23,12 @@ public class test {
 //            System.out.println("错误信息:"+constraintViolation.getMessage());
 //        }
 
-        for(int i =0; i < 100; i++){
-            System.out.println(getMyRecommendCode());
-        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        System.out.println(new Timestamp(sdf.parse("20160608000000").getTime()));
+
+//        for(int i =0; i < 100; i++){
+//            System.out.println(getMyRecommendCode());
+//        }
 
 
 

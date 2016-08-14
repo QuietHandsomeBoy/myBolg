@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- 扫描controller（controller层注入） -->
-    <context:component-scan base-package="com.pro.test.web"/>
+    <context:component-scan base-package="com.pro.test"/>
 
     <!-- 路径映射处理适配器，包括参数的处理 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -44,6 +44,15 @@
             </list>
         </property>
     </bean>
+
+
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="10485760000"></property><!-- 最大上传文件大小 -->
+        <property name="maxInMemorySize" value="10960"></property>
+    </bean>
+
 
     <mvc:resources mapping="/resources/**" location="resources/" />
 

@@ -20,6 +20,7 @@
         <property name="locations">
             <list>
                 <value>classpath*:config/application.properties</value>
+                <value>classpath*:config/sysconfig.properties</value>
             </list>
         </property>
     </bean>
@@ -112,5 +113,6 @@
     <!-- 启用对事务注解的支持 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <bean id="SpringContextHolder" class = "com.pro.test.core.common.springmvc.context.SpringContextHolder"/>
 
 </beans>

@@ -22,12 +22,12 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
             style: 'select-btn'
         });
         $('table input[type=checkbox]').on('ifChecked', function () {
-            if ($('table input[type=checkbox]').is(':checked').length > 1) {
+            if ($(".list-content-box input[type='checkbox']:checked").length > 1) {
                 $("#edit-one-article").attr("disabled", "disabled");
             }
         });
         $('table input[type=checkbox]').on('ifUnchecked', function () {
-            if ($('table input[type=checkbox]').is(':checked').length < 2) {
+            if ($(".list-content-box input[type='checkbox']:checked").length < 2) {
                 $("#edit-one-article").removeAttr("disabled");
             }
         });
@@ -193,6 +193,7 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
 
 
         var submitSearchForm = function (condition, type) {
+            $(".pagination-loading").show();
             var contextBox = $(".list-content-box").find("table tbody");
             contextBox.css("opacity", "0");
             $.ajax({
@@ -202,6 +203,7 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
                 data: condition,
                 async:false,
                 success: function (data) {
+                    setTimeout(function(){$(".pagination-loading").hide();},500);
                     var resultObj = JSON.parse(data);
                     var articleList = resultObj.articleList;
                     var pagination = resultObj.pagination;
@@ -261,6 +263,7 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
                     $("#edit-one-article").removeAttr("disabled");//除去edit按钮的禁用元素
                 },
                 error: function () {
+                    setTimeout(function(){$(".pagination-loading").hide();},500);
                     alert('error');
                 }
             });

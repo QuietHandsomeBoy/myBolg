@@ -252,6 +252,7 @@
                     </div>
                     <div class="col-lg-9">
                         <div class="list-main-box">
+                            <div class="pagination-loading" style="display: none;"></div>
                             <div class="list-header-box">
                                 <h2><span id="articleRangeSpan">全部</span>
                                     <span style="font-size: 16px;">(共查找出<span

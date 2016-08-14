@@ -6,6 +6,8 @@ import com.pro.test.core.common.mybatis.ContextData;
 import com.pro.test.core.common.mybatis.entity.Pagination;
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
 import com.pro.test.core.controller.BaseController;
+import com.pro.test.core.enumdata.ArticleRange;
+import com.pro.test.core.enumdata.ArticleRights;
 import com.pro.test.core.util.EhcacheUtils;
 import com.pro.test.core.vo.ArticleRangeVo;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
@@ -84,8 +86,19 @@ public class ArticleController extends BaseController {
 
     @RequestMapping(value = "insertArticle.html")
     public String insertArticle(RequestResolver requestResolver) throws Exception {
-        Map<String,Object> map = (Map<String,Object>) EhcacheUtils.getValue("articleRangeEnumCache","articleRangeEnum");
-        requestResolver.setAttribute("articleRangeEnumMap",map);
+        Map<String,Object> articleRangeEnum = (Map<String,Object>) EhcacheUtils.getValue("articleEnumCache","articleRangeEnum");
+        if(articleRangeEnum == null){
+            articleRangeEnum = ArticleRange.getArticleRangeEnum();
+            EhcacheUtils.setValue("articleEnumCache","articleRangeEnum",articleRangeEnum);
+        }
+        Map<String,Object> articleRightsEnum = (Map<String,Object>) EhcacheUtils.getValue("articleEnumCache","articleRightsEnum");
+        if(articleRightsEnum == null){
+            articleRightsEnum = ArticleRights.getArticleRightsEnum();
+            EhcacheUtils.setValue("articleEnumCache","articleRightsEnum",articleRightsEnum);
+        }
+        requestResolver.setAttribute("articleRangeEnumMap",articleRangeEnum);
+        requestResolver.setAttribute("articleRightsEnumMap",articleRightsEnum);
+
         return "admin/article/insertArticle";
     }
 
@@ -101,5 +114,6 @@ public class ArticleController extends BaseController {
         }
         return "redirect:admin/article/articleList";
     }
+
 
 }

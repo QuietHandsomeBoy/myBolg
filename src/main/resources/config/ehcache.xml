@@ -31,8 +31,8 @@
            memoryStoreEvictionPolicy="LRU">
     </cache>
 
-    <cache name="articleRangeEnumCache"
-           maxElementsInMemory="1"
+    <cache name="articleEnumCache"
+           maxElementsInMemory="999"
            overflowToDisk="false"
            eternal="true"
            memoryStoreEvictionPolicy="LRU">

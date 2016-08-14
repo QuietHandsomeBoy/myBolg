@@ -2,9 +2,7 @@
  * Created by hxpeng on 2016/7/15.
  */
 
-
-define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
-
+define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor", "toastr"], function () {
 
     var init = function () {
 
@@ -19,10 +17,10 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
         });
 
         $('.other-condition').find("input[type='checkbox']").on({
-            "ifChecked":function(){
+            "ifChecked": function () {
                 $(this).val(1);
             },
-            "ifUnchecked":function(){
+            "ifUnchecked": function () {
                 $(this).val(0);
             }
         })
@@ -30,17 +28,15 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
         $('.tags-list .i-checks').iCheck({
             checkboxClass: 'icheckbox_flat-blue'
         });
-        $('.type-confition .i-checks').each(function () {
-            var self = $(this),
-                label = self.next(),
-                label_text = label.text();
 
-            label.remove();
-            self.iCheck({
-                radioClass: 'icheckbox_line-blue',
-                insert: '<div class="icheck_line-icon"></div>' + label_text
-            });
-        });
+        $("input[name='keyWords']").blur(formatKeyWords).keydown(tagKeydown);
+
+        $("#choosArticleTagsBtn").on("click", function () {
+            var obj = {
+                tipsId:"articleTags"
+            }
+            operateTips(obj);
+        })
 
         $('#article-content').each(function (index, element) {
             $(element).wysiwyg({
@@ -48,12 +44,12 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
                 // 'selection'|'top'|'top-selection'|'bottom'|'bottom-selection'
                 toolbar: index == 0 ? 'top-selection' : (index == 1 ? 'bottom' : 'selection'),
                 buttons: {
-                    //insertimage: {
-                    //    title: '插入图片',
-                    //    image: '<i class="fa fa-photo"></i>',
-                    //    //showstatic: true,    // wanted on the toolbar
-                    //    showselection: false // wanted on selection
-                    //},
+                    insertimage: {
+                        title: '插入图片',
+                        image: '<i class="fa fa-photo"></i>',
+                        //showstatic: true,    // wanted on the toolbar
+                        showselection: false // wanted on selection
+                    },
                     insertlink: {
                         title: '插入链接',
                         image: '<i id="font_link" class="fa fa-link"></i>',
@@ -169,77 +165,98 @@ define(['bootstrapSelect', 'icheck', 'wysiwyg', "wysiwygEditor"], function () {
         $(".wysiwyg-editor").blur();
         // 加入自定义功能   【全屏/插入代码/插入图片】
         var orderBtn = "<a onclick='insertCode()' href='javascript:;' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
-        //orderBtn += "<a onclick='changeStyle(this)' href='javascript:;' class='wysiwyg-toolbar-icon' title='全屏' style='float:right;'><i class='fa fa-expand'></i></a>";
         $(".wysiwyg-toolbar").append(orderBtn);
-        $(".wysiwyg-toolbar").prepend("<a id='showUploadBox' href='javascript:showUploadBox()' class='wysiwyg-toolbar-icon' title='插入图片'><i class='fa fa-photo'></i></a>");
 
-        $("#save-article").on("click",function(){
+
+        $("#save-article").on("click", function () {
             saveArticle();
         })
 
-        function saveArticle(){
-
-            var tipsDiv = $("#resultTips");
-            var checkTxt = tipsDiv.find("p").html("错误：");
-            if($("input[name='articleRange']:checked").length < 1){
-                checkTxt.append("请选择笔记范围！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("input[name='articleTags']:checked").length < 1){
-                checkTxt.append("请为笔记选择标签！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("input[name='articleTitle']").val() == ""){
-                checkTxt.append("请输入笔记标题！！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("textarea[name='articleTitle']").val() == ""){
-                checkTxt.append("请输入笔记简介！！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            if($("textarea[name='articleContent']").val() == ""){
-                checkTxt.append("请输入博客正文！");
-                tipsDiv.addClass("tips-show");
-                return false;
-            }
-            $("#articleForm").submit();
-        }
-
     }
 
-    $("#closeTipsBox").on("click",function(){
+    function tagKeydown(ev) {
+        var code = (ev ? ev.which : event.keyCode);
+        if (code == 8) {
+            //如果是退格键
+            var ss = $('#key-words-list span');
+            if (ss.length > 0 && $("input[name='keyWords']").val().length == 0) {
+                ss.eq(ss.length - 1).remove();
+                formatKeyWords();
+            } else if (ss.length == 1) {
+                ss.eq(ss.length - 1).remove();
+                formatKeyWords();
+                $("input[name='keyWords']").css({'padding-left': 15});
+            }
+        }
+    }
 
-    })
+    var formatKeyWords = function () {
+        if ($("input[name='keyWords']").val()) {
+            var keyWords = '';
+            $('#key-words-list span').each(function () {
+                keyWords += this.innerHTML + ',';
+            });
+            keyWords += $("input[name='keyWords']").val().trim(',').replace(/[^\u4e00-\u9fa5\w\s\-+.#,，]+/g, '');
+            keyWords = keyWords.trim(',').split(/[,，]+/g);
+            var s = [];
+            for (var i = 0; i < keyWords.length; i++) {
+                if ($.inArray(keyWords[i], s)) {
+                    s.push(keyWords[i].trim().slice(0, 20));
+                }
+                if (s.length == 4) break;
+            }
+            var resultHtml = '';
+            for (var i = 0; i < s.length; i++) {
+                resultHtml += '<span title="' + s[i] + '">' + s[i] + '</span>';
+            }
+            $('#key-words-list').html(resultHtml);
+            $('#key-words-list span').click(function () {
+                $(this).remove();
+                formatKeyWords();
+            });
+        }
+        if ($('#key-words-list span').length == 0) {
+            $("input[name='keyWords']").css({'padding-left': 15});
+        } else {
+            var w = $('#key-words-list').width();
+            $("input[name='keyWords']").val('').css({
+                'padding-left': w
+            });
+        }
+    }
+
+    var saveArticle = function () {
+        if ($("select[name='articleRights']").val() == '') {
+            tips("请选择文章来源渠道！");
+            return;
+        }
+        if ($("select[name='articleRange']").val() == '') {
+            tips("请选择文章所属分类！");
+            return;
+        }
+        if ($("input[name='articleTags']:checked").length < 1) {
+            tips("请为笔记选择标签！");
+            return;
+        }
+        if ($("input[name='articleTitle']").val() == "") {
+            tips("请输入笔记标题！");
+            return;
+        }
+        if ($("textarea[name='articleIntroduced']").val() == "") {
+            tips("请输入笔记简介！");
+            return;
+        }
+        if ($("textarea[name='articleContent']").val() == "") {
+            tips("请输入博客正文！");
+            return;
+        }
+        $("#articleForm").submit();
+    }
+
 
     return {
-        init:init
+        init: init
     }
 
 
 })
-
-
-//全屏切换
-//function changeStyle(sysiwyg) {
-//    var box = $(sysiwyg).parents(".wysiwyg-container").parent();
-//    if (box && box.hasClass("full-screen-style")) {
-//        $("#fullscreenBox").removeClass("full-screen-style");
-//        $("#myWorld").css("visibility","visible").css("height","auto");
-//        $("#article-content-box").html($("#fullscreenBox").clone());
-//        $("#article-content-box").html($("#fullscreenBox").html());
-//        $("#article-content-box").find(".fullscreenBtn").attr("title", "全屏模式").html("<i class='fa fa-expand'></i>");
-//        $("#article-content-box").find(".wysiwyg-container").css("min-height", "350px");
-//        $("#fullscreenBox").html("");
-//    } else {
-//        $("#myWorld").css("visibility","hidden").css("height","0px");
-//        $("#fullscreenBox").html($("#article-content-box").clone());
-//        $("#fullscreenBox").find(".fullscreenBtn").attr("title", "正常模式").html("<i class='fa fa-compress'></i>");
-//        $("#fullscreenBox").addClass("full-screen-style");
-//        $("#fullscreenBox").find(".wysiwyg-container").css("min-height", document.documentElement.clientHeight);
-//        $("#article-content-box").html("");
-//    }
-//};
