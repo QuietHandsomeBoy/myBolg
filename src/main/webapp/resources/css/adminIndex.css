@@ -749,7 +749,7 @@ a:hover, a:active, a:visited, a:focus {
     cursor: pointer;
 }
 
-.form-group .search-title-input, .form-group .key-words-input {
+.form-group .search-title-input, .form-group .key-words-input,.related-article-box input[type=text],.related-article-box button {
     height: 49px;
     box-shadow: 0 1px 1px #d3d1d1;
     font-size: 14px;
@@ -797,7 +797,7 @@ a:hover, a:active, a:visited, a:focus {
     border-bottom: 1px solid #b7b7b7;
     box-shadow: 0 1px 1px #d3d1d1;
 }
-.article-tags-box button:active {
+.article-tags-box button:active,.related-article-box button:active {
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
 }
@@ -911,13 +911,30 @@ label:focus {
 .other-condition .bootstrap-select {
     width: 100px !important;
 }
+.related-article-box{
+    margin-bottom: 20px;
+}
+.related-article-box > div{
+    position: relative;
+    overflow: auto;
+}
+.related-article-box input[type=text]{
+    width: calc(100% - 50px);
+    float: left;
+}
+.related-article-box button{
+    float: left;
+    width: 50px;
+}
+
 
 .search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a {
     text-align: center;
     display: inline-block;
-    width: 100%;
+    width: 48%;
+    float: left;
     padding: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 0.925rem;
     line-height: 1;
     -webkit-border-radius: 4px;
@@ -930,6 +947,22 @@ label:focus {
     color: #1ab394;
     border-bottom: 1px solid #b7b7b7;
 }
+.search-box a{
+    float: left;
+}
+.add-article-box a{
+    float: right;
+}
+.save-as-draft-box a{
+    width: 100%;
+}
+.view-article-box a{
+    float: left;
+}
+.save-article-box a{
+    float: right;
+}
+
 
 .search-box a:hover, .add-article-box a:hover, .save-as-draft-box a:hover, .view-article-box a:hover, .save-article-box a:hover {
     background-color: #18a689;
@@ -1251,7 +1284,7 @@ label:focus {
     color: #1c375b;
     font-size: 14px;
     position: relative;
-    min-height: 420px;
+    min-height: 600px;
     padding: 20px 30px;
     overflow: auto;
     outline: none;
@@ -1856,8 +1889,9 @@ label:focus {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
 }
 .choose-tags-sources-box .bootstrap-select{
-    width: 35%;
+    width: 30% !important;
     min-width: 200px;
+    margin: 0px 5px !important;
 }
 .choose-tags-sources-box .select-btn{
     margin-top: -3px !important;

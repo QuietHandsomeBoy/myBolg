@@ -181,7 +181,7 @@
                                                 <input type='text' name="keyWords" class="form-control key-words-input"/>
                                             </div>
                                         </div>
-                                        <h5>标签设置<label class="label label-gray">常用标签</label></h5>
+                                        <h5>标签设置<label class="label label-gray">最多可选择8个标签</label></h5>
                                         <div class="article-tags-box">
                                             <ul class="tags-list">
                                                 <li><label class=""><input type="checkbox" value="work" name="articleTags" class="i-checks">Work</label></li>
@@ -197,12 +197,20 @@
                                             </ul>
                                             <button type="button" id="choosArticleTagsBtn">添加标签</button>
                                         </div>
+                                        <h5>关联文章<label class="label label-gray">最多可添加两个文章链接</label></h5>
+                                        <div class="related-article-box">
+                                            <div>
+                                                <input type='text' name="aboutArticleUrl" class="form-control key-words-input"/>
+                                                <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
+                                            </div>
+                                        </div>
                                         <h5>其他设置</h5>
                                         <div class="other-condition form-group">
                                             <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="1">公开</label>
                                             <label class=""><input type="checkbox" name="onTop" class="i-checks">置顶</label>
                                             <label class=""><input type="checkbox" name="limitComments" class="i-checks">限制评论</label>
                                         </div>
+                                        <div style="height: 80px;width: 100%;"></div>
                                         <div class="save-as-draft-box">
                                             <a href="javascript:;" id="save-as-draft">保存为草稿</a>
                                         </div>

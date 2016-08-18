@@ -4,6 +4,9 @@
 
 define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor", "toastr"], function () {
 
+
+    var wysiwygeditor;
+
     var init = function () {
 
         $('.selectpicker').selectpicker({
@@ -29,17 +32,51 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             checkboxClass: 'icheckbox_flat-blue'
         });
 
+        $("#save-as-draft").on("click",function(){
+            saveArticleContent();
+        })
+
+        $(document).on("click",".add-btn",function(){
+            var btnType = $(this).attr("data-type");
+            if (btnType == 'add') {
+                var classLength = $(".related-article-box").find("div").length;
+                if(classLength > 1){
+                    tips("最多只可添加两个相关文章链接！");
+                    return;
+                }
+                $(".related-article-box").find("button").each(function () {
+                    $(this).attr("data-type","del").removeClass("fa-plus").addClass("fa-minus");
+                })
+                var html = "<div>"+
+                    '<input type="text" name="aboutArticleUrl" class="form-control key-words-input"/>'+
+                    '<button class="add-btn fa fa-plus" type="button" data-type="add"></button>'+
+                    '</div>';
+                $(".related-article-box").append(html);
+            } else if (btnType == 'del') {
+                $(this).parent().remove();
+                //var classLength = $(".related-article-box").find("div").length;
+                //if(classLength > 1){
+                //    var obj = $(".related-article-box").find("div").eq(classLength-1);
+                //    var lastObj = obj.prev();
+                //    lastObj.find("button").removeClass("fa-minus").addClass("fa-plus");
+                //    obj.remove();
+                //}else{
+                //    return;
+                //}
+            }
+        })
+
         $("input[name='keyWords']").blur(formatKeyWords).keydown(tagKeydown);
 
         $("#choosArticleTagsBtn").on("click", function () {
             var obj = {
-                tipsId:"articleTags"
+                tipsId: "articleTags"
             }
             operateTips(obj);
         })
 
         $('#article-content').each(function (index, element) {
-            $(element).wysiwyg({
+            wysiwygeditor = $(element).wysiwyg({
                 classes: 'some-more-classes',
                 // 'selection'|'top'|'top-selection'|'bottom'|'bottom-selection'
                 toolbar: index == 0 ? 'top-selection' : (index == 1 ? 'bottom' : 'selection'),
@@ -167,7 +204,6 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
         var orderBtn = "<a onclick='insertCode()' href='javascript:;' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
         $(".wysiwyg-toolbar").append(orderBtn);
 
-
         $("#save-article").on("click", function () {
             saveArticle();
         })
@@ -201,7 +237,9 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             var s = [];
             for (var i = 0; i < keyWords.length; i++) {
                 if ($.inArray(keyWords[i], s)) {
-                    s.push(keyWords[i].trim().slice(0, 20));
+                    if (keyWords[i] != '') {
+                        s.push(keyWords[i].trim().slice(0, 20));
+                    }
                 }
                 if (s.length == 4) break;
             }
@@ -253,6 +291,10 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
         $("#articleForm").submit();
     }
 
+
+    var saveArticleContent = function(){
+        wysiwygeditor.getHTML();
+    }
 
     return {
         init: init
