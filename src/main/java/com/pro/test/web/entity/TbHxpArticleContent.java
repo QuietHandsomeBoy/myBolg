@@ -1,18 +1,25 @@
 package com.pro.test.web.entity;
 
+import com.pro.test.core.common.annotation.*;
+
 import java.util.Date;
 
 public class TbHxpArticleContent {
+    @TableId
     private String id;
 
     private String articleId;
 
+    @CreateDate
     private Date createDate;
 
+    @CreateBy
     private String createBy;
 
+    @LastUpdateDate
     private Date updateDate;
 
+    @LastUpdateBy
     private String updateBy;
 
     private Integer isDeleted;

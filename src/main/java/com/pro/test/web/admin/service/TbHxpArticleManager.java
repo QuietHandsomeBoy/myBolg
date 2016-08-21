@@ -4,15 +4,13 @@ import com.pro.test.core.common.global.BaseVariables;
 import com.pro.test.core.common.mybatis.service.SimpleManager;
 import com.pro.test.core.enumdata.ArticleRange;
 import com.pro.test.core.util.EhcacheUtils;
+import com.pro.test.core.util.UUIDUtils;
 import com.pro.test.core.vo.ArticleRangeVo;
 import com.pro.test.web.dao.TbHxpArticleDao;
 import com.pro.test.web.entity.TbHxpArticle;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hxpeng on 2016/7/1.
@@ -26,11 +24,19 @@ public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticl
     }
 
 
-    public int insertArticle(TbHxpArticle tbHxpArticle){
-        return dao.insert(tbHxpArticle);
+    public int insertArticle(TbHxpArticle tbHxpArticle) throws Exception {
+        tbHxpArticle.setArticleId(UUIDUtils.getUUID());
+        dao.insert(tbHxpArticle);
+        updateArticleRangsCountInfo(tbHxpArticle.getArticleRange(),1);
+        return 0;
     }
 
 
+    /**
+     * 从Ehcache获取文章类型，没有则查找再更新
+     * @return
+     * @throws Exception
+     */
     public List<ArticleRangeVo> getArticleRangsCountInfo() throws Exception {
         List<ArticleRangeVo> result = (List<ArticleRangeVo>) EhcacheUtils.getValue("articleRangeCountCache","articleRanges");
         if(result == null){
@@ -55,6 +61,24 @@ public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticl
             EhcacheUtils.setValue("articleRangeCountCache","articleRanges",result);
         }
         return result;
+    }
+
+
+    /**
+     * 更新Ehcache
+     * @param rangKey
+     * @param increment 增量
+     * @throws Exception
+     */
+    public synchronized void updateArticleRangsCountInfo(String rangKey, int increment) throws Exception {
+        List<ArticleRangeVo> result = (List<ArticleRangeVo>) EhcacheUtils.getValue("articleRangeCountCache","articleRanges");
+        for(ArticleRangeVo articleRangeVo : result){
+            if(articleRangeVo.getArticleRange().equals(rangKey)){
+                articleRangeVo.setArticleRangeCount(articleRangeVo.getArticleRangeCount()+increment);
+            }
+        }
+        Collections.sort(result);//排序，从大到小
+        EhcacheUtils.setValue("articleRangeCountCache","articleRanges",result);
     }
 
 }

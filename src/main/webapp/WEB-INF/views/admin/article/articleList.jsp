@@ -19,7 +19,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/animate.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/bootstrap/bootstrap-datetimepicker.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/adminIndex.css">
-    <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require.js"></script>
+    <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
     <title>MyBolg</title>
 </head>
 <body>

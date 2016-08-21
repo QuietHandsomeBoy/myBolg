@@ -9,9 +9,12 @@ import com.pro.test.core.controller.BaseController;
 import com.pro.test.core.enumdata.ArticleRange;
 import com.pro.test.core.enumdata.ArticleRights;
 import com.pro.test.core.util.EhcacheUtils;
+import com.pro.test.core.util.UUIDUtils;
 import com.pro.test.core.vo.ArticleRangeVo;
+import com.pro.test.web.admin.service.TbHxpArticleContentManager;
 import com.pro.test.web.admin.service.TbHxpArticleManager;
 import com.pro.test.web.entity.TbHxpArticle;
+import com.pro.test.web.entity.TbHxpArticleContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -35,6 +38,9 @@ public class ArticleController extends BaseController {
 
     @Autowired
     private TbHxpArticleManager tbHxpArticleManager;
+
+    @Autowired
+    private TbHxpArticleContentManager tbHxpArticleContentManager;
 
     @RequestMapping(value = "articleList.html")
     public String articleList(Pagination pagination, RequestResolver requestResolver,TbHxpArticle tbHxpArticle) throws Exception {
@@ -98,21 +104,37 @@ public class ArticleController extends BaseController {
         }
         requestResolver.setAttribute("articleRangeEnumMap",articleRangeEnum);
         requestResolver.setAttribute("articleRightsEnumMap",articleRightsEnum);
-
+        requestResolver.setAttribute("articleId", UUIDUtils.getUUID());
         return "admin/article/insertArticle";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/saveArticle.json", method = RequestMethod.POST)
-    public String saveArticle(@Validated TbHxpArticle tbHxpArticle, BindingResult bindingResult) {
-
+    public Map<String,Object> saveArticle(@Validated TbHxpArticle tbHxpArticle, String content, BindingResult bindingResult) {
+        Map<String,Object> map = new HashMap<>();
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return "admin/article/insertArticle";
+            map.put("result","err");
+            map.put("resultMsg","请按要求输入文章相关信息!");
+            return map;
         }
         if (tbHxpArticle != null && tbHxpArticle.getId() == null) {
-            tbHxpArticleManager.insertArticle(tbHxpArticle);
+            try {
+                tbHxpArticleManager.insertArticle(tbHxpArticle);
+                TbHxpArticleContent tbHxpArticleContent = new TbHxpArticleContent();
+                tbHxpArticleContent.setArticleId(tbHxpArticle.getArticleId());
+                tbHxpArticleContent.setArticleContent(content);
+                tbHxpArticleContentManager.insert(tbHxpArticleContent);
+            }catch (Exception e){
+                e.printStackTrace();
+                map.put("result","err");
+                map.put("resultMsg","系统后台错误！");
+                return map;
+            }
         }
-        return "redirect:admin/article/articleList";
+
+
+        return map;
     }
 
 

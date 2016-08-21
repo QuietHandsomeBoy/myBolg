@@ -5,7 +5,7 @@
 require.config({
     baseUrl: "/" + document.URL.split("/")[3] + "/resources",
     paths: {
-        "jQuery": "js/common/jquery",
+        "jQuery": "js/common/jquery/jquery",
         "highcharts": "js/admin/highchart/highcharts",
         "jqueryAniview": "js/admin/aniview/jquery.aniview.min",
         "jqueryMetisMenu": "js/admin/metismenu/jquery.metisMenu",
@@ -15,16 +15,17 @@ require.config({
         "bootstrap": "js/admin/bootstrap/bootstrap",
         "bootstrapDatetimepicker": "js/admin/bootstrap/bootstrap-datetimepicker.min",
         "bootstrapSelect": "js/admin/bootstrap/bootstrap-select",
-        "pjax": "js/common/pjax",
-        "nprogress": "js/common/nprogress",
-        "jqueryCookie": "js/common/jquery.cookie",
+        "pjax": "js/common/pjax/pjax",
+        "nprogress": "js/common/nprogress/nprogress",
+        "jqueryCookie": "js/common/jquery/jquery.cookie",
         "metismenu": "js/admin/metismenu/jquery.metisMenu",
-        "icheck": "js/common/icheck",
-        "toastr": "js/common/toastr.min",
-        "ajaxfileupload":"js/common/ajaxfileupload",
+        "icheck": "js/common/icheck/icheck",
+        "toastr": "js/common/toastr/toastr.min",
+        "ajaxfileupload":"js/common/ajaxfileupload/ajaxfileupload",
         "index": "js/admin/index",
         "articleList": "js/admin/articleList",
-        "insertArticle": 'js/admin/insertArticle'
+        "insertArticle": 'js/admin/insertArticle',
+        "baseutil": 'js/common/util/base-util'
     },
     shim: {
         "bootstrap": ['jQuery'],
@@ -43,6 +44,7 @@ require.config({
         "icheck": ['jQuery'],
         "ajaxfileupload":['jQuery'],
         "toastr":['jQuery'],
+        "baseutil":['jQuery']
     },
     urlArgs: "bust=" + (new Date()).getTime()
 });

@@ -9,8 +9,8 @@ public class BaseVariables {
 
     //**====================Ehcache 名========================start ***//
 
-    public static final String ARTICLE_RANGE = "articleRange";
-    public static final String ARTICLE_RANGE_COUNT = "count";
+    public static final String ARTICLE_RANGE = "articleRange";//文章类型
+    public static final String ARTICLE_RANGE_COUNT = "count";//文章类型统计
 
 
 

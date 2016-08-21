@@ -19,7 +19,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/animate.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/bootstrap/bootstrap-datetimepicker.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/adminIndex.css">
-    <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require.js"></script>
+    <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
     <title>MyBolg</title>
 </head>
 <body>
@@ -158,6 +158,7 @@
         </div>
         <div id="content" class="content-container">
             <form action="${_Weburl}/admin/article/saveArticle" method="post" id="articleForm">
+                <input type="hidden" name="articleId" value="${articleId}"/>
                 <div>
                     <div class="row">
                         <div class="col-lg-3">
@@ -200,15 +201,15 @@
                                         <h5>关联文章<label class="label label-gray">最多可添加两个文章链接</label></h5>
                                         <div class="related-article-box">
                                             <div>
-                                                <input type='text' name="aboutArticleUrl" class="form-control key-words-input"/>
-                                                <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
+                                                <input type='text' name="aboutArticleUrl" class="form-control key-words-input" value="http://www.baidu.com"/>
+                                                <button class="add-btn fa fa-plus" type="button" data-type="add"></button>s
                                             </div>
                                         </div>
                                         <h5>其他设置</h5>
                                         <div class="other-condition form-group">
                                             <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="1">公开</label>
-                                            <label class=""><input type="checkbox" name="onTop" class="i-checks">置顶</label>
-                                            <label class=""><input type="checkbox" name="limitComments" class="i-checks">限制评论</label>
+                                            <label class=""><input type="checkbox" name="onTop" class="i-checks" value="1">置顶</label>
+                                            <label class=""><input type="checkbox" name="limitComments" class="i-checks" value="1">限制评论</label>
                                         </div>
                                         <div style="height: 80px;width: 100%;"></div>
                                         <div class="save-as-draft-box">
@@ -242,12 +243,14 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-10">
-                                                <input placeholder="请输入标题.." type="text" class="" name="articleTitle">
+                                                <input placeholder="请输入标题.." type="text" class="" name="articleTitle" value="Openstack Manila源码阅读笔记(一)manilaclient调用过程">
                                             </div>
                                         </div>
                                         <h5>enter the introduce of article</h5>
                                         <div class="title-introduce-box">
-                                            <textarea id="summary" name="articleIntroduced" style="">测试！！测试！！测试！！测试！！</textarea>
+                                            <textarea id="summary" name="articleIntroduced" style="">
+                                                最近开始研究Openstack Manila的源码. 开发环境在之前的文章里已经提到过了. Openstack版本为Mitaka, IDE用的是Pycharm远程调试. 这篇文章主要是理解一下当我们在shell里输入了一个manila API指令之后, 后台到底发生了什么, 整个调用的过程是怎么样的, 真正干活的人是谁. 其实也就是Command-Line Interface.
+                                            </textarea>
                                         </div>
                                     </div>
                                 </div>

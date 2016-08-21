@@ -2,10 +2,9 @@
  * Created by hxpeng on 2016/7/15.
  */
 
-define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor", "toastr"], function () {
+define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor", "toastr", "baseutil"], function () {
 
-
-    var wysiwygeditor;
+    var publicUtil = PublicUtil;
 
     var init = function () {
 
@@ -32,37 +31,28 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             checkboxClass: 'icheckbox_flat-blue'
         });
 
-        $("#save-as-draft").on("click",function(){
-            saveArticleContent();
+        $("#save-as-draft").on("click", function () {
+            saveArticle("draft");
         })
 
-        $(document).on("click",".add-btn",function(){
+        $(document).on("click", ".add-btn", function () {
             var btnType = $(this).attr("data-type");
             if (btnType == 'add') {
                 var classLength = $(".related-article-box").find("div").length;
-                if(classLength > 1){
+                if (classLength > 1) {
                     tips("最多只可添加两个相关文章链接！");
                     return;
                 }
                 $(".related-article-box").find("button").each(function () {
-                    $(this).attr("data-type","del").removeClass("fa-plus").addClass("fa-minus");
+                    $(this).attr("data-type", "del").removeClass("fa-plus").addClass("fa-minus");
                 })
-                var html = "<div>"+
-                    '<input type="text" name="aboutArticleUrl" class="form-control key-words-input"/>'+
-                    '<button class="add-btn fa fa-plus" type="button" data-type="add"></button>'+
+                var html = "<div>" +
+                    '<input type="text" name="aboutArticleUrl" class="form-control key-words-input"/>' +
+                    '<button class="add-btn fa fa-plus" type="button" data-type="add"></button>' +
                     '</div>';
                 $(".related-article-box").append(html);
             } else if (btnType == 'del') {
                 $(this).parent().remove();
-                //var classLength = $(".related-article-box").find("div").length;
-                //if(classLength > 1){
-                //    var obj = $(".related-article-box").find("div").eq(classLength-1);
-                //    var lastObj = obj.prev();
-                //    lastObj.find("button").removeClass("fa-minus").addClass("fa-plus");
-                //    obj.remove();
-                //}else{
-                //    return;
-                //}
             }
         })
 
@@ -76,8 +66,8 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
         })
 
         $('#article-content').each(function (index, element) {
-            wysiwygeditor = $(element).wysiwyg({
-                classes: 'some-more-classes',
+            $(element).wysiwyg({
+                //classes: 'some-more-classes',
                 // 'selection'|'top'|'top-selection'|'bottom'|'bottom-selection'
                 toolbar: index == 0 ? 'top-selection' : (index == 1 ? 'bottom' : 'selection'),
                 buttons: {
@@ -205,7 +195,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
         $(".wysiwyg-toolbar").append(orderBtn);
 
         $("#save-article").on("click", function () {
-            saveArticle();
+            saveArticle("normal");
         })
 
     }
@@ -227,7 +217,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
     }
 
     var formatKeyWords = function () {
-        if ($("input[name='keyWords']").val()) {
+        if (publicUtil.isNotEmpty(new String($("input[name='keyWords']").val()).trim())) {
             var keyWords = '';
             $('#key-words-list span').each(function () {
                 keyWords += this.innerHTML + ',';
@@ -263,38 +253,87 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
         }
     }
 
-    var saveArticle = function () {
-        if ($("select[name='articleRights']").val() == '') {
+    var checkArticle = function () {
+
+        if (!publicUtil.isNotEmpty($("select[name='articleRights']").val())) {
             tips("请选择文章来源渠道！");
-            return;
+            return false;
         }
-        if ($("select[name='articleRange']").val() == '') {
+        if (!publicUtil.isNotEmpty($("select[name='articleRange']").val())) {
             tips("请选择文章所属分类！");
-            return;
+            return false;
         }
         if ($("input[name='articleTags']:checked").length < 1) {
             tips("请为笔记选择标签！");
-            return;
+            return false;
         }
-        if ($("input[name='articleTitle']").val() == "") {
+        if (!publicUtil.isNotEmpty($("input[name='articleTitle']").val())) {
             tips("请输入笔记标题！");
-            return;
-        }
-        if ($("textarea[name='articleIntroduced']").val() == "") {
-            tips("请输入笔记简介！");
-            return;
+            return false;
         }
         if ($("textarea[name='articleContent']").val() == "") {
             tips("请输入博客正文！");
-            return;
+            return false;
         }
-        $("#articleForm").submit();
+        return true;
     }
 
+    var saveArticle = function (status) {
+        if (checkArticle()) {
 
-    var saveArticleContent = function(){
-        wysiwygeditor.getHTML();
+            var articleRights = $("select[name='articleRights']").val();
+            var articleRange = $("select[name='articleRange']").val();
+            var articleTags = $("input[name='articleTags']:checked");
+            var articleTitle = encodeURIComponent($("input[name='articleTitle']").val());
+            var articleContent = $("textarea[name='articleContent']").val();
+            var isPublic = $("input[name='isPublic']").is(':checked') ? 1 : 0;
+            var onTop = $("input[name='onTop']").is(':checked') ? 1 : 0;
+            var limitComments = $("input[name='limitComments']").is(':checked') ? 1 : 0;
+
+            var tags = '';
+            $.each(articleTags, function (k, v) {
+                tags += $(v).val() + ',';
+            })
+            tags = tags.substring(0, tags.length - 1);
+
+            var keyWords = '';
+            var keyWordsSpan = $("#key-words-list span");
+            if (keyWordsSpan.length > 0) {
+                $.each(keyWordsSpan, function () {
+                    keyWords += $(this).html() + ',';
+                })
+            }
+            keyWords = keyWords.substring(0, keyWords.length - 1);
+
+            var aboutArticleUrl = '';
+            $.each($("input[name='aboutArticleUrl']"), function () {
+                aboutArticleUrl += ''
+            })
+
+            var articleIntroduced = publicUtil.isNotEmpty(new String($("textarea[name='articleIntroduced']").val()).trim)
+                ? encodeURIComponent($("textarea[name='articleIntroduced']").val()) : "";
+
+
+            var content = encodeURIComponent(new String($("textarea[name='articleContent']").val()).trim());
+
+            var articleData = "articleTitle="+articleTitle+"&articleIntroduced="+articleIntroduced+"&articleTags="+articleTags;
+            articleData += "&articleRange="+articleRange+"&keyWords="+keyWords+"&isPublic="+isPublic+"&onTop="+onTop+"&limitComments="+limitComments;
+            articleData += "&articleRights="+articleRights+"&articleStatus="+status+"&content="+content;
+
+            $.ajax({
+                type: "POST",
+                url: ctx + "/admin/article/saveArticle.json",
+                dataType: "json",
+                data: articleData,
+                async: false,
+                success: function (data) {
+                    alert(1);
+                }
+
+            })
+        }
     }
+
 
     return {
         init: init

@@ -135,22 +135,14 @@
                     // Only process image files
                     if( ! file.type.match('image.*') )
                         return;
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        var dataurl = event.target.result;
-                        insert_image_wysiwyg( dataurl, file.name );
-                    };
-                    // Read in the image file as a data URL
-                    reader.readAsDataURL( file );
-
                     $.ajaxFileUpload({
                         url: ctx+"/upload/uploadArticleImg.json",
                         secureuri: false,
                         fileElementId: 'articleImage',
                         dataType: 'json',
-                        //data: {
-                        //    username: "嘻嘻"
-                        //},
+                        data: {
+                            articleId: $("input[name='articleId']").val()
+                        },
                         beforeSend: function () {
                             $(".pagination-loading").show();
                         },
@@ -158,7 +150,15 @@
                             $(".pagination-loading").hide();
                         },
                         success: function(data) {
-                            if(data == 'true'){
+                            data = jQuery.parseJSON(data);
+                            if(data.result == 'success'){
+                                var reader = new FileReader();
+                                reader.onload = function(event) {
+                                    var dataurl = event.target.result;
+                                    insert_image_wysiwyg( data.path, file.name );
+                                };
+                                // Read in the image file as a data URL
+                                reader.readAsDataURL( file );
                                 toastrTips("图片上传成功！","success");
                             }else{
                                 toastrTips("图片上传失败！","warning");

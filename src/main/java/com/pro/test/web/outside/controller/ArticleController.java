@@ -20,7 +20,7 @@ public class ArticleController {
 
 
     @RequestMapping(value = "articleDetail.html")
-    public String addArticle(RequestResolver requestResolver, TbHxpArticle tbHxpArticle){
+    public String addArticle(RequestResolver requestResolver, TbHxpArticle tbHxpArticle) throws Exception {
         System.out.print("111111");
         tbHxpArticleManager.insertArticle(tbHxpArticle);
         return "outside/article/articleDetail";

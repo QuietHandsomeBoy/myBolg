@@ -5,10 +5,10 @@ package com.pro.test.core.enumdata;
  */
 public enum ArticleStatus {
 
-    Normal("Normal", "正常"),
-    Draft("Draft", "草稿"),
-    Deleted("Deleted", "已删除"),
-    Secret("Secret", "私人");
+    normal("normal", "正常"),
+    draft("draft", "草稿"),
+    deleted("deleted", "已删除"),
+    secret("secret", "私人");
 
     private String key;
     private String value;

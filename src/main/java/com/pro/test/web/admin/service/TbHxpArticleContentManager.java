@@ -4,6 +4,7 @@ import com.pro.test.core.common.mybatis.service.SimpleManager;
 import com.pro.test.web.dao.TbHxpArticleContentDao;
 import com.pro.test.web.entity.TbHxpArticleContent;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -16,5 +17,11 @@ public class TbHxpArticleContentManager extends SimpleManager<TbHxpArticleConten
     public String test(){
         dao.findAll();
         return "";
+    }
+
+    @Transactional
+    public int insert(TbHxpArticleContent tbHxpArticleContent){
+        int i = 1/0;
+        return this.dao.insert(tbHxpArticleContent);
     }
 }
