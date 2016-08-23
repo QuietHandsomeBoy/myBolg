@@ -48,11 +48,17 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
                 })
                 var html = "<div>" +
                     '<input type="text" name="aboutArticleUrl" class="form-control key-words-input"/>' +
-                    '<button class="add-btn fa fa-plus" type="button" data-type="add"></button>' +
+                    '<button class="add-btn fa fa-minus" type="button" data-type="del"></button>' +
                     '</div>';
                 $(".related-article-box").append(html);
             } else if (btnType == 'del') {
                 $(this).parent().remove();
+                if ($(".related-article-box").find("div").length == 1) {
+                    $(".related-article-box").find("button").each(function () {
+                        $(this).attr("data-type", "add").removeClass("fa-minus").addClass("fa-plus");
+                    })
+                    return;
+                }
             }
         })
 
@@ -253,7 +259,59 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
         }
     }
 
+    var checkAboutArticleUrl = function () {
+        var check = false;
+        $.each($("input[name='aboutArticleUrl']"), function (k, v) {
+            var url = $(v).val();
+            if (url == "") {
+                alert("请录入文章url。");
+                return false;
+            }
+            else {
+                //if (url.toLowerCase().indexOf("http://localhost:8082") == -1 || url.toLowerCase().indexOf("/article/articleDetail/") == -1) {
+                if (url.indexOf("http://localhost:8082") == -1 || url.indexOf("/article/articleDetail/") == -1 || url.indexOf(".html") == -1) {
+                    alert('请输入文章的的详细地址。');
+                    return false;
+                }
+            }
+            var splitStr = url.split("/");
+            var articleId = 0;
+            if (splitStr.length == 6) {
+                articleId = splitStr[5];
+                articleId = articleId.substring(0,articleId.indexOf("."));
+            }
+            if (publicUtil.isNotEmpty(articleId)) {
+                $.ajax({
+                    type: "POST",
+                    url: ctx + "/admin/article/isArticle.json",
+                    dataType: "json",
+                    data: {"articleId": articleId},
+                    async: false,
+                    success: function (data) {
+                        if (data.result == 'true') {
+                            check = true;
+                        } else {
+                            return false;
+                        }
+                    }
+                })
+            }
+        })
+        return check;
+    }
+
+
     var checkArticle = function () {
+
+        if (!checkAboutArticleUrl()) {
+            tips("请输入正确的文章地址！")
+            return false;
+        }
+
+        if (!publicUtil.isNotEmpty($("#articleId").val())) {
+            tips("请刷新页面重新输入！");
+            return false;
+        }
 
         if (!publicUtil.isNotEmpty($("select[name='articleRights']").val())) {
             tips("请选择文章来源渠道！");
@@ -267,6 +325,8 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             tips("请为笔记选择标签！");
             return false;
         }
+
+
         if (!publicUtil.isNotEmpty($("input[name='articleTitle']").val())) {
             tips("请输入笔记标题！");
             return false;
@@ -275,7 +335,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             tips("请输入博客正文！");
             return false;
         }
-        return true;
+        return false;
     }
 
     var saveArticle = function (status) {
@@ -306,8 +366,8 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             keyWords = keyWords.substring(0, keyWords.length - 1);
 
             var aboutArticleUrl = '';
-            $.each($("input[name='aboutArticleUrl']"), function () {
-                aboutArticleUrl += ''
+            $.each($("input[name='aboutArticleUrl']"), function (k, v) {
+                aboutArticleUrl += '&aboutArticleUrl1=' + $(v).val() + ''
             })
 
             var articleIntroduced = publicUtil.isNotEmpty(new String($("textarea[name='articleIntroduced']").val()).trim)
@@ -316,9 +376,9 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
 
             var content = encodeURIComponent(new String($("textarea[name='articleContent']").val()).trim());
 
-            var articleData = "articleTitle="+articleTitle+"&articleIntroduced="+articleIntroduced+"&articleTags="+articleTags;
-            articleData += "&articleRange="+articleRange+"&keyWords="+keyWords+"&isPublic="+isPublic+"&onTop="+onTop+"&limitComments="+limitComments;
-            articleData += "&articleRights="+articleRights+"&articleStatus="+status+"&content="+content;
+            var articleData = "articleTitle=" + articleTitle + "&articleIntroduced=" + articleIntroduced + "&articleTags=" + articleTags;
+            articleData += "&articleRange=" + articleRange + "&keyWords=" + keyWords + "&isPublic=" + isPublic + "&onTop=" + onTop + "&limitComments=" + limitComments;
+            articleData += "&articleRights=" + articleRights + "&articleStatus=" + status + "&content=" + content;
 
             $.ajax({
                 type: "POST",
@@ -327,7 +387,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
                 data: articleData,
                 async: false,
                 success: function (data) {
-                    alert(1);
+                    window.location.href = ctx + "/admin/article/articleList.html";
                 }
 
             })

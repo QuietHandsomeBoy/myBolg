@@ -138,4 +138,22 @@ public class ArticleController extends BaseController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "isArticle.json", method = RequestMethod.POST)
+    public Map<String,Object> isArticle(String articleId){
+        Map<String,Object> map = new HashMap<>();
+        map.put("result","false");
+        try {
+            TbHxpArticle tbHxpArticle = tbHxpArticleManager.findOneByArticleID(articleId);
+            if(tbHxpArticle != null){
+                map.put("result","true");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("result","err");
+        }
+        return map;
+    }
+
+
 }

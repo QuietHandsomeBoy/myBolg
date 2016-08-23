@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/main.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/animate.min.css">
-    <script data-main="${_outsideJsUrl}/config" src="${_commonJsUrl}/require.js"></script>
+    <script data-main="${_outsideJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
     <title>MyBolg</title>
 </head>
 <body>
@@ -44,7 +44,7 @@
                             <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
-                                        <h2 class="article_title"><a href="http://localhost:8084/springDemo3/articleDetail.html" rel="bookmark">There is
+                                        <h2 class="article_title"><a href="http://localhost:8084/springDemo3/article/articleDetail.html" rel="bookmark">There is
                                             something
                                             in the New York air that makes sleep useless</a></h2>
                                         <div class="article-meta">

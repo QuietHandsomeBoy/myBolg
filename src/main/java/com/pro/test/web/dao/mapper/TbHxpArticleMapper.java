@@ -2,6 +2,7 @@ package com.pro.test.web.dao.mapper;
 
 import com.pro.test.core.common.mybatis.dao.GenericMapper;
 import com.pro.test.web.entity.TbHxpArticle;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,6 @@ public interface TbHxpArticleMapper extends GenericMapper {
     int updateByPrimaryKey(TbHxpArticle record);
 
     List<Map<String,Object>> findArticleRangeCount();
+
+    TbHxpArticle findOneByArticleId(@Param(value = "articleId") String articleId);
 }

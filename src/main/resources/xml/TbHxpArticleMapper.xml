@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pro.test.web.dao.mapper.TbHxpArticleMapper" >
-  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpArticle" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
-    <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
-    <result column="article_introduced" property="articleIntroduced" jdbcType="VARCHAR" />
-    <result column="article_range" property="articleRange" jdbcType="VARCHAR" />
-    <result column="article_type" property="articleType" jdbcType="VARCHAR" />
-    <result column="article_author_id" property="articleAuthorId" jdbcType="VARCHAR" />
-    <result column="article_author_name" property="articleAuthorName" jdbcType="VARCHAR" />
-    <result column="article_tags" property="articleTags" jdbcType="VARCHAR" />
-    <result column="last_comment_date" property="lastCommentDate" jdbcType="DATE" />
-    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
-    <result column="likes_count" property="likesCount" jdbcType="INTEGER" />
-    <result column="read_count" property="readCount" jdbcType="INTEGER" />
-    <result column="limit_comments" property="limitComments" jdbcType="VARCHAR" />
-    <result column="is_public" property="isPublic" jdbcType="INTEGER" />
-    <result column="on_top" property="onTop" jdbcType="INTEGER" />
-    <result column="key_words" property="keyWords" jdbcType="VARCHAR" />
-    <result column="is_content_finish" property="isContentFinish" jdbcType="INTEGER" />
-    <result column="article_rights" property="articleRights" jdbcType="VARCHAR" />
-    <result column="article_status" property="articleStatus" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
-  </resultMap>
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpArticleMapper">
+    <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpArticle">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="article_id" property="articleId" jdbcType="VARCHAR"/>
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+        <result column="article_introduced" property="articleIntroduced" jdbcType="VARCHAR"/>
+        <result column="article_range" property="articleRange" jdbcType="VARCHAR"/>
+        <result column="article_type" property="articleType" jdbcType="VARCHAR"/>
+        <result column="article_author_id" property="articleAuthorId" jdbcType="VARCHAR"/>
+        <result column="article_author_name" property="articleAuthorName" jdbcType="VARCHAR"/>
+        <result column="article_tags" property="articleTags" jdbcType="VARCHAR"/>
+        <result column="last_comment_date" property="lastCommentDate" jdbcType="DATE"/>
+        <result column="comment_count" property="commentCount" jdbcType="INTEGER"/>
+        <result column="likes_count" property="likesCount" jdbcType="INTEGER"/>
+        <result column="read_count" property="readCount" jdbcType="INTEGER"/>
+        <result column="limit_comments" property="limitComments" jdbcType="VARCHAR"/>
+        <result column="is_public" property="isPublic" jdbcType="INTEGER"/>
+        <result column="on_top" property="onTop" jdbcType="INTEGER"/>
+        <result column="key_words" property="keyWords" jdbcType="VARCHAR"/>
+        <result column="is_content_finish" property="isContentFinish" jdbcType="INTEGER"/>
+        <result column="article_rights" property="articleRights" jdbcType="VARCHAR"/>
+        <result column="article_status" property="articleStatus" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
 
-  <resultMap id="articleRangeCount" type="java.util.Map">
-    <result column="count(id)" property="count" jdbcType="INTEGER"/>
-    <result column="article_range" property="articleRange" jdbcType="VARCHAR"/>
-  </resultMap>
+    <resultMap id="articleRangeCount" type="java.util.Map">
+        <result column="count(id)" property="count" jdbcType="INTEGER"/>
+        <result column="article_range" property="articleRange" jdbcType="VARCHAR"/>
+    </resultMap>
 
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
     id, article_id, article_title, article_introduced, article_range, article_type, article_author_id, 
     article_author_name, article_tags, last_comment_date, comment_count, likes_count, 
     read_count, limit_comments, is_public, on_top, key_words, is_content_finish, article_rights, 
     article_status, create_date, create_by, update_date, update_by, remark, is_deleted
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_hxp_article
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_hxp_article
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_hxp_article
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpArticle" >
+    <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpArticle">
     insert into tb_hxp_article (id, article_id, article_title, 
       article_introduced, article_range, article_type, 
       article_author_id, article_author_name, article_tags, 
@@ -71,251 +71,251 @@
       #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpArticle" >
-    insert into tb_hxp_article
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="articleId != null" >
-        article_id,
-      </if>
-      <if test="articleTitle != null" >
-        article_title,
-      </if>
-      <if test="articleIntroduced != null" >
-        article_introduced,
-      </if>
-      <if test="articleRange != null" >
-        article_range,
-      </if>
-      <if test="articleType != null" >
-        article_type,
-      </if>
-      <if test="articleAuthorId != null" >
-        article_author_id,
-      </if>
-      <if test="articleAuthorName != null" >
-        article_author_name,
-      </if>
-      <if test="articleTags != null" >
-        article_tags,
-      </if>
-      <if test="lastCommentDate != null" >
-        last_comment_date,
-      </if>
-      <if test="commentCount != null" >
-        comment_count,
-      </if>
-      <if test="likesCount != null" >
-        likes_count,
-      </if>
-      <if test="readCount != null" >
-        read_count,
-      </if>
-      <if test="limitComments != null" >
-        limit_comments,
-      </if>
-      <if test="isPublic != null" >
-        is_public,
-      </if>
-      <if test="onTop != null" >
-        on_top,
-      </if>
-      <if test="keyWords != null" >
-        key_words,
-      </if>
-      <if test="isContentFinish != null" >
-        is_content_finish,
-      </if>
-      <if test="articleRights != null" >
-        article_rights,
-      </if>
-      <if test="articleStatus != null" >
-        article_status,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="articleId != null" >
-        #{articleId,jdbcType=VARCHAR},
-      </if>
-      <if test="articleTitle != null" >
-        #{articleTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="articleIntroduced != null" >
-        #{articleIntroduced,jdbcType=VARCHAR},
-      </if>
-      <if test="articleRange != null" >
-        #{articleRange,jdbcType=VARCHAR},
-      </if>
-      <if test="articleType != null" >
-        #{articleType,jdbcType=VARCHAR},
-      </if>
-      <if test="articleAuthorId != null" >
-        #{articleAuthorId,jdbcType=VARCHAR},
-      </if>
-      <if test="articleAuthorName != null" >
-        #{articleAuthorName,jdbcType=VARCHAR},
-      </if>
-      <if test="articleTags != null" >
-        #{articleTags,jdbcType=VARCHAR},
-      </if>
-      <if test="lastCommentDate != null" >
-        #{lastCommentDate,jdbcType=DATE},
-      </if>
-      <if test="commentCount != null" >
-        #{commentCount,jdbcType=INTEGER},
-      </if>
-      <if test="likesCount != null" >
-        #{likesCount,jdbcType=INTEGER},
-      </if>
-      <if test="readCount != null" >
-        #{readCount,jdbcType=INTEGER},
-      </if>
-      <if test="limitComments != null" >
-        #{limitComments,jdbcType=VARCHAR},
-      </if>
-      <if test="isPublic != null" >
-        #{isPublic,jdbcType=INTEGER},
-      </if>
-      <if test="onTop != null" >
-        #{onTop,jdbcType=INTEGER},
-      </if>
-      <if test="keyWords != null" >
-        #{keyWords,jdbcType=VARCHAR},
-      </if>
-      <if test="isContentFinish != null" >
-        #{isContentFinish,jdbcType=INTEGER},
-      </if>
-      <if test="articleRights != null" >
-        #{articleRights,jdbcType=VARCHAR},
-      </if>
-      <if test="articleStatus != null" >
-        #{articleStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpArticle" >
-    update tb_hxp_article
-    <set >
-      <if test="articleId != null" >
-        article_id = #{articleId,jdbcType=VARCHAR},
-      </if>
-      <if test="articleTitle != null" >
-        article_title = #{articleTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="articleIntroduced != null" >
-        article_introduced = #{articleIntroduced,jdbcType=VARCHAR},
-      </if>
-      <if test="articleRange != null" >
-        article_range = #{articleRange,jdbcType=VARCHAR},
-      </if>
-      <if test="articleType != null" >
-        article_type = #{articleType,jdbcType=VARCHAR},
-      </if>
-      <if test="articleAuthorId != null" >
-        article_author_id = #{articleAuthorId,jdbcType=VARCHAR},
-      </if>
-      <if test="articleAuthorName != null" >
-        article_author_name = #{articleAuthorName,jdbcType=VARCHAR},
-      </if>
-      <if test="articleTags != null" >
-        article_tags = #{articleTags,jdbcType=VARCHAR},
-      </if>
-      <if test="lastCommentDate != null" >
-        last_comment_date = #{lastCommentDate,jdbcType=DATE},
-      </if>
-      <if test="commentCount != null" >
-        comment_count = #{commentCount,jdbcType=INTEGER},
-      </if>
-      <if test="likesCount != null" >
-        likes_count = #{likesCount,jdbcType=INTEGER},
-      </if>
-      <if test="readCount != null" >
-        read_count = #{readCount,jdbcType=INTEGER},
-      </if>
-      <if test="limitComments != null" >
-        limit_comments = #{limitComments,jdbcType=VARCHAR},
-      </if>
-      <if test="isPublic != null" >
-        is_public = #{isPublic,jdbcType=INTEGER},
-      </if>
-      <if test="onTop != null" >
-        on_top = #{onTop,jdbcType=INTEGER},
-      </if>
-      <if test="keyWords != null" >
-        key_words = #{keyWords,jdbcType=VARCHAR},
-      </if>
-      <if test="isContentFinish != null" >
-        is_content_finish = #{isContentFinish,jdbcType=INTEGER},
-      </if>
-      <if test="articleRights != null" >
-        article_rights = #{articleRights,jdbcType=VARCHAR},
-      </if>
-      <if test="articleStatus != null" >
-        article_status = #{articleStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpArticle" >
+    <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpArticle">
+        insert into tb_hxp_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="articleTitle != null">
+                article_title,
+            </if>
+            <if test="articleIntroduced != null">
+                article_introduced,
+            </if>
+            <if test="articleRange != null">
+                article_range,
+            </if>
+            <if test="articleType != null">
+                article_type,
+            </if>
+            <if test="articleAuthorId != null">
+                article_author_id,
+            </if>
+            <if test="articleAuthorName != null">
+                article_author_name,
+            </if>
+            <if test="articleTags != null">
+                article_tags,
+            </if>
+            <if test="lastCommentDate != null">
+                last_comment_date,
+            </if>
+            <if test="commentCount != null">
+                comment_count,
+            </if>
+            <if test="likesCount != null">
+                likes_count,
+            </if>
+            <if test="readCount != null">
+                read_count,
+            </if>
+            <if test="limitComments != null">
+                limit_comments,
+            </if>
+            <if test="isPublic != null">
+                is_public,
+            </if>
+            <if test="onTop != null">
+                on_top,
+            </if>
+            <if test="keyWords != null">
+                key_words,
+            </if>
+            <if test="isContentFinish != null">
+                is_content_finish,
+            </if>
+            <if test="articleRights != null">
+                article_rights,
+            </if>
+            <if test="articleStatus != null">
+                article_status,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="articleId != null">
+                #{articleId,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTitle != null">
+                #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articleIntroduced != null">
+                #{articleIntroduced,jdbcType=VARCHAR},
+            </if>
+            <if test="articleRange != null">
+                #{articleRange,jdbcType=VARCHAR},
+            </if>
+            <if test="articleType != null">
+                #{articleType,jdbcType=VARCHAR},
+            </if>
+            <if test="articleAuthorId != null">
+                #{articleAuthorId,jdbcType=VARCHAR},
+            </if>
+            <if test="articleAuthorName != null">
+                #{articleAuthorName,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTags != null">
+                #{articleTags,jdbcType=VARCHAR},
+            </if>
+            <if test="lastCommentDate != null">
+                #{lastCommentDate,jdbcType=DATE},
+            </if>
+            <if test="commentCount != null">
+                #{commentCount,jdbcType=INTEGER},
+            </if>
+            <if test="likesCount != null">
+                #{likesCount,jdbcType=INTEGER},
+            </if>
+            <if test="readCount != null">
+                #{readCount,jdbcType=INTEGER},
+            </if>
+            <if test="limitComments != null">
+                #{limitComments,jdbcType=VARCHAR},
+            </if>
+            <if test="isPublic != null">
+                #{isPublic,jdbcType=INTEGER},
+            </if>
+            <if test="onTop != null">
+                #{onTop,jdbcType=INTEGER},
+            </if>
+            <if test="keyWords != null">
+                #{keyWords,jdbcType=VARCHAR},
+            </if>
+            <if test="isContentFinish != null">
+                #{isContentFinish,jdbcType=INTEGER},
+            </if>
+            <if test="articleRights != null">
+                #{articleRights,jdbcType=VARCHAR},
+            </if>
+            <if test="articleStatus != null">
+                #{articleStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpArticle">
+        update tb_hxp_article
+        <set>
+            <if test="articleId != null">
+                article_id = #{articleId,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTitle != null">
+                article_title = #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articleIntroduced != null">
+                article_introduced = #{articleIntroduced,jdbcType=VARCHAR},
+            </if>
+            <if test="articleRange != null">
+                article_range = #{articleRange,jdbcType=VARCHAR},
+            </if>
+            <if test="articleType != null">
+                article_type = #{articleType,jdbcType=VARCHAR},
+            </if>
+            <if test="articleAuthorId != null">
+                article_author_id = #{articleAuthorId,jdbcType=VARCHAR},
+            </if>
+            <if test="articleAuthorName != null">
+                article_author_name = #{articleAuthorName,jdbcType=VARCHAR},
+            </if>
+            <if test="articleTags != null">
+                article_tags = #{articleTags,jdbcType=VARCHAR},
+            </if>
+            <if test="lastCommentDate != null">
+                last_comment_date = #{lastCommentDate,jdbcType=DATE},
+            </if>
+            <if test="commentCount != null">
+                comment_count = #{commentCount,jdbcType=INTEGER},
+            </if>
+            <if test="likesCount != null">
+                likes_count = #{likesCount,jdbcType=INTEGER},
+            </if>
+            <if test="readCount != null">
+                read_count = #{readCount,jdbcType=INTEGER},
+            </if>
+            <if test="limitComments != null">
+                limit_comments = #{limitComments,jdbcType=VARCHAR},
+            </if>
+            <if test="isPublic != null">
+                is_public = #{isPublic,jdbcType=INTEGER},
+            </if>
+            <if test="onTop != null">
+                on_top = #{onTop,jdbcType=INTEGER},
+            </if>
+            <if test="keyWords != null">
+                key_words = #{keyWords,jdbcType=VARCHAR},
+            </if>
+            <if test="isContentFinish != null">
+                is_content_finish = #{isContentFinish,jdbcType=INTEGER},
+            </if>
+            <if test="articleRights != null">
+                article_rights = #{articleRights,jdbcType=VARCHAR},
+            </if>
+            <if test="articleStatus != null">
+                article_status = #{articleStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpArticle">
     update tb_hxp_article
     set article_id = #{articleId,jdbcType=VARCHAR},
       article_title = #{articleTitle,jdbcType=VARCHAR},
@@ -345,44 +345,54 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <!-- 根据条件查询信息 -->
-  <select id="findPage" resultMap="BaseResultMap" useCache="false">
-    select
-    <include refid="Base_Column_List"/>
-    from tb_hxp_article
-    <where>
-      <if test="tbHxpArticle != null and tbHxpArticle.articleTitle != null  and tbHxpArticle.articleTitle != '' ">
-        and article_title like concat(concat('%', #{tbHxpArticle.articleTitle}), '%')
-      </if>
-      <if test="tbHxpArticle != null and tbHxpArticle.articleRange != null  and tbHxpArticle.articleRange != '' ">
-        and article_range = #{tbHxpArticle.articleRange}
-      </if>
-      <if test="createDateBegin != null and createDateBegin != ''">
-        and CREATE_DATE <![CDATA[ >= ]]>   #{createDateBegin}
-      </if>
-      <if test="createDateEnd != null and createDateEnd != ''">
-        and CREATE_DATE <![CDATA[ <= ]]> #{createDateEnd}
-      </if>
-    </where>
-    <if test="order != null and order != '' ">
-      order by ${order} ${sort}
-    </if>
-    <if test="order == null or order == '' ">
-      order by comment_count,likes_count,read_count desc,create_date desc
-    </if>
-  </select>
+    <!-- 根据条件查询信息 -->
+    <select id="findPage" resultMap="BaseResultMap" useCache="false">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_hxp_article
+        <where>
+            <if test="tbHxpArticle != null and tbHxpArticle.articleTitle != null  and tbHxpArticle.articleTitle != '' ">
+                and article_title like concat(concat('%', #{tbHxpArticle.articleTitle}), '%')
+            </if>
+            <if test="tbHxpArticle != null and tbHxpArticle.articleRange != null  and tbHxpArticle.articleRange != '' ">
+                and article_range = #{tbHxpArticle.articleRange}
+            </if>
+            <if test="createDateBegin != null and createDateBegin != ''">
+                and CREATE_DATE <![CDATA[ >= ]]>   #{createDateBegin}
+            </if>
+            <if test="createDateEnd != null and createDateEnd != ''">
+                and CREATE_DATE <![CDATA[ <= ]]> #{createDateEnd}
+            </if>
+        </where>
+        <if test="order != null and order != '' ">
+            order by ${order} ${sort}
+        </if>
+        <if test="order == null or order == '' ">
+            order by comment_count,likes_count,read_count desc,create_date desc
+        </if>
+    </select>
 
-  <delete id="deleteByIds" parameterType="java.util.List">
-    DELETE FROM TB_HXP_ARTICLE WHERE id IN
-    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-      #{item}
-    </foreach>
+    <delete id="deleteByIds" parameterType="java.util.List">
+        DELETE FROM TB_HXP_ARTICLE WHERE id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
 
-  </delete>
+    </delete>
 
-  <select id="findArticleRangeCount" resultMap="articleRangeCount">
+    <select id="findArticleRangeCount" resultMap="articleRangeCount">
     select count(id),article_range from TB_HXP_ARTICLE GROUP BY article_range
   </select>
 
+    <select id="findOneByArticleId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_hxp_article
+        <where>
+            <if test="articleId != null and articleId != '' ">
+                article_id = #{articleId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 
 </mapper>

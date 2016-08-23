@@ -5,14 +5,14 @@
 require.config({
     baseUrl : "/" + document.URL.split("/")[3] + "/resources",
     paths:{
-        "jQuery":"js/common/jquery",
+        "jQuery":"js/common/jquery/jquery",
         "sidebar":"js/outside/sidebar/sidebar-transitions",
         "jqueryAniview":"js/outside/aniview/jquery.aniview.min",
         "ie":"js/common/ie",
-        "pjax":"js/common/pjax",
-        "nprogress":"js/common/nprogress",
-        "jqueryCookie":"js/common/jquery.cookie",
-        "icheck":"js/common/icheck"
+        "pjax":"js/common/pjax/pjax",
+        "nprogress":"js/common/nprogress/nprogress",
+        "jqueryCookie":"js/common/jquery/jquery.cookie",
+        "icheck":"js/common/icheck/icheck"
     },
     shim : {
         "jqueryAniview":['jQuery'],

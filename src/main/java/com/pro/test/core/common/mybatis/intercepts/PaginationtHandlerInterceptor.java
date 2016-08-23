@@ -30,7 +30,7 @@ import java.util.Properties;
  * Created by hxpeng on 2016/7/25.
  */
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class})})
-public class PaginationtHandlerInterceptor implements Interceptor {
+public class PaginationtHandlerInterceptor implements Interceptor{
 
     /**
      * 日志处理
@@ -47,15 +47,8 @@ public class PaginationtHandlerInterceptor implements Interceptor {
      */
     private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
 
-    /**
-     * 拦截方法
-     *
-     * @param invocation 调用代理类
-     * @return 返回处理结果
-     * @throws Throwable 统一异处理
-     */
+    @Override
     public Object intercept(Invocation invocation) throws Throwable {
-
         if (invocation.getTarget() instanceof RoutingStatementHandler) {
             RoutingStatementHandler statement = (RoutingStatementHandler) invocation.getTarget();
             MetaObject metaStatementHandler = MetaObject.forObject(statement, DEFAULT_OBJECT_FACTORY, DEFAULT_OBJECT_WRAPPER_FACTORY);
@@ -109,28 +102,32 @@ public class PaginationtHandlerInterceptor implements Interceptor {
         return invocation.proceed();
     }
 
+
     /**
      * 插入目标对象
      *
-     * @param target 目标对象
+     * @param o 目标对象
      * @return 返回目标对象
      */
-    public Object plugin(Object target) {
-        if (target instanceof StatementHandler) {
-            return Plugin.wrap(target, this);
+    @Override
+    public Object plugin(Object o) {
+        if (o instanceof StatementHandler) {
+            return Plugin.wrap(o, this);
         } else {
-            return target;
+            return o;
         }
     }
 
     /**
      * 设置属性
      *
-     * @param arg0 参数
+     * @param properties 参数
      */
     @Override
-    public void setProperties(Properties arg0) {
+    public void setProperties(Properties properties) {
+
     }
+
 
     /**
      * 从数据库里查询总的记录数并计算总页数，回写进分页参数<code>Pagination</code>,这样调用
@@ -143,7 +140,7 @@ public class PaginationtHandlerInterceptor implements Interceptor {
      * @param boundSql        绑定的SQL语句
      * @param pagination      分页对象
      */
-    private void setPageParameter(Connection connection, Dialect dialect, String sql,
+    private static void setPageParameter(Connection connection, Dialect dialect, String sql,
                                   MappedStatement mappedStatement, BoundSql boundSql, Pagination pagination) {
         // 记录总记录数
         String countSql = SqlParser.getCountSql(dialect, sql);
@@ -186,5 +183,4 @@ public class PaginationtHandlerInterceptor implements Interceptor {
             }
         }
     }
-
 }

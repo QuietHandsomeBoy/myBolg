@@ -23,9 +23,21 @@ public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticl
         return dao.selectByPrimaryKey(id);
     }
 
+    public TbHxpArticle findOneByArticleID(String articleId){
+        return dao.findOneByArticleID(articleId);
+    }
 
+    /**
+     * 新增一篇文章
+     * @param tbHxpArticle
+     * @return
+     * @throws Exception
+     */
     public int insertArticle(TbHxpArticle tbHxpArticle) throws Exception {
         tbHxpArticle.setArticleId(UUIDUtils.getUUID());
+        if(tbHxpArticle.getArticleRange() == null){
+            tbHxpArticle.setArticleRange(ArticleRange.other.getKey());
+        }
         dao.insert(tbHxpArticle);
         updateArticleRangsCountInfo(tbHxpArticle.getArticleRange(),1);
         return 0;

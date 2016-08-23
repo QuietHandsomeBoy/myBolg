@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/main.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/animate.min.css">
-    <script data-main="${_outsideJsUrl}/config" src="${_commonJsUrl}/require.js"></script>
+    <script data-main="${_outsideJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
     <title>There is something in the New York air that makes sleep useless</title>
 </head>
 <body>

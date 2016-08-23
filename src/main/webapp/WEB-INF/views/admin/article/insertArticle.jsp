@@ -177,8 +177,7 @@
                                         <h5>关键字设置<label class="label label-gray">用&nbsp;|&nbsp;字符隔开&nbsp;;&nbsp;最多设置四个关键字</label></h5>
                                         <div class="key-words form-group">
                                             <div style="position: relative;">
-                                                <div id="key-words-list">
-                                                </div>
+                                                <div id="key-words-list"></div>
                                                 <input type='text' name="keyWords" class="form-control key-words-input"/>
                                             </div>
                                         </div>
@@ -202,7 +201,7 @@
                                         <div class="related-article-box">
                                             <div>
                                                 <input type='text' name="aboutArticleUrl" class="form-control key-words-input" value="http://www.baidu.com"/>
-                                                <button class="add-btn fa fa-plus" type="button" data-type="add"></button>s
+                                                <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
                                             </div>
                                         </div>
                                         <h5>其他设置</h5>
