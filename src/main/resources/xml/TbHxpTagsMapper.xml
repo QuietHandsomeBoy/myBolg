@@ -3,11 +3,8 @@
 <mapper namespace="com.pro.test.web.dao.mapper.TbHxpTagsMapper" >
   <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpTags" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="tag_id" property="tagId" jdbcType="VARCHAR" />
+    <result column="tag_code" property="tagCode" jdbcType="VARCHAR" />
     <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
-    <result column="tag_title" property="tagTitle" jdbcType="VARCHAR" />
-    <result column="tag_img" property="tagImg" jdbcType="VARCHAR" />
-    <result column="tag_count" property="tagCount" jdbcType="INTEGER" />
     <result column="create_date" property="createDate" jdbcType="DATE" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="update_date" property="updateDate" jdbcType="DATE" />
@@ -16,11 +13,10 @@
     <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, tag_id, tag_name, tag_title, tag_img, tag_count, create_date, create_by, update_date, 
-    update_by, remark, is_deleted
+    id, tag_code, tag_name, create_date, create_by, update_date, update_by, remark, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_hxp_tags
     where id = #{id,jdbcType=VARCHAR}
@@ -30,16 +26,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpTags" >
-    insert into tb_hxp_tags (id, tag_id, tag_name, 
-      tag_title, tag_img, tag_count, 
-      create_date, create_by, update_date, 
-      update_by, remark, is_deleted
-      )
-    values (#{id,jdbcType=VARCHAR}, #{tagId,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR}, 
-      #{tagTitle,jdbcType=VARCHAR}, #{tagImg,jdbcType=VARCHAR}, #{tagCount,jdbcType=INTEGER}, 
-      #{createDate,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, 
-      #{updateBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}
-      )
+    insert into tb_hxp_tags (id, tag_code, tag_name,
+    create_date, create_by, update_date,
+    update_by, remark, is_deleted
+    )
+    values (#{id,jdbcType=VARCHAR}, #{tagCode,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR},
+    #{createDate,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE},
+    #{updateBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpTags" >
     insert into tb_hxp_tags
@@ -47,20 +41,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="tagId != null" >
-        tag_id,
+      <if test="tagCode != null" >
+        tag_code,
       </if>
       <if test="tagName != null" >
         tag_name,
-      </if>
-      <if test="tagTitle != null" >
-        tag_title,
-      </if>
-      <if test="tagImg != null" >
-        tag_img,
-      </if>
-      <if test="tagCount != null" >
-        tag_count,
       </if>
       <if test="createDate != null" >
         create_date,
@@ -85,20 +70,11 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="tagId != null" >
-        #{tagId,jdbcType=VARCHAR},
+      <if test="tagCode != null" >
+        #{tagCode,jdbcType=VARCHAR},
       </if>
       <if test="tagName != null" >
         #{tagName,jdbcType=VARCHAR},
-      </if>
-      <if test="tagTitle != null" >
-        #{tagTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="tagImg != null" >
-        #{tagImg,jdbcType=VARCHAR},
-      </if>
-      <if test="tagCount != null" >
-        #{tagCount,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=DATE},
@@ -123,20 +99,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpTags" >
     update tb_hxp_tags
     <set >
-      <if test="tagId != null" >
-        tag_id = #{tagId,jdbcType=VARCHAR},
+      <if test="tagCode != null" >
+        tag_code = #{tagCode,jdbcType=VARCHAR},
       </if>
       <if test="tagName != null" >
         tag_name = #{tagName,jdbcType=VARCHAR},
-      </if>
-      <if test="tagTitle != null" >
-        tag_title = #{tagTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="tagImg != null" >
-        tag_img = #{tagImg,jdbcType=VARCHAR},
-      </if>
-      <if test="tagCount != null" >
-        tag_count = #{tagCount,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=DATE},
@@ -161,11 +128,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpTags" >
     update tb_hxp_tags
-    set tag_id = #{tagId,jdbcType=VARCHAR},
+    set tag_code = #{tagCode,jdbcType=VARCHAR},
       tag_name = #{tagName,jdbcType=VARCHAR},
-      tag_title = #{tagTitle,jdbcType=VARCHAR},
-      tag_img = #{tagImg,jdbcType=VARCHAR},
-      tag_count = #{tagCount,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=DATE},
       create_by = #{createBy,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=DATE},

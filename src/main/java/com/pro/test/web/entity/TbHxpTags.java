@@ -1,26 +1,27 @@
 package com.pro.test.web.entity;
 
+import com.pro.test.core.common.annotation.*;
+
 import java.util.Date;
 
 public class TbHxpTags {
+    @TableId
     private String id;
 
-    private String tagId;
+    private String tagCode;
 
     private String tagName;
 
-    private String tagTitle;
-
-    private String tagImg;
-
-    private Integer tagCount;
-
+    @CreateDate
     private Date createDate;
 
+    @CreateBy
     private String createBy;
 
+    @LastUpdateDate
     private Date updateDate;
 
+    @LastUpdateBy
     private String updateBy;
 
     private String remark;
@@ -35,12 +36,12 @@ public class TbHxpTags {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getTagId() {
-        return tagId;
+    public String getTagCode() {
+        return tagCode;
     }
 
-    public void setTagId(String tagId) {
-        this.tagId = tagId == null ? null : tagId.trim();
+    public void setTagCode(String tagCode) {
+        this.tagCode = tagCode == null ? null : tagCode.trim();
     }
 
     public String getTagName() {
@@ -49,30 +50,6 @@ public class TbHxpTags {
 
     public void setTagName(String tagName) {
         this.tagName = tagName == null ? null : tagName.trim();
-    }
-
-    public String getTagTitle() {
-        return tagTitle;
-    }
-
-    public void setTagTitle(String tagTitle) {
-        this.tagTitle = tagTitle == null ? null : tagTitle.trim();
-    }
-
-    public String getTagImg() {
-        return tagImg;
-    }
-
-    public void setTagImg(String tagImg) {
-        this.tagImg = tagImg == null ? null : tagImg.trim();
-    }
-
-    public Integer getTagCount() {
-        return tagCount;
-    }
-
-    public void setTagCount(Integer tagCount) {
-        this.tagCount = tagCount;
     }
 
     public Date getCreateDate() {

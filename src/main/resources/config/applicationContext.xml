@@ -103,7 +103,7 @@
 
     <!-- 事务 aop 配置 -->
     <aop:config>
-        <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.*.service..*(..))"/>
+        <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.*.service..*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
     </aop:config>
 

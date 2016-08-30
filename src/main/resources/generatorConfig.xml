@@ -18,16 +18,17 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-        <javaModelGenerator targetPackage="com.pro.test.web.entity" targetProject="src/main/java">
+        <!--<javaModelGenerator targetPackage="com.pro.test.web.entity" targetProject="src/main/java">-->
+        <javaModelGenerator targetPackage="entity" targetProject="D:\table">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
-        <sqlMapGenerator targetPackage="xml" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="xml" targetProject="D:\table">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <javaClientGenerator targetPackage="com.pro.test.web.dao.mapper" targetProject="src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="mapper" targetProject="D:\table" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
             <property name="rootInterface" value="com.pro.test.core.common.mybatis.dao.GenericMapper"/>
         </javaClientGenerator>
@@ -37,7 +38,7 @@
                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
             <!--&lt;!&ndash;<property name="useActualColumnNames" value="true"/>&ndash;&gt;-->
         <!--</table>-->
-        <table tableName="%"
+        <table tableName="TB_HXP_TAGS"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <!--<property name="useActualColumnNames" value="true"/>-->

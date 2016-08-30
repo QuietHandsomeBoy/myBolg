@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pro.test.web.dao.mapper.TbHxpArticleContentMapper" >
-  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpArticleContent" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="DATE" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="DATE" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pro.test.web.entity.TbHxpArticleContent" extends="BaseResultMap" >
-    <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpArticleContentMapper">
+    <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpArticleContent">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="article_id" property="articleId" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="DATE"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pro.test.web.entity.TbHxpArticleContent" extends="BaseResultMap">
+        <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, article_id, create_date, create_by, update_date, update_by, is_deleted
   </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     article_content
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_hxp_article_content
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_hxp_article_content
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <!--根据文章ID查找文章正文-->
+    <select id="findOneByArticleId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_hxp_article_content
+        where article_id = #{articleId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_hxp_article_content
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpArticleContent" >
+    <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpArticleContent">
     insert into tb_hxp_article_content (id, article_id, create_date, 
       create_by, update_date, update_by, 
       is_deleted, article_content)
@@ -39,89 +49,80 @@
       #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, #{updateBy,jdbcType=VARCHAR}, 
       #{isDeleted,jdbcType=INTEGER}, #{articleContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpArticleContent" >
-    insert into tb_hxp_article_content
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="articleId != null" >
-        article_id,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
-      <if test="articleContent != null" >
-        article_content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="articleId != null" >
-        #{articleId,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=DATE},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=INTEGER},
-      </if>
-      <if test="articleContent != null" >
-        #{articleContent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpArticleContent" >
-    update tb_hxp_article_content
-    <set >
-      <if test="articleId != null" >
-        article_id = #{articleId,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=DATE},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=DATE},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=INTEGER},
-      </if>
-      <if test="articleContent != null" >
-        article_content = #{articleContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pro.test.web.entity.TbHxpArticleContent" >
+    <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpArticleContent">
+        insert into tb_hxp_article_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="articleContent != null">
+                article_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="articleId != null">
+                #{articleId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=DATE},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="articleContent != null">
+                #{articleContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByArticleIdSelective" parameterType="com.pro.test.web.entity.TbHxpArticleContent">
+        update tb_hxp_article_content
+        <set>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=DATE},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="articleContent != null">
+                article_content = #{articleContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where article_id = #{articleId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pro.test.web.entity.TbHxpArticleContent">
     update tb_hxp_article_content
     set article_id = #{articleId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=DATE},
@@ -132,7 +133,7 @@
       article_content = #{articleContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpArticleContent" >
+    <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpArticleContent">
     update tb_hxp_article_content
     set article_id = #{articleId,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=DATE},

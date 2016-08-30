@@ -19,6 +19,8 @@ public class TbHxpArticleDao extends GenericDAO<TbHxpArticle, TbHxpArticleMapper
         return mapper.insert(tbHxpArticle);
     }
 
+    public int update(TbHxpArticle tbHxpArticle) {return mapper.updateByArticleIDSelective(tbHxpArticle);}
+
     public List<Map<String,Object>> findArticleRangeCount(){return mapper.findArticleRangeCount();}
 
     public TbHxpArticle findOneByArticleID(String articleId){return mapper.findOneByArticleId(articleId);}

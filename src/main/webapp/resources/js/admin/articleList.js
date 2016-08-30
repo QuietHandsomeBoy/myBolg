@@ -3,62 +3,71 @@
  */
 
 
-define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
+define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck','pjax','baseutil'], function () {
+
+    var publicUtil = PublicUtil;
+
+    var binding = function(){
+        $('table input[type=checkbox]').on('ifChecked', function () {
+            var len = $(".list-content-box input[type='checkbox']:checked").length;
+            if(len == 1){
+                $("#edit-one-article").removeAttr("disabled");
+            }else if (len > 1) {
+                $("#edit-one-article").attr("disabled", "disabled");
+            }
+        });
+        $('table input[type=checkbox]').on('ifUnchecked', function () {
+            var len = $(".list-content-box input[type='checkbox']:checked").length;
+            if(len <= 0){
+                $("#edit-one-article").attr("disabled", "disabled");
+            }
+            if (len < 2 && len > 0) {
+                $("#edit-one-article").removeAttr("disabled");
+            }
+        });
+
+        $('.list-content-box .i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green'
+        });
+    }
 
     var init = function () {
+        binding();
 
-        $(".datetimepicker ").remove();//清除旧的时间选择器
+        $("#content").pjax("a", ".list-main-box", {fragment: '.list-main-box',replace:false,scrollTo:false})
+            .on("click", "#navigation li a", function () {
+                $(".list-main-box").css("opacity","0");
+            })
+            .on("pjax:complete", function () {
+                setTimeout(function () {
+                    $(".list-main-box").css("opacity","1");
+                }, 200);
+            })
+
+        if($(".datetimepicker").length < 1){
+            $(".form-group .date").datetimepicker({
+                autoclose: true,
+                todayBtn: true
+            });
+        }
 
         var srearchCondition = '';//文章查询条件
         var paginationCondition = '';//分页查询条件
 
-        $(".form-group .date").datetimepicker({
-            autoclose: true,
-            todayBtn: true
-        });
         $('.selectpicker').selectpicker({
             showIcon: true,
             showTick: true,
             style: 'select-btn'
         });
-        $('table input[type=checkbox]').on('ifChecked', function () {
-            if ($(".list-content-box input[type='checkbox']:checked").length > 1) {
-                $("#edit-one-article").attr("disabled", "disabled");
-            }
-        });
-        $('table input[type=checkbox]').on('ifUnchecked', function () {
-            if ($(".list-content-box input[type='checkbox']:checked").length < 2) {
-                $("#edit-one-article").removeAttr("disabled");
-            }
-        });
 
-        $('.category-list .i-checks').iCheck({
-            checkboxClass: 'icheckbox_flat-blue'
-        });
         $('.other-condition .i-checks').iCheck({
             checkboxClass: 'icheckbox_flat-orange'
         });
-        $('.folder-list .i-checks').each(function () {
-            var self = $(this),
-                label = self.next(),
-                label_text = label.text();
 
-            label.remove();
-            self.iCheck({
-                checkboxClass: 'icheckbox_line-blue',
-                radioClass: 'icheckbox_line-blue',
-                insert: '<div class="icheck_line-icon"></div>' + label_text
-            });
-        });
-        $('.folder-list .i-checks').iCheck('check');
-
-        $('.list-content-box .i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green'
-        });
 
         $("#navigation").find("li").on("click", function () {
             $(this).addClass("active").siblings().removeClass("active");
-            $("#articleRange").val($(this).attr("data-range-name"));
+            $("#articleRange").val($(this).find("a").attr("data-type"));
         })
 
         $("#toggle-all").click(function () {
@@ -70,7 +79,6 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
             } else {
                 $(".list-content-box table tr").each(function (i, z) {
                     $(z).find("input[type=checkbox]").iCheck('uncheck');
-                    $("#edit-one-article").removeAttr("disabled");
                 })
                 $(this).find("input[type=hidden]").val(0)
             }
@@ -106,10 +114,28 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
         })
 
         $("#refresh-all").on("click",function(){
-            submitSearchForm(srearchCondition + '&' + paginationCondition, "pagination");
+            assembling();
+        })
+
+        $("#edit-one-article").on("click",function(){
+            var articleid = $(".list-content-box input[type='checkbox']:checked").val();
+            $("#vehicle-a").attr("href",ctx + "/admin/article/insertArticle.html?articleId="+articleid);
+            $("#vehicle-a").click();
         })
 
         $("#searchBtn").on("click", function () {
+            assembling();
+        })
+
+        var totalPages = Number($("#totalPages").val());
+        var currentPage = Number($("#page").val());
+        var lastBtn = $("#lastBtn");
+        var nextBtn = $("#nextBtn");
+        $("#articlePagination").on("click", "li", function () {
+            paginationFun($(this));
+        })
+
+        var assembling = function(){
             srearchCondition = "";
             $.each($("#searchArticleParam").serializeArray(), function (k, v) {
                 if ($("input[name='" + v.name + "']").attr("type") == 'text') {
@@ -122,17 +148,16 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
                     srearchCondition += v.name + "=" + $("select[name='" + v.name + "']").val() + "&";
                 }
             })
+            var articleRange = $("input[name='articleRange']").val();
+            if(!publicUtil.isEmpty(articleRange)){
+                if(articleRange != "all"){
+                    srearchCondition += "articleRange="+articleRange+"&";
+                }
+            }
             srearchCondition = srearchCondition.substring(0, srearchCondition.length - 1);
             submitSearchForm(srearchCondition, "search");
-        })
+        }
 
-        var totalPages = Number($("#totalPages").val());
-        var currentPage = Number($("#page").val());
-        var lastBtn = $("#lastBtn");
-        var nextBtn = $("#nextBtn");
-        $("#articlePagination").on("click", "li", function () {
-            paginationFun($(this));
-        })
 
         var paginationFun = function (obj) {
             var page = $(obj);
@@ -166,9 +191,11 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
             }
 
             paginationCondition = "";
-            $.each($("#searchArticleParam").serializeArray(), function (k, v) {
+            $.each($(".list-main-box").find("input"), function (k, v) {
                 if ($("input[name='" + v.name + "']").attr("type") == 'hidden') {
-                    paginationCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
+                    if(v.name != "articleRange"){
+                        paginationCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
+                    }
                 }
             })
             paginationCondition = paginationCondition.substring(0, paginationCondition.length - 1);
@@ -189,7 +216,7 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
                 nextBtn.removeAttr("disabled");
             }
         }
-        $(".list-main-box").addClass("animated").addClass("fadeInRight");
+        $(".right-animated-box").addClass("animated").addClass("fadeInRight");
 
 
         var submitSearchForm = function (condition, type) {
@@ -215,25 +242,21 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
                     }
                     $.each(articleList, function (k, v) {
                         resultHtml += '<tr>';
-                        resultHtml += '<td><input type="checkbox" class="i-checks" value="'+ v.id+'"></td>';
+                        resultHtml += '<td><input type="checkbox" class="i-checks" value="'+ v.articleId+'"></td>';
                         resultHtml += '<td><a href="javascript:;" class="article-title">' + v.articleTitle + '</a></td>';
                         resultHtml += '<td><label class="label label-biji">' + changeArticleTag(v.articleRange) + '</label></td>';
-                        resultHtml += '<td>' + v.likesCount + '</td>';
-                        resultHtml += '<td>' + v.readCount + '</td>';
-                        resultHtml += '<td>' + v.commentCount + '</td>';
+                        //resultHtml += '<td>' + v.likesCount + '</td>';
+                        //resultHtml += '<td>' + v.readCount + '</td>';
+                        //resultHtml += '<td>' + v.commentCount + '</td>';
                         resultHtml += '<td>' + v.articleAuthorName + '</td>';
                         resultHtml += '<td>' + new Date(v.createDate).format("yyyy-MM-dd") + '</td>';
+                        resultHtml += '<td>' + new Date(v.updateDate).format("yyyy-MM-dd") + '</td>';
                         resultHtml += "</tr>";
                     })
                     setTimeout(function () {
                         contextBox.html(resultHtml);
                         //重新绑定
-                        $('.list-content-box .i-checks').iCheck({
-                            checkboxClass: 'icheckbox_square-green'
-                        });
-                        $('table input[type=checkbox]').on('ifChecked', function () {
-                            $("#edit-one-article").attr("disabled", "disabled");
-                        });
+                        binding();
                         contextBox.css("opacity", "1");
                     }, 300);
 
@@ -260,7 +283,7 @@ define(['bootstrapSelect','bootstrapDatetimepicker', 'icheck'], function () {
                         lastBtn = $("#lastBtn");
                         nextBtn = $("#nextBtn");
                     }
-                    $("#edit-one-article").removeAttr("disabled");//除去edit按钮的禁用元素
+                    $("#edit-one-article").attr("disabled","disabled");//除去edit按钮的禁用元素
                 },
                 error: function () {
                     setTimeout(function(){$(".pagination-loading").hide();},500);

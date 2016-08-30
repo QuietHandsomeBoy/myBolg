@@ -28,23 +28,13 @@ public class TbHxpArticle implements Serializable {
 
     private String articleTags;
 
-    private Date lastCommentDate;
-
-    private Integer commentCount;
-
-    private Integer likesCount;
-
-    private Integer readCount;
-
-    private String limitComments;
-
     private Integer isPublic;
+
+    private String aboutArticleUrl;
 
     private Integer onTop;
 
     private String keyWords;
-
-    private Integer isContentFinish;
 
     private String articleRights;
 
@@ -138,52 +128,20 @@ public class TbHxpArticle implements Serializable {
         this.articleTags = articleTags == null ? null : articleTags.trim();
     }
 
-    public Date getLastCommentDate() {
-        return lastCommentDate;
-    }
-
-    public void setLastCommentDate(Date lastCommentDate) {
-        this.lastCommentDate = lastCommentDate;
-    }
-
-    public Integer getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public Integer getLikesCount() {
-        return likesCount;
-    }
-
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
-    }
-
-    public Integer getReadCount() {
-        return readCount;
-    }
-
-    public void setReadCount(Integer readCount) {
-        this.readCount = readCount;
-    }
-
-    public String getLimitComments() {
-        return limitComments;
-    }
-
-    public void setLimitComments(String limitComments) {
-        this.limitComments = limitComments == null ? null : limitComments.trim();
-    }
-
     public Integer getIsPublic() {
         return isPublic;
     }
 
     public void setIsPublic(Integer isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public String getAboutArticleUrl() {
+        return aboutArticleUrl;
+    }
+
+    public void setAboutArticleUrl(String aboutArticleUrl) {
+        this.aboutArticleUrl = aboutArticleUrl == null ? null : aboutArticleUrl.trim();
     }
 
     public Integer getOnTop() {
@@ -200,14 +158,6 @@ public class TbHxpArticle implements Serializable {
 
     public void setKeyWords(String keyWords) {
         this.keyWords = keyWords == null ? null : keyWords.trim();
-    }
-
-    public Integer getIsContentFinish() {
-        return isContentFinish;
-    }
-
-    public void setIsContentFinish(Integer isContentFinish) {
-        this.isContentFinish = isContentFinish;
     }
 
     public String getArticleRights() {

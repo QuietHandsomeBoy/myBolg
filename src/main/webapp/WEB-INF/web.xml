@@ -54,6 +54,13 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/resources/js/*</url-pattern>
+        <url-pattern>/resources/css/*</url-pattern>
+        <url-pattern>/resources/images/*</url-pattern>
+        <url-pattern>/resources/fonts/*</url-pattern>
+    </servlet-mapping>
 
     <!-- 服务初始化 -->
     <servlet>

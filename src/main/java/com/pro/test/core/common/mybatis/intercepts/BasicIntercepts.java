@@ -56,6 +56,16 @@ public class BasicIntercepts implements Interceptor {
                     field.set(parameter,currentDate);
                     field.setAccessible(false);
                 }
+                if (AnnotationUtils.getAnnotation(field, LastUpdateBy.class) != null) {
+                    field.setAccessible(true);
+                    field.set(parameter,"admin");
+                    field.setAccessible(false);
+                }
+                if (AnnotationUtils.getAnnotation(field, LastUpdateDate.class) != null) {
+                    field.setAccessible(true);
+                    field.set(parameter,currentDate);
+                    field.setAccessible(false);
+                }
             }
         }
         return invocation.proceed();

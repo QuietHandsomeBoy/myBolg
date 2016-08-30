@@ -21,10 +21,7 @@ public class ArticleController {
 
     @RequestMapping(value = "articleDetail/{pdId}.html")
     public String addArticle(@PathVariable String pdId,  RequestResolver requestResolver) {
-
-
         return "outside/article/articleDetail";
-
     }
 
 

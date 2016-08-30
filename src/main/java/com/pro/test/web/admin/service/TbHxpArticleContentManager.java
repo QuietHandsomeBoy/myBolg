@@ -13,12 +13,16 @@ import org.springframework.stereotype.Service;
 public class TbHxpArticleContentManager extends SimpleManager<TbHxpArticleContent, TbHxpArticleContentDao> {
 
 
-    public String test(){
+    public String test() {
         dao.findAll();
         return "";
     }
 
-    public int insert(TbHxpArticleContent tbHxpArticleContent){
+    public int insert(TbHxpArticleContent tbHxpArticleContent) {
         return this.dao.insert(tbHxpArticleContent);
+    }
+
+    public TbHxpArticleContent findOneByArticleId(String articleId) {
+        return this.dao.findOneByArticleId(articleId);
     }
 }

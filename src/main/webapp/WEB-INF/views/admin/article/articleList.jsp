@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/WEB-INF/views/common/top.jsp"%>
+<%@include file="/WEB-INF/views/common/top.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -24,7 +24,7 @@
 </head>
 <body>
 <div id="myWorld">
-    <nav class="left-menu">
+    <nav class="left-menu" id="left-menu">
         <div class="sidebar-collapse animated fadeInLeft">
             <div class="nav-header">
                 <div class="dropdown profile-element">
@@ -158,6 +158,7 @@
                 <!--<li class="active"><strong>Flot Charts</strong></li>-->
             </ol>
         </div>
+        <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
             <div>
                 <div class="row">
@@ -167,12 +168,7 @@
                                 <div class="file-manager">
                                     <form id="searchArticleParam" method="post"
                                           action="${_Weburl}/admin/article/articleList.html">
-                                        <input type="hidden" id="totalPages" value="${pagination.totalPages}">
-                                        <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
-                                        <input type="hidden" id="page" name="page" value="${pagination.currentPage}">
-                                        <input type="hidden" id="size" name="size" value="${pagination.pageSize}">
-                                        <input type="hidden" id="order" name="order" value="${order}">
-                                        <input type="hidden" value="${tbHxpArticle.articleRange}" name="articleRange"/>
+                                        <input type="hidden" value="${tbHxpArticle.articleRange}" name="articleRange" id="articleRange"/>
                                         <div class="left-box-tab-header">
                                             <ul id="navigation">
                                                 <c:forEach items="${articleRangeCount}" var="range">
@@ -187,8 +183,10 @@
                                                             <li>
                                                         </c:otherwise>
                                                     </c:choose>
-                                                    <a href="${_Weburl}/admin/article/articleList.html<c:if test='${range.articleRange ne "all"}'>?articleRange=${range.articleRange}</c:if>">
-                                                            ${range.articleRangeName}<span class="label label-info pull-right">${range.articleRangeCount}</span>
+                                                    <a data-type="${range.articleRange}"
+                                                       href="${_Weburl}/admin/article/articleList.html<c:if test='${range.articleRange ne "all"}'>?articleRange=${range.articleRange}</c:if>">
+                                                            ${range.articleRangeName}<span
+                                                            class="label label-info pull-right">${range.articleRangeCount}</span>
                                                     </a>
                                                     </li>
                                                 </c:forEach>
@@ -197,6 +195,7 @@
                                         <h5>Title Like</h5>
                                         <div class="form-group">
                                             <input type='text' class="form-control search-title-input"
+                                                   autocomplete="off"
                                                    name="articleTitle"/>
                                         </div>
                                         <h5>Time Frame</h5>
@@ -220,29 +219,25 @@
                                                 <div class="col-lg-3 pull-left">
                                                     <h5>Rights</h5>
                                                     <select class="selectpicker" name="articleRights">
-                                                        <option value="ORIGINAL">原创</option>
-                                                        <option value="REPRINT">转载</option>
-                                                        <option value="XXXX">求同存异</option>
-                                                        <option value="OTHERS">其他</option>
+                                                        <option value="">请选择</option>
+                                                        <c:forEach items="${articleRightsEnumMap}" var="articleRightsEnum">
+                                                            <option <c:if test="${tbHxpArticle.articleRights eq articleRightsEnum.value}">selected</c:if> value="${articleRightsEnum.key}">${articleRightsEnum.value}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-8 pull-right">
                                                     <h5>Others</h5>
-                                                    <label class=""><input type="checkbox" class="i-checks"
-                                                                           name="isPublic" value="1">公开</label>
-                                                    <label class=""><input type="checkbox" class="i-checks"
-                                                                           name="limitComments" value="1">置顶</label>
-                                                    <label class=""><input type="checkbox" class="i-checks"
-                                                                           name="limitComments" value="1">限制评论</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="isPublic" value="1">公开</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="limitComments" value="1">置顶</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="limitComments" value="1">限制评论</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="search-box">
                                             <a href="javascript:;" id="searchBtn">Search</a>
                                         </div>
-                                        <div class="add-article-box">
-                                            <a href="${_Weburl}/admin/article/insertArticle.html"
-                                               id="addArticleBtn">ADD </a>
+                                        <div class="clean-box">
+                                            <a href="javascript:;" id="cleanBtn">Clean Condition</a>
                                         </div>
                                         <div class="clearfix"></div>
                                     </form>
@@ -251,94 +246,112 @@
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="list-main-box">
-                            <div class="pagination-loading" style="display: none;"></div>
-                            <div class="list-header-box">
-                                <h2><span id="articleRangeSpan">全部</span>
-                                    <span style="font-size: 16px;">(共查找出<span
-                                            id="totalRecordsSpan">${pagination.totalRecords}</span>条记录)</span>
-                                </h2>
-                                <div class="list-pagination-box pull-right">
-                                    <ul class="pagination" id="articlePagination">
-                                        <li class="page">
-                                            <button id="lastBtn" disabled="true">&laquo;</button>
-                                        </li>
-                                        <li class="active page">
-                                            <button class="paginationNum">1</button>
-                                        </li>
-                                        <c:forEach begin="2" end="${pagination.totalPages}" var="page">
+                        <div class="right-animated-box">
+                            <div class="list-main-box">
+                                <input type="hidden" id="totalPages" value="${pagination.totalPages}">
+                                <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
+                                <input type="hidden" id="page" name="page" value="${pagination.currentPage}">
+                                <input type="hidden" id="order" name="order" value="${order}">
+                                <div class="pagination-loading" style="display: none;"></div>
+                                <div class="list-header-box">
+                                    <h2>
+                                        <span id="articleRangeSpan">
+                                            <c:if test="${articleRange eq null}">全部</c:if>
+                                            <t:translate source="${articleRangeCount}" value="${articleRange}"
+                                                         sourceKey="articleRange,articleRangeName"/>
+                                        </span>
+                                    <span style="font-size: 16px;">
+                                        (共查找出<span id="totalRecordsSpan">${pagination.totalRecords}</span>条记录)</span>
+                                    </h2>
+                                    <div class="list-pagination-box pull-right">
+                                        <ul class="pagination" id="articlePagination">
                                             <li class="page">
-                                                <button class="paginationNum">${page}</button>
+                                                <button id="lastBtn" disabled="true">&laquo;</button>
                                             </li>
-                                        </c:forEach>
-                                        <li class="page">
-                                            <button id="nextBtn">&raquo;</button>
-                                        </li>
-                                    </ul>
-                                    <ul id="pagination-demo" class="pagination-sm">
+                                            <li class="active page">
+                                                <button class="paginationNum">1</button>
+                                            </li>
+                                            <c:forEach begin="2" end="${pagination.totalPages}" var="page">
+                                                <li class="page">
+                                                    <button class="paginationNum">${page}</button>
+                                                </li>
+                                            </c:forEach>
+                                            <li class="page">
+                                                <c:choose>
+                                                    <c:when test="${pagination.totalPages le 1}">
+                                                        <button id="nextBtn" disabled="true">&raquo;</button>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <button id="nextBtn">&raquo;</button>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                        <ul id="pagination-demo" class="pagination-sm">
+
+                                        </ul>
+                                    </div>
+                                    <div class="header-tool-box">
+                                        <button id="toggle-all" class="btn-white btn-sm">
+                                            <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle All
+                                        </button>
+                                        <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh</button>
+                                        <button id="edit-one-article" class="btn-white btn-sm" disabled="disabled"><i class="fa fa-edit"></i>Edit</button>
+                                        <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete</button>
+                                        <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
+                                    </div>
                                 </div>
-                                <div class="header-tool-box">
-                                    <button id="toggle-all" class="btn-white btn-sm">
-                                        <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle All
-                                    </button>
-                                    <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh
-                                    </button>
-                                    <button id="edit-one-article" class="btn-white btn-sm"><i class="fa fa-edit"></i>Edit
-                                    </button>
-                                    <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
-                                    </button>
-                                    <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
-                                </div>
-                            </div>
-                            <div class="list-content-box">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Article Title</th>
-                                        <th>Article Type</th>
-                                        <th><a href="javascript:;">Likes<i class="fa fa-chevron-down"></i></a></th>
-                                        <th><a href="javascript:;">Reads<i class="fa fa-chevron-down"></i></a></th>
-                                        <th><a href="javascript:;">Comments<i class="fa fa-chevron-down"></i></a></th>
-                                        <th>Admin</th>
-                                        <th><a href="javascript:;">Create Time<i class="fa fa-chevron-down"></i></a>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${articleList}" var="article">
+                                <div class="list-content-box">
+                                    <table class="table table-hover">
+                                        <thead>
                                         <tr>
-                                            <td><input type="checkbox" class="i-checks" value="${article.id}"></td>
-                                            <td><a href="javascript:;" class="article-title">${article.articleTitle}</a>
-                                            </td>
-                                            <td>
-                                                <label class="label label-biji">
-                                                <t:translate source="${articleRangeCount}" value="${article.articleRange}" sourceKey="articleRange,articleRangeName"/>
-                                                </label>
-                                            </td>
-                                            <td>${article.likesCount}</td>
-                                            <td>${article.readCount}</td>
-                                            <td>${article.commentCount}</td>
-                                            <td>${article.articleAuthorName}</td>
-                                            <td><fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd"/></td>
+                                            <th></th>
+                                            <th>Article Title</th>
+                                            <th>Article Type</th>
+                                            <th>Admin</th>
+                                            <th><a href="javascript:;">Create Time<i class="fa fa-chevron-down"></i></a>
+                                            <th><a href="javascript:;">Last Update Time<i
+                                                    class="fa fa-chevron-down"></i></a>
+                                            </th>
                                         </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${articleList}" var="article">
+                                            <tr>
+                                                <td><input type="checkbox" class="i-checks" value="${article.articleId}"></td>
+                                                <td><a href="javascript:;"
+                                                       class="article-title">${article.articleTitle}</a>
+                                                </td>
+                                                <td>
+                                                    <label class="label label-biji">
+                                                        <t:translate source="${articleRangeCount}"
+                                                                     value="${article.articleRange}"
+                                                                     sourceKey="articleRange,articleRangeName"/>
+                                                    </label>
+                                                </td>
+                                                <td>${article.articleAuthorName}</td>
+                                                <td><fmt:formatDate value="${article.createDate}"
+                                                                    pattern="yyyy-MM-dd"/></td>
+                                                <td><fmt:formatDate value="${article.updateDate}"
+                                                                    pattern="yyyy-MM-dd"/></td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clearfix"></div>
+                                <script>
+                                    var ctx = '${_Weburl}';
+                                    require(["articleList"], function (common) {
+                                        common.init();
+                                    });
+                                </script>
                             </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script>
-                var ctx = '${_Weburl}';
-                require(["articleList"], function (common) {
-                    common.init();
-                });
-            </script>
         </div>
     </div>
 </div>

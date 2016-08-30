@@ -748,7 +748,9 @@ a:hover, a:active, a:visited, a:focus {
     user-select:none;
     cursor: pointer;
 }
-
+.key-words-input{
+    padding-left: 15px;
+}
 .form-group .search-title-input, .form-group .key-words-input,.related-article-box input[type=text],.related-article-box button {
     height: 49px;
     box-shadow: 0 1px 1px #d3d1d1;
@@ -833,7 +835,7 @@ a:hover, a:active, a:visited, a:focus {
     border-top: 1px solid #c5c5c5;
 }
 
-#navigation a, .search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a {
+#navigation a, .search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a, .clean-box a {
     color: #444;
     display: block;
     background: #FFFFFF;
@@ -928,7 +930,7 @@ label:focus {
 }
 
 
-.search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a {
+.search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a,.clean-box a {
     text-align: center;
     display: inline-block;
     width: 48%;
@@ -947,7 +949,8 @@ label:focus {
     color: #1ab394;
     border-bottom: 1px solid #b7b7b7;
 }
-.search-box a{
+.search-box a,.clean-box a{
+    width: 100%;
     float: left;
 }
 .add-article-box a{
@@ -964,20 +967,26 @@ label:focus {
 }
 
 
-.search-box a:hover, .add-article-box a:hover, .save-as-draft-box a:hover, .view-article-box a:hover, .save-article-box a:hover {
+.search-box a:hover, .add-article-box a:hover, .save-as-draft-box a:hover, .view-article-box a:hover, .save-article-box a:hover,.clean-box a:hover {
     background-color: #18a689;
     border-color: #18a689;
     color: #FFFFFF;
 }
 
+.right-animated-box{
+    opacity: 0;
+}
 .list-main-box {
     width: 100%;
     padding: 10px 20px;
     border-radius: 2px;
     background: #FFFFFF;
     min-height: 745px;
-    opacity: 0;
+    opacity: 1;
     position: relative;
+    -webkit-transition: all .15s;
+    -moz-transition: all .15s;
+    transition: all .15s;
 }
 
 .pagination-loading {
@@ -1042,7 +1051,7 @@ label:focus {
     border-right: 1px solid #ddd;
 }
 
-.list-header-box .pagination li.active button {
+.list-header-box .pagination li:active button,.list-header-box .pagination li.active button {
     color: #fff;
     cursor: default;
     background-color: #428bca;

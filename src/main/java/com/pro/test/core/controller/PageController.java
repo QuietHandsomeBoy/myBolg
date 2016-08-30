@@ -33,7 +33,7 @@ public class PageController {
      */
     @RequestMapping("/404")
     public String error404() {
-        return "404";
+        return "common/404";
     }
 
     /**

@@ -16,7 +16,7 @@ public interface TbHxpArticleMapper extends GenericMapper {
 
     TbHxpArticle selectByPrimaryKey(String id);
 
-    int updateByPrimaryKeySelective(TbHxpArticle record);
+    int updateByArticleIDSelective(TbHxpArticle record);
 
     int updateByPrimaryKey(TbHxpArticle record);
 

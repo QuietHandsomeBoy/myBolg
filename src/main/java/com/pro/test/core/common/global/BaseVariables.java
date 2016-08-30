@@ -18,8 +18,11 @@ public class BaseVariables {
 
 
 
+    /** 编码方式 */
+    public static String global_encoding = "UTF-8";
 
-
+    /** 开发类型 */
+    public static boolean global_develope_flag = false;
 
 
 

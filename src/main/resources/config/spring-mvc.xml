@@ -10,6 +10,17 @@
     <!-- 扫描controller（controller层注入） -->
     <context:component-scan base-package="com.pro.test"/>
 
+    <!-- 定义基础拦截器，主要进行权限拦截  -->
+    <!--<mvc:interceptors>-->
+        <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+        <!--<bean class="com.pro.test.core.common.springmvc.Interceptor.BaseInterceptor"/>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/test/number.do"/>-->
+            <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
+            <!--<bean class="com.host.app.web.interceptor.LoginInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
     <!-- 路径映射处理适配器，包括参数的处理 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <!--线程安全的访问session -->
@@ -52,9 +63,6 @@
         <property name="maxUploadSize" value="10485760000"></property><!-- 最大上传文件大小 -->
         <property name="maxInMemorySize" value="10960"></property>
     </bean>
-
-
-    <mvc:resources mapping="/resources/**" location="resources/" />
 
     <!-- 开启注解 -->
     <!--第一个是HandlerMapping的实现类，它会处理@RequestMapping 注解，并将其注册到请求映射表中。（下片文章我们会详细介绍的）-->

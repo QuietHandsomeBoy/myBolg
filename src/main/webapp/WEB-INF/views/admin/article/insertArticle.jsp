@@ -158,7 +158,8 @@
         </div>
         <div id="content" class="content-container">
             <form action="${_Weburl}/admin/article/saveArticle" method="post" id="articleForm">
-                <input type="hidden" name="articleId" value="${articleId}"/>
+                <input type="hidden" id="articleId" value="${tbHxpArticle.articleId}"/>
+                <input type="hidden" id="newArticleId" value="${articleId}"/>
                 <div>
                     <div class="row">
                         <div class="col-lg-3">
@@ -170,6 +171,9 @@
                                             <select class="selectpicker" name="articleRange">
                                                 <option value="">-请选择-</option>
                                                 <c:forEach items="${articleRangeEnumMap}" var="articleRangeEnum">
+                                                    <c:if test="${articleRangeEnum.key eq tbHxpArticle.articleRange}">
+                                                        <option selected value="${articleRangeEnum.key}">${articleRangeEnum.value}</option>
+                                                    </c:if>
                                                     <option value="${articleRangeEnum.key}">${articleRangeEnum.value}</option>
                                                 </c:forEach>
                                             </select>
@@ -177,8 +181,12 @@
                                         <h5>关键字设置<label class="label label-gray">用&nbsp;|&nbsp;字符隔开&nbsp;;&nbsp;最多设置四个关键字</label></h5>
                                         <div class="key-words form-group">
                                             <div style="position: relative;">
-                                                <div id="key-words-list"></div>
-                                                <input type='text' name="keyWords" class="form-control key-words-input"/>
+                                                <div id="key-words-list">
+                                                    <c:forEach items="${keyWordslist}" var="keyWords">
+                                                        <span title="${keyWords}">${keyWords}</span>
+                                                    </c:forEach>
+                                                </div>
+                                                <input type='text' name="keyWords" class="form-control key-words-input" autocomplete="off"/>
                                             </div>
                                         </div>
                                         <h5>标签设置<label class="label label-gray">最多可选择8个标签</label></h5>
@@ -200,15 +208,24 @@
                                         <h5>关联文章<label class="label label-gray">最多可添加两个文章链接</label></h5>
                                         <div class="related-article-box">
                                             <div>
-                                                <input type='text' name="aboutArticleUrl" class="form-control key-words-input" value="http://www.baidu.com"/>
-                                                <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
+                                                <c:set var="aboutArticleUrl" value="${fn:split(tbHxpArticle.aboutArticleUrl,',')}"/>
+                                                <c:forEach items="${aboutArticleUrl}" var="url">
+                                                    <input type='text' autocomplete="off" name="aboutArticleUrl" class="form-control key-words-input" value="${url}"/>
+                                                    <c:choose>
+                                                        <c:when test="${fn:length(aboutArticleUrl) eq 2}">
+                                                            <button class="add-btn fa fa-minus" type="button" data-type="del"></button>
+                                                        </c:when>
+                                                        <c:when test="${fn:length(aboutArticleUrl) eq 1 || fn:length(aboutArticleUrl) eq 0}">
+                                                            <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                         <h5>其他设置</h5>
                                         <div class="other-condition form-group">
-                                            <label class=""><input type="checkbox" name="isPublic" class="i-checks" checked value="1">公开</label>
-                                            <label class=""><input type="checkbox" name="onTop" class="i-checks" value="1">置顶</label>
-                                            <label class=""><input type="checkbox" name="limitComments" class="i-checks" value="1">限制评论</label>
+                                            <label class=""><input type="checkbox" name="isPublic" class="i-checks" <c:if test="${tbHxpArticle.isPublic eq 1}">checked</c:if> value="1">公开</label>
+                                            <label class=""><input type="checkbox" name="onTop" class="i-checks" <c:if test="${tbHxpArticle.onTop eq 1}">checked</c:if>  value="1">置顶</label>
                                         </div>
                                         <div style="height: 80px;width: 100%;"></div>
                                         <div class="save-as-draft-box">
@@ -237,34 +254,22 @@
                                                 <select class="selectpicker" name="articleRights">
                                                     <option value="">-请选择-</option>
                                                     <c:forEach items="${articleRightsEnumMap}" var="articleRightsEnum">
-                                                        <option value="${articleRightsEnum.key}">${articleRightsEnum.value}</option>
+                                                        <option <c:if test="${tbHxpArticle.articleRights eq articleRightsEnum.key}">selected</c:if> value="${articleRightsEnum.key}">${articleRightsEnum.value}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="col-lg-10">
-                                                <input placeholder="请输入标题.." type="text" class="" name="articleTitle" value="Openstack Manila源码阅读笔记(一)manilaclient调用过程">
+                                                <input autocomplete="off" placeholder="请输入标题.." type="text" class="" name="articleTitle" value="${tbHxpArticle.articleTitle}">
                                             </div>
                                         </div>
                                         <h5>enter the introduce of article</h5>
                                         <div class="title-introduce-box">
-                                            <textarea id="summary" name="articleIntroduced" style="">
-                                                最近开始研究Openstack Manila的源码. 开发环境在之前的文章里已经提到过了. Openstack版本为Mitaka, IDE用的是Pycharm远程调试. 这篇文章主要是理解一下当我们在shell里输入了一个manila API指令之后, 后台到底发生了什么, 整个调用的过程是怎么样的, 真正干活的人是谁. 其实也就是Command-Line Interface.
-                                            </textarea>
+                                            <textarea id="summary" name="articleIntroduced">${tbHxpArticle.articleIntroduced}</textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="article-content-box" class="article-content-box">
-                                    <div id="uploadFile_box" class="uploadFile_box">
-                                        <div style="width:100%;padding: 10px;">
-                                            <i id="removeImage" class="fa fa-close" style="display: none;"></i>
-                                            <input type="file" style="display:none;" id="uploadImg" name="uploadImg" data-max_size="3145728"/>
-                                            <div class="fileIcon" id="uploadimgbtn">
-                                                <i class="fa fa-plus"></i>
-                                            </div>
-                                            <button id="confimbtn" class="confimbtn"> 确 认 </button>
-                                        </div>
-                                    </div>
-                                    <textarea id="article-content" name="articleContent">在此输入正文...</textarea>
+                                    <textarea id="article-content" name="articleContent">${articleContent}</textarea>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -281,32 +286,5 @@
         </div>
     </div>
 </div>
-<%--<div class="tips-div" id="choosArticleTags">--%>
-    <%--<div class="operate-content">--%>
-        <%--<h3>选择标签</h3>--%>
-        <%--<div>--%>
-            <%--<div class="choose-tags-input-box">--%>
-                <%--<p>已选择标签：</p>--%>
-                <%--<input/>--%>
-            <%--</div>--%>
-            <%--<div class="choose-tags-sources-box">--%>
-                <%--<p>已选择标签：</p>--%>
-                <%--<div>--%>
-                    <%--<input placeholder="请输入标签名字"/>--%>
-                    <%--<select class="selectpicker" name="tagType">--%>
-                        <%--<option value="">-请选择-</option>--%>
-                        <%--<option value=" ">技术标签</option>--%>
-                        <%--<option value=" ">日记标签</option>--%>
-                        <%--<option value=" ">文摘标签</option>--%>
-                    <%--</select>--%>
-                    <%--<button type="button">查询</button>--%>
-                <%--</div>--%>
-                <%--<div class="tags-sources-box"></div>--%>
-            <%--</div>--%>
-            <%--<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips('choosArticleTags')">Close me!</button>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-<%--<div class="tips-background-div"></div>--%>
 </body>
 </html>

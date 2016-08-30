@@ -8,6 +8,14 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
 
     var init = function () {
 
+        if($('#key-words-list').width() != 0){
+            $("input[name='keyWords']").val('').css({
+                'padding-left': $('#key-words-list').width()
+            });
+        }else{
+            $("input[name='keyWords']").val('').css({'padding-left': "15px"});
+        }
+
         $('.selectpicker').selectpicker({
             showIcon: true,
             showTick: true,
@@ -35,19 +43,19 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             saveArticle("draft");
         })
 
-        $(document).on("click", ".add-btn", function () {
+        $(".left-box-content").on("click", ".add-btn", function () {
+            var classLength = $(".related-article-box").find("div").length;
+            if (classLength > 1) {
+                tips("最多只可添加两个相关文章链接！");
+                return;
+            }
             var btnType = $(this).attr("data-type");
             if (btnType == 'add') {
-                var classLength = $(".related-article-box").find("div").length;
-                if (classLength > 1) {
-                    tips("最多只可添加两个相关文章链接！");
-                    return;
-                }
                 $(".related-article-box").find("button").each(function () {
                     $(this).attr("data-type", "del").removeClass("fa-plus").addClass("fa-minus");
                 })
                 var html = "<div>" +
-                    '<input type="text" name="aboutArticleUrl" class="form-control key-words-input"/>' +
+                    '<input type="text" name="aboutArticleUrl" class="form-control key-words-input" autocomplete="off"/>' +
                     '<button class="add-btn fa fa-minus" type="button" data-type="del"></button>' +
                     '</div>';
                 $(".related-article-box").append(html);
@@ -69,6 +77,14 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
                 tipsId: "articleTags"
             }
             operateTips(obj);
+        })
+
+
+        $("#articleForm").find("input").keypress(function (e) {
+            var code = (e ? e.which : event.keyCode);
+            if (code == 13) {
+                return false;
+            }
         })
 
         $('#article-content').each(function (index, element) {
@@ -260,44 +276,40 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
     }
 
     var checkAboutArticleUrl = function () {
-        var check = false;
         $.each($("input[name='aboutArticleUrl']"), function (k, v) {
-            var url = $(v).val();
-            if (url == "") {
-                alert("请录入文章url。");
-                return false;
-            }
-            else {
-                //if (url.toLowerCase().indexOf("http://localhost:8082") == -1 || url.toLowerCase().indexOf("/article/articleDetail/") == -1) {
-                if (url.indexOf("http://localhost:8082") == -1 || url.indexOf("/article/articleDetail/") == -1 || url.indexOf(".html") == -1) {
-                    alert('请输入文章的的详细地址。');
-                    return false;
+            if (publicUtil.isNotEmpty(url)) {
+                var url = $(v).val();
+                if (publicUtil.isNotEmpty(url)) {
+                    //if (url.toLowerCase().indexOf("http://localhost:8082") == -1 || url.toLowerCase().indexOf("/article/articleDetail/") == -1) {
+                    if (url.indexOf("http://localhost:8082") == -1 || url.indexOf("/article/articleDetail/") == -1 || url.indexOf(".html") == -1) {
+                        return false;
+                    }
+                    var splitStr = url.split("/");
+                    var articleId = 0;
+                    if (splitStr.length == 6) {
+                        articleId = splitStr[5];
+                        articleId = articleId.substring(articleId.indexOf("."), articleId.length);
+                    }
+                    if (publicUtil.isNotEmpty(articleId)) {
+                        $.ajax({
+                            type: "POST",
+                            url: ctx + "/admin/article/isArticle.json",
+                            dataType: "json",
+                            data: {"articleId": articleId},
+                            async: false,
+                            success: function (data) {
+                                if (data.result == 'true') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        })
+                    }
                 }
             }
-            var splitStr = url.split("/");
-            var articleId = 0;
-            if (splitStr.length == 6) {
-                articleId = splitStr[5];
-                articleId = articleId.substring(0,articleId.indexOf("."));
-            }
-            if (publicUtil.isNotEmpty(articleId)) {
-                $.ajax({
-                    type: "POST",
-                    url: ctx + "/admin/article/isArticle.json",
-                    dataType: "json",
-                    data: {"articleId": articleId},
-                    async: false,
-                    success: function (data) {
-                        if (data.result == 'true') {
-                            check = true;
-                        } else {
-                            return false;
-                        }
-                    }
-                })
-            }
         })
-        return check;
+        return true;
     }
 
 
@@ -307,12 +319,6 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             tips("请输入正确的文章地址！")
             return false;
         }
-
-        if (!publicUtil.isNotEmpty($("#articleId").val())) {
-            tips("请刷新页面重新输入！");
-            return false;
-        }
-
         if (!publicUtil.isNotEmpty($("select[name='articleRights']").val())) {
             tips("请选择文章来源渠道！");
             return false;
@@ -326,7 +332,6 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             return false;
         }
 
-
         if (!publicUtil.isNotEmpty($("input[name='articleTitle']").val())) {
             tips("请输入笔记标题！");
             return false;
@@ -335,12 +340,15 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
             tips("请输入博客正文！");
             return false;
         }
-        return false;
+
+        return true;
     }
 
     var saveArticle = function (status) {
         if (checkArticle()) {
 
+            var articleId = $("#articleId").val();
+            var newArticleId = $("#newArticleId").val();
             var articleRights = $("select[name='articleRights']").val();
             var articleRange = $("select[name='articleRange']").val();
             var articleTags = $("input[name='articleTags']:checked");
@@ -364,19 +372,14 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
                 })
             }
             keyWords = keyWords.substring(0, keyWords.length - 1);
-
             var aboutArticleUrl = '';
             $.each($("input[name='aboutArticleUrl']"), function (k, v) {
                 aboutArticleUrl += '&aboutArticleUrl1=' + $(v).val() + ''
             })
-
             var articleIntroduced = publicUtil.isNotEmpty(new String($("textarea[name='articleIntroduced']").val()).trim)
                 ? encodeURIComponent($("textarea[name='articleIntroduced']").val()) : "";
-
-
             var content = encodeURIComponent(new String($("textarea[name='articleContent']").val()).trim());
-
-            var articleData = "articleTitle=" + articleTitle + "&articleIntroduced=" + articleIntroduced + "&articleTags=" + articleTags;
+            var articleData = "newArticleId=" + newArticleId + "&articleId=" + articleId + "&articleTitle=" + articleTitle + "&articleIntroduced=" + articleIntroduced + "&articleTags=" + articleTags;
             articleData += "&articleRange=" + articleRange + "&keyWords=" + keyWords + "&isPublic=" + isPublic + "&onTop=" + onTop + "&limitComments=" + limitComments;
             articleData += "&articleRights=" + articleRights + "&articleStatus=" + status + "&content=" + content;
 
@@ -387,7 +390,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
                 data: articleData,
                 async: false,
                 success: function (data) {
-                    window.location.href = ctx + "/admin/article/articleList.html";
+                    alert("新增成功！");
                 }
 
             })
