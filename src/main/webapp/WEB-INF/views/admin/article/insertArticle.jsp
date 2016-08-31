@@ -192,16 +192,6 @@
                                         <h5>标签设置<label class="label label-gray">最多可选择8个标签</label></h5>
                                         <div class="article-tags-box">
                                             <ul class="tags-list" id="tags-list-box">
-                                                <li><label class=""><input type="checkbox" value="work" name="articleTags" class="i-checks">Work</label></li>
-                                                <li><label class=""><input type="checkbox" value="1" name="articleTags" class="i-checks">Documents</label></li>
-                                                <li><label class=""><input type="checkbox" value="2" name="articleTags" class="i-checks">Social</label></li>
-                                                <li><label class=""><input type="checkbox" value="3" name="articleTags" class="i-checks">Advertising</label></li>
-                                                <li><label class=""><input type="checkbox" value="4" name="articleTags" class="i-checks">Clients</label></li>
-                                                <li><label class=""><input type="checkbox" value="5" name="articleTags" class="i-checks">Work</label></li>
-                                                <li><label class=""><input type="checkbox" value="6" name="articleTags" class="i-checks">Documents</label></li>
-                                                <li><label class=""><input type="checkbox" value="7" name="articleTags" class="i-checks">Social</label></li>
-                                                <li><label class=""><input type="checkbox" value="8" name="articleTags" class="i-checks">Advertising</label></li>
-                                                <li><label class=""><input type="checkbox" value="9" name="articleTags" class="i-checks">Clients</label></li>
                                             </ul>
                                             <button type="button" id="choosArticleTagsBtn">添加标签</button>
                                         </div>

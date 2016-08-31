@@ -860,6 +860,7 @@ a:hover, a:active, a:visited, a:focus {
 .category-list, .tags-list {
     padding: 0;
     overflow: auto;
+    margin: 0px;
 }
 
 .category-list li, .tags-list li {

@@ -20,8 +20,6 @@ public class TbHxpArticle implements Serializable {
 
     private String articleRange;
 
-    private String articleType;
-
     private String articleAuthorId;
 
     private String articleAuthorName;
@@ -94,14 +92,6 @@ public class TbHxpArticle implements Serializable {
 
     public void setArticleRange(String articleRange) {
         this.articleRange = articleRange == null ? null : articleRange.trim();
-    }
-
-    public String getArticleType() {
-        return articleType;
-    }
-
-    public void setArticleType(String articleType) {
-        this.articleType = articleType == null ? null : articleType.trim();
     }
 
     public String getArticleAuthorId() {
