@@ -45,12 +45,13 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
 
         $(".left-box-content").on("click", ".add-btn", function () {
             var classLength = $(".related-article-box").find("div").length;
-            if (classLength > 1) {
-                tips("最多只可添加两个相关文章链接！");
-                return;
-            }
+
             var btnType = $(this).attr("data-type");
             if (btnType == 'add') {
+                if (classLength > 1) {
+                    tips("最多只可添加两个相关文章链接！");
+                    return;
+                }
                 $(".related-article-box").find("button").each(function () {
                     $(this).attr("data-type", "del").removeClass("fa-plus").addClass("fa-minus");
                 })
@@ -395,6 +396,58 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor
 
             })
         }
+    }
+
+
+    //操作弹出框
+    var operateTips = function(obj){
+
+        if(obj == null){
+            return ;
+        }
+        //obj = {
+        //    tipsId : "",
+        //    operateType : "",
+        //}
+        var html =
+            '<div class="tips-div" id="'+obj.tipsId+'">' +
+            '<div class="operate-content">' +
+            '<h3>选择标签</h3>' +
+            '<div>' +
+            '<div class="choose-tags-input-box">' +
+            '<p>已选择标签：</p>' +
+            '<div class="choosed-tags-box"></div>' +
+            '</div>' +
+            '<div class="choose-tags-sources-box">' +
+            '<p>已选择标签：</p>' +
+            '<div>' +
+            '<input placeholder="请输入标签名字"/>' +
+            '<select class="selectpicker" name="tagType">' +
+            '<option value="">-请选择-</option>' +
+            '<option value=" ">技术标签</option>' +
+            '<option value=" ">日记标签</option>' +
+            '<option value=" ">文摘标签</option>' +
+            '</select>' +
+            '<button type="button">查询</button>' +
+            '</div>' +
+            '<div class="tags-sources-box"></div>' +
+            '</div>' +
+            '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips('+"'"+obj.tipsId+"'"+')">Close me!</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="tips-background-div"></div>';
+
+        $("body").append(html);
+        $('.selectpicker').selectpicker({
+            showIcon: true,
+            showTick: true,
+            style: 'select-btn'
+        });
+
+        setTimeout(function () {
+            $("#"+obj.tipsId).addClass("tips-show");
+        }, 100);
     }
 
 

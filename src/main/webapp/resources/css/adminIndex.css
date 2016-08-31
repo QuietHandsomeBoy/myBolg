@@ -1868,7 +1868,8 @@ label:focus {
     padding:10px 0px;
     margin: 5px 0px;
 }
-.operate-content .choose-tags-input-box input,.tags-sources-box,.choose-tags-sources-box input,.choose-tags-sources-box .select-btn,.choose-tags-sources-box button{
+.operate-content .choose-tags-input-box .choosed-tags-box,.tags-sources-box,.choose-tags-sources-box input,
+.choose-tags-sources-box .select-btn,.choose-tags-sources-box button{
     height: 49px;
     box-shadow: 0 1px 1px #d3d1d1;
     font-size: 14px;

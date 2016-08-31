@@ -8,6 +8,8 @@ public class TbHxpTags {
     @TableId
     private String id;
 
+    private String tagType;
+
     private String tagCode;
 
     private String tagName;
@@ -99,4 +101,13 @@ public class TbHxpTags {
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    public String getTagType() {
+        return tagType;
+    }
+
+    public void setTagType(String tagType) {
+        this.tagType = tagType;
+    }
+
 }

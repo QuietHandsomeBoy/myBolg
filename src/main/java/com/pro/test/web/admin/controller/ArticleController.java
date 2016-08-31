@@ -167,31 +167,10 @@ public class ArticleController extends BaseController {
             return map;
         }
         try {
-            if (tbHxpArticle != null) {
-                if (StringUtils.isNotBlank(newArticleId) && StringUtils.isBlank(tbHxpArticle.getArticleId())) {
-                    tbHxpArticle.setArticleAuthorName("干锅加鲁鲁");
-                    tbHxpArticle.setArticleId(newArticleId);
-                    tbHxpArticleManager.insertArticle(tbHxpArticle);
-                    TbHxpArticleContent tbHxpArticleContent = new TbHxpArticleContent();
-                    tbHxpArticleContent.setArticleId(tbHxpArticle.getArticleId());
-                    tbHxpArticleContent.setArticleContent(HtmlUtils.htmlEscape(content));
-                    tbHxpArticleContentManager.insert(tbHxpArticleContent);
-                } else if(StringUtils.isNotBlank(tbHxpArticle.getArticleId())){
-                    tbHxpArticleManager.update(tbHxpArticle);
-                    TbHxpArticleContent tbHxpArticleContent = new TbHxpArticleContent();
-                    tbHxpArticleContent.setArticleId(tbHxpArticle.getArticleId());
-                    tbHxpArticleContent.setArticleContent(HtmlUtils.htmlEscape(content));
-                    tbHxpArticleContentManager.update(tbHxpArticleContent);
-                }else{
-                    map.put("result","faild");
-                    map.put("resultMsg","请输入正确的数据！");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            map = tbHxpArticleManager.insertArticle(tbHxpArticle,newArticleId,content);
+        }catch (Exception e){
             map.put("result", "err");
             map.put("resultMsg", "系统后台错误！");
-            return map;
         }
         return map;
     }

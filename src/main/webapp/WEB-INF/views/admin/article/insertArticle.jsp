@@ -191,7 +191,7 @@
                                         </div>
                                         <h5>标签设置<label class="label label-gray">最多可选择8个标签</label></h5>
                                         <div class="article-tags-box">
-                                            <ul class="tags-list">
+                                            <ul class="tags-list" id="tags-list-box">
                                                 <li><label class=""><input type="checkbox" value="work" name="articleTags" class="i-checks">Work</label></li>
                                                 <li><label class=""><input type="checkbox" value="1" name="articleTags" class="i-checks">Documents</label></li>
                                                 <li><label class=""><input type="checkbox" value="2" name="articleTags" class="i-checks">Social</label></li>

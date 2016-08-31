@@ -43,16 +43,9 @@
                     <a href="javascript:;"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span
+                        <li class="active"><a href="${_Weburl}/admin/article/articleList.html">文章列表<span
                                 class="label label-warning pull-right">24</span></a></li>
                         <li><a href="${_Weburl}/admin/article/insertArticle.html">写笔记</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-comments"></i> <span class="nav-label">Comments</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="javascript:;">评论管理<span class="label label-warning pull-right">30</span></a></li>
                     </ul>
                 </li>
                 <li>
@@ -66,8 +59,6 @@
                     <a href="mailbox.html"><i class="fa fa-bar-chart"></i> <span
                             class="nav-label">Statistics</span><span class="fa arrow"></span></a>
                     <!--<a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">统计报表</span><span class="label label-warning pull-right">16/24</span></a>-->
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="javascript:;">评论统计</a></li>
                         <li><a href="javascript:;">点赞统计</a></li>
                         <li><a href="javascript:;">留言统计</a></li>
                         <li><a href="javascript:;">访问统计</a></li>
@@ -154,7 +145,7 @@
         <div class="breadcrumb-box">
             <ol class="breadcrumb">
                 <li><a href="javascript:;">Home</a></li>
-                <li><a HREF="javascript:;">笔记列表</a></li>
+                <li><a HREF="javascript:;">文章列表</a></li>
                 <!--<li class="active"><strong>Flot Charts</strong></li>-->
             </ol>
         </div>
@@ -228,8 +219,7 @@
                                                 <div class="col-lg-8 pull-right">
                                                     <h5>Others</h5>
                                                     <label class=""><input type="checkbox" class="i-checks" name="isPublic" value="1">公开</label>
-                                                    <label class=""><input type="checkbox" class="i-checks" name="limitComments" value="1">置顶</label>
-                                                    <label class=""><input type="checkbox" class="i-checks" name="limitComments" value="1">限制评论</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="onTop" value="1">置顶</label>
                                                 </div>
                                             </div>
                                         </div>

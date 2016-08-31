@@ -309,7 +309,7 @@
 
     <delete id="deleteByIds" parameterType="java.util.List">
         update tb_hxp_article
-        set is_deleted = 1 WHERE id IN
+        set is_deleted = 1 WHERE article_id IN
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -317,7 +317,7 @@
     </delete>
 
     <select id="findArticleRangeCount" resultMap="articleRangeCount">
-        select count(id),article_range from TB_HXP_ARTICLE GROUP BY article_range
+        select count(id),article_range from TB_HXP_ARTICLE where is_deleted = 0 GROUP BY article_range
     </select>
 
     <select id="findOneByArticleId" resultMap="BaseResultMap">
@@ -328,6 +328,7 @@
             <if test="articleId != null and articleId != '' ">
                 article_id = #{articleId,jdbcType=VARCHAR}
             </if>
+            and is_deleted = 0
         </where>
     </select>
 
