@@ -1,8 +1,8 @@
 package com.pro.test.web.test;
 
-import java.sql.Timestamp;
+import com.pro.test.core.enumdata.ArticleRange;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Random;
 
 /**
@@ -22,15 +22,22 @@ public class test {
 //            System.out.println("国际化key:"+constraintViolation.getMessageTemplate());
 //            System.out.println("错误信息:"+constraintViolation.getMessage());
 //        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        System.out.println(new Timestamp(sdf.parse("20160608000000").getTime()));
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//        System.out.println(new Timestamp(sdf.parse("20160608000000").getTime()));
 
 //        for(int i =0; i < 100; i++){
 //            System.out.println(getMyRecommendCode());
 //        }
 
 
+        Class t = ArticleRange.class;
+        for(Object o : t.getEnumConstants()){
+            ArticleRange a = (ArticleRange) o;
+            if(a.getKey().equals("other")){
+                System.out.println(a.getValue());
+            }
+        }
 
     }
 

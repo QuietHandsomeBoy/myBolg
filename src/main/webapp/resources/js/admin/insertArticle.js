@@ -2,7 +2,7 @@
  * Created by hxpeng on 2016/7/15.
  */
 
-define(['bootstrapSelect', 'icheck', 'ajaxfileupload', 'wysiwyg', "wysiwygEditor", "toastr", "baseutil"], function () {
+define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor", "toastr", "baseutil"], function () {
 
     var publicUtil = PublicUtil;
 

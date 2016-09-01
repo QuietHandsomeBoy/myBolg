@@ -1,153 +1,163 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pro.test.web.dao.mapper.TbHxpTagsMapper" >
-  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpTags" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="tag_type" property="tagType" jdbcType="VARCHAR" />
-    <result column="tag_code" property="tagCode" jdbcType="VARCHAR" />
-    <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="DATE" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <result column="update_date" property="updateDate" jdbcType="DATE" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, tag_type, tag_code, tag_name, create_date, create_by, update_date,
-    update_by, remark, is_deleted
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from tb_hxp_tags
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from tb_hxp_tags
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpTags" >
-    insert into tb_hxp_tags (id, tag_type,
-    tag_code, tag_name, create_date,
-    create_by, update_date, update_by,
-    remark, is_deleted)
-    values (#{id,jdbcType=VARCHAR}, #{tagType,jdbcType=VARCHAR},
-    #{tagCode,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE},
-    #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, #{updateBy,jdbcType=VARCHAR},
-    #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpTags" >
-    insert into tb_hxp_tags
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="tagType != null" >
-        tag_type,
-      </if>
-      <if test="tagCode != null" >
-        tag_code,
-      </if>
-      <if test="tagName != null" >
-        tag_name,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="tagType != null" >
-        #{tagType,jdbcType=VARCHAR},
-      </if>
-      <if test="tagCode != null" >
-        #{tagCode,jdbcType=VARCHAR},
-      </if>
-      <if test="tagName != null" >
-        #{tagName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=DATE},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null" >
-        #{isDeleted,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpTags" >
-    update tb_hxp_tags
-    <set >
-      <if test="tagType != null" >
-        tag_type = #{tagType,jdbcType=VARCHAR},
-      </if>
-      <if test="tagCode != null" >
-        tag_code = #{tagCode,jdbcType=VARCHAR},
-      </if>
-      <if test="tagName != null" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpTagsMapper">
+    <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpTags">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="tag_type" property="tagType" jdbcType="VARCHAR"/>
+        <result column="tag_name" property="tagName" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="DATE"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, tag_type, tag_name, create_date, create_by, update_date, update_by, remark, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_hxp_tags
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from tb_hxp_tags
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpTags">
+        insert into tb_hxp_tags (id, tag_type, tag_name,
+        create_date, create_by, update_date,
+        update_by, remark, is_deleted
+        )
+        values (#{id,jdbcType=VARCHAR}, #{tagType,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR},
+        #{createDate,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE},
+        #{updateBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpTags">
+        insert into tb_hxp_tags
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tagType != null">
+                tag_type,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="tagType != null">
+                #{tagType,jdbcType=VARCHAR},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=DATE},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpTags">
+        update tb_hxp_tags
+        <set>
+            <if test="tagType != null">
+                tag_type = #{tagType,jdbcType=VARCHAR},
+            </if>
+            <if test="tagName != null">
+                tag_name = #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=DATE},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpTags">
+        update tb_hxp_tags
+        set tag_type = #{tagType,jdbcType=VARCHAR},
         tag_name = #{tagName,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
         create_date = #{createDate,jdbcType=DATE},
-      </if>
-      <if test="createBy != null" >
         create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
         update_date = #{updateDate,jdbcType=DATE},
-      </if>
-      <if test="updateBy != null" >
         update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null" >
-        is_deleted = #{isDeleted,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpTags" >
-    update tb_hxp_tags
-    set tag_type = #{tagType,jdbcType=VARCHAR},
-      tag_code = #{tagCode,jdbcType=VARCHAR},
-      tag_name = #{tagName,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=DATE},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=DATE},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=INTEGER}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        is_deleted = #{isDeleted,jdbcType=INTEGER}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!-- 根据条件查询信息 -->
+    <select id="findPage" resultMap="BaseResultMap" useCache="false">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_hxp_tags
+        <where>
+            <if test="tbHxpTags != null and tbHxpTags.tagName != null  and tbHxpTags.tagName != '' ">
+                and tag_name like concat(concat('%', #{tbHxpTags.tagName}), '%')
+            </if>
+            <if test="tbHxpTags != null and tbHxpTags.tagType != null  and tbHxpTags.tagType != '' ">
+                and tag_type = #{tbHxpTags.tagType}
+            </if>
+            and is_deleted = 0
+        </where>
+        <if test="order != null and order != '' ">
+            order by ${order} ${sort}
+        </if>
+        <if test="order == null or order == '' ">
+            order by create_date desc
+        </if>
+    </select>
 </mapper>

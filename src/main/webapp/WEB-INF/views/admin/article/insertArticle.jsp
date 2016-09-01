@@ -47,13 +47,6 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-comments"></i> <span class="nav-label">Comments</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="javascript:;">评论管理<span class="label label-warning pull-right">30</span></a></li>
-                    </ul>
-                </li>
-                <li>
                     <a href="#"><i class="fa fa-pencil-square-o"></i> <span class="nav-label">Leave Message</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
@@ -65,7 +58,6 @@
                             class="nav-label">Statistics</span><span class="fa arrow"></span></a>
                     <!--<a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">统计报表</span><span class="label label-warning pull-right">16/24</span></a>-->
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="javascript:;">评论统计</a></li>
                         <li><a href="javascript:;">点赞统计</a></li>
                         <li><a href="javascript:;">留言统计</a></li>
                         <li><a href="javascript:;">访问统计</a></li>
@@ -76,7 +68,7 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">菜单管理</a></li>
-                        <li><a href="javascript:;">标签管理</a></li>
+                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理</a></li>
                         <li><a href="javascript:;">权限管理</a></li>
                         <li><a href="javascript:;">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
@@ -262,17 +254,17 @@
                                     <textarea id="article-content" name="articleContent">${articleContent}</textarea>
                                 </div>
                                 <div class="clearfix"></div>
+                                <script>
+                                    var ctx = '${_Weburl}';
+                                    require(["insertArticle"],function(common){
+                                        common.init();
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-            <script>
-                var ctx = '${_Weburl}';
-                require(["insertArticle"],function(common){
-                    common.init();
-                });
-            </script>
         </div>
     </div>
 </div>

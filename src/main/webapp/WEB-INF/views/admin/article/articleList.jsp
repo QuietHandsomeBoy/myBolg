@@ -40,12 +40,13 @@
             </div>
             <ul class="nav metismenu" id="side-menu">
                 <li class="active">
-                    <a href="javascript:;"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
+                    <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a href="${_Weburl}/admin/article/articleList.html">文章列表<span
-                                class="label label-warning pull-right">24</span></a></li>
-                        <li><a href="${_Weburl}/admin/article/insertArticle.html">写笔记</a></li>
+                        <li class="active"><a data-a-href="${_Weburl}/admin/article/articleList.html"
+                                              href="javascript:;">笔记列表
+                            <span class="label label-warning pull-right">24</span></a></li>
+                        <li><a href="${_Weburl}/admin/article/insertArticle.html" href="javascript:;">写笔记</a></li>
                     </ul>
                 </li>
                 <li>
@@ -59,6 +60,7 @@
                     <a href="mailbox.html"><i class="fa fa-bar-chart"></i> <span
                             class="nav-label">Statistics</span><span class="fa arrow"></span></a>
                     <!--<a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">统计报表</span><span class="label label-warning pull-right">16/24</span></a>-->
+                    <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">点赞统计</a></li>
                         <li><a href="javascript:;">留言统计</a></li>
                         <li><a href="javascript:;">访问统计</a></li>
@@ -69,7 +71,7 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">菜单管理</a></li>
-                        <li><a href="javascript:;">标签管理</a></li>
+                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理</a></li>
                         <li><a href="javascript:;">权限管理</a></li>
                         <li><a href="javascript:;">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
@@ -77,7 +79,6 @@
                     </ul>
                 </li>
             </ul>
-
         </div>
     </nav>
     <div id="page-wrapper" class="gray-bg">
@@ -154,12 +155,13 @@
             <div>
                 <div class="row">
                     <div class="col-lg-3">
-                        <div id="left-box" class="animated fadeInUp">
+                        <div id="left-box" class="animated fadeIn">
                             <div class="left-box-content">
                                 <div class="file-manager">
                                     <form id="searchArticleParam" method="post"
                                           action="${_Weburl}/admin/article/articleList.html">
-                                        <input type="hidden" value="${tbHxpArticle.articleRange}" name="articleRange" id="articleRange"/>
+                                        <input type="hidden" value="${tbHxpArticle.articleRange}" name="articleRange"
+                                               id="articleRange"/>
                                         <div class="left-box-tab-header">
                                             <ul id="navigation">
                                                 <c:forEach items="${articleRangeCount}" var="range">
@@ -211,15 +213,20 @@
                                                     <h5>Rights</h5>
                                                     <select class="selectpicker" name="articleRights">
                                                         <option value="">请选择</option>
-                                                        <c:forEach items="${articleRightsEnumMap}" var="articleRightsEnum">
-                                                            <option <c:if test="${tbHxpArticle.articleRights eq articleRightsEnum.value}">selected</c:if> value="${articleRightsEnum.key}">${articleRightsEnum.value}</option>
+                                                        <c:forEach items="${articleRightsEnumMap}"
+                                                                   var="articleRightsEnum">
+                                                            <option
+                                                                    <c:if test="${tbHxpArticle.articleRights eq articleRightsEnum.value}">selected</c:if>
+                                                                    value="${articleRightsEnum.key}">${articleRightsEnum.value}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-8 pull-right">
                                                     <h5>Others</h5>
-                                                    <label class=""><input type="checkbox" class="i-checks" name="isPublic" value="1">公开</label>
-                                                    <label class=""><input type="checkbox" class="i-checks" name="onTop" value="1">置顶</label>
+                                                    <label class=""><input type="checkbox" class="i-checks"
+                                                                           name="isPublic" value="1">公开</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="onTop"
+                                                                           value="1">置顶</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,7 +243,7 @@
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="right-animated-box">
+                        <div class="right-animated-box animated fadeIn">
                             <div class="list-main-box">
                                 <input type="hidden" id="totalPages" value="${pagination.totalPages}">
                                 <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
@@ -278,17 +285,19 @@
 
                                             </li>
                                         </ul>
-                                        <ul id="pagination-demo" class="pagination-sm">
-
-                                        </ul>
                                     </div>
                                     <div class="header-tool-box">
                                         <button id="toggle-all" class="btn-white btn-sm">
-                                            <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle All
+                                            <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle
+                                            All
                                         </button>
-                                        <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh</button>
-                                        <button id="edit-one-article" class="btn-white btn-sm" disabled="disabled"><i class="fa fa-edit"></i>Edit</button>
-                                        <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete</button>
+                                        <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh
+                                        </button>
+                                        <button id="edit-one-article" class="btn-white btn-sm" disabled="disabled"><i
+                                                class="fa fa-edit"></i>Edit
+                                        </button>
+                                        <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
+                                        </button>
                                         <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
                                     </div>
                                 </div>
@@ -300,18 +309,17 @@
                                             <th>Article Title</th>
                                             <th>Article Type</th>
                                             <th>Admin</th>
-                                            <th><a href="javascript:;">Create Time<i class="fa fa-chevron-down"></i></a>
-                                            <th><a href="javascript:;">Last Update Time<i
-                                                    class="fa fa-chevron-down"></i></a>
-                                            </th>
+                                            <th>Create Time</th>
+                                            <th>Last Update Time</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${articleList}" var="article">
                                             <tr>
-                                                <td><input type="checkbox" class="i-checks" value="${article.articleId}"></td>
+                                                <td><input type="checkbox" class="i-checks"
+                                                           value="${article.articleId}"></td>
                                                 <td><a href="javascript:;"
-                                                       class="article-title">${article.articleTitle}</a>
+                                                       class="title-common article-title">${article.articleTitle}</a>
                                                 </td>
                                                 <td>
                                                     <label class="label label-biji">

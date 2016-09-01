@@ -1,7 +1,6 @@
 /**
- * Created by hxpeng on 2016/7/22.
+ * Created by hxpeng on 2016/8/31.
  */
-
 
 define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseutil'], function () {
 
@@ -32,24 +31,8 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
     }
 
     var init = function () {
+
         binding();
-
-        $("#content").pjax("a", ".list-main-box", {fragment: '.list-main-box', replace: false, scrollTo: false})
-            .on("click", "#navigation li a", function () {
-                $(".list-main-box").css("opacity", "0");
-            })
-            .on("pjax:complete", function () {
-                setTimeout(function () {
-                    $(".list-main-box").css("opacity", "1");
-                }, 200);
-            })
-
-        if ($(".datetimepicker").length < 1) {
-            $(".form-group .date").datetimepicker({
-                autoclose: true,
-                todayBtn: true
-            });
-        }
 
         var srearchCondition = '';//文章查询条件
         var paginationCondition = '';//分页查询条件
@@ -59,17 +42,6 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             showTick: true,
             style: 'select-btn'
         });
-
-        $('.other-condition .i-checks').iCheck({
-            checkboxClass: 'icheckbox_flat-orange'
-        });
-
-
-        $("#navigation").find("li").on("click", function () {
-            $(this).addClass("active").siblings().removeClass("active");
-            $("#articleRange").val($(this).find("a").attr("data-type"));
-        })
-
         $("#toggle-all").click(function () {
             if ($(this).find("input[type=hidden]").val() == "0") {
                 $(".list-content-box table tr").each(function (i, z) {
@@ -116,12 +88,6 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
 
         $("#refresh-all").on("click", function () {
             assembling();
-        })
-
-        $("#edit-one-article").on("click", function () {
-            var articleid = $(".list-content-box input[type='checkbox']:checked").val();
-            $("#vehicle-a").attr("href", ctx + "/admin/article/insertArticle.html?articleId=" + articleid);
-            $("#vehicle-a").click();
         })
 
         $("#searchBtn").on("click", function () {
@@ -320,11 +286,10 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                 }
             })
         }
-
     }
+
 
     return {
         init: init,
     }
-
 })

@@ -10,8 +10,6 @@ public class TbHxpTags {
 
     private String tagType;
 
-    private String tagCode;
-
     private String tagName;
 
     @CreateDate
@@ -36,14 +34,6 @@ public class TbHxpTags {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
-    }
-
-    public String getTagCode() {
-        return tagCode;
-    }
-
-    public void setTagCode(String tagCode) {
-        this.tagCode = tagCode == null ? null : tagCode.trim();
     }
 
     public String getTagName() {

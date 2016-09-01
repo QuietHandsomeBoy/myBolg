@@ -19,4 +19,18 @@ public class EntityUtils {
         return method.invoke(obj, new Object[0]);
     }
 
+    public static Object getEnumValue(Object obj, String variableName) throws Exception {
+        Class<?> entityClass = obj.getClass();
+        String key;
+        Method method;
+        for (Object o : entityClass.getEnumConstants()) {
+            method = entityClass.getMethod(getMethodName("key"), new Class[0]);
+            key = method.invoke(obj, new Object[0]).toString();
+            if (key.equals(variableName)) {
+                method = entityClass.getMethod(getMethodName("value"), new Class[0]);
+                return method.invoke(obj, new Object[0]).toString();
+            }
+        }
+        return null;
+    }
 }

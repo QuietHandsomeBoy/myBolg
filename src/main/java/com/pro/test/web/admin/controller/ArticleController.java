@@ -40,16 +40,15 @@ public class ArticleController extends BaseController {
     @Autowired
     private TbHxpArticleContentManager tbHxpArticleContentManager;
 
-    @RequestMapping(value = "articleList.html")
+    @RequestMapping(value = "articleList.html", method = RequestMethod.GET)
     public String articleList(Pagination pagination, RequestResolver requestResolver, TbHxpArticle tbHxpArticle) throws Exception {
         ContextData contextData = new ContextData(pagination);
         contextData.setEntity(tbHxpArticle);
-        contextData.setOrder("");
         List<TbHxpArticle> list = tbHxpArticleManager.findPage(contextData);
         //从缓存中拿取各种笔记的count！
         List<ArticleRangeVo> articleRangsCountInfo = tbHxpArticleManager.getArticleRangsCountInfo();
-        if(StringUtils.isNotBlank(tbHxpArticle.getArticleRange())){
-            requestResolver.setAttribute("articleRange",tbHxpArticle.getArticleRange());
+        if (StringUtils.isNotBlank(tbHxpArticle.getArticleRange())) {
+            requestResolver.setAttribute("articleRange", tbHxpArticle.getArticleRange());
         }
         Map<String, Object> articleRightsEnum = (Map<String, Object>) EhcacheUtils.getValue("articleEnumCache", "articleRightsEnum");
         if (articleRightsEnum == null) {
@@ -167,8 +166,8 @@ public class ArticleController extends BaseController {
             return map;
         }
         try {
-            map = tbHxpArticleManager.insertArticle(tbHxpArticle,newArticleId,content);
-        }catch (Exception e){
+            map = tbHxpArticleManager.insertArticle(tbHxpArticle, newArticleId, content);
+        } catch (Exception e) {
             map.put("result", "err");
             map.put("resultMsg", "系统后台错误！");
         }

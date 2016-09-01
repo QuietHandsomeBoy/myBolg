@@ -715,7 +715,7 @@ a:hover, a:active, a:visited, a:focus {
     padding: 0;
 }
 
-.left-box-content {
+.left-box-content,.left-tags-box {
     background: none;
     border: none;
     padding: 10px;
@@ -804,7 +804,7 @@ a:hover, a:active, a:visited, a:focus {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
 }
 
-.left-box-content h5 {
+.left-box-content h5,.left-tags-box h5 {
     color: #34424e;
     font-weight: bold;
 }
@@ -891,9 +891,11 @@ label:focus {
 .date {
     margin-bottom: 5px;
 }
-
 .other-condition {
     margin-bottom: 20px;
+}
+.tags-condition{
+    margin-bottom: 50px;
 }
 
 .other-condition label {
@@ -913,6 +915,9 @@ label:focus {
 
 .other-condition .bootstrap-select {
     width: 100px !important;
+}
+.tags-condition .bootstrap-select{
+    width: 100% !important;
 }
 .related-article-box{
     margin-bottom: 20px;
@@ -977,7 +982,7 @@ label:focus {
 .right-animated-box{
     opacity: 0;
 }
-.list-main-box {
+.list-main-box,.right-tags-box {
     width: 100%;
     padding: 10px 20px;
     border-radius: 2px;
@@ -1005,7 +1010,7 @@ label:focus {
     animation: nprogress-spinner 400ms linear infinite;
 }
 
-.list-main-box table tbody {
+.list-main-box table tbody,.right-tags-box table tbody {
     -webkit-transition: all .25s ease-out;
     -moz-transition: all .25s ease-out;
     transition: all .25s ease-out;
@@ -1072,7 +1077,7 @@ label:focus {
     color: #FFFFFF;
 }
 
-.list-main-box h2 {
+.list-main-box h2,.right-tags-box h2 {
     font-size: 20px;
     margin-top: 0;
 }
@@ -1102,6 +1107,9 @@ label:focus {
     padding-left: 5px;
 }
 
+.list-content-box .table > tbody > tr > td:first-child {
+    width: 60px;
+}
 .list-content-box .table > tbody > tr > td, .list-content-box .table > thead > tr > th {
     text-align: center;
 }
@@ -1141,17 +1149,18 @@ label:focus {
 .pagination > li > a > i {
     line-height: 18px;
 }
-
-.article-title {
+.title-common {
     margin-left: 5px;
     font-size: 14px;
-    width: 500px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #6d6d6d;
     font-weight: bold;
     display: block;
+}
+.article-title {
+    width: 500px;
 }
 
 .article-title:focus, .article-title:visited {

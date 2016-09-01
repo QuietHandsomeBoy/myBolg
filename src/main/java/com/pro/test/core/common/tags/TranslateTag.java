@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hxpeng on 2016/8/12.
@@ -54,6 +56,32 @@ public class TranslateTag extends TagSupport {
                         if (value.equals(tempObject)) {
                             result = EntityUtils.getVariableValue(object, valueField);
                             break;
+                        }
+                    }
+                }
+                if (source instanceof Map) {
+                    Map<String,Object> map = (Map<String, Object>) source;
+                    Iterator it = map.entrySet().iterator();
+                    while (it.hasNext()){
+                        Map.Entry e = (Map.Entry) it.next();
+                        if(e.getKey().toString().equals(value)){
+                            Object val = e.getValue();
+                            if(val != null){
+                                if(val instanceof String){
+                                    break;
+                                }
+                                if(result.getClass().isEnum()){
+                                    result = EntityUtils.getEnumValue(result, keyField);
+                                    break;
+                                }else{
+                                    Object tempObject = EntityUtils.getVariableValue(val, keyField);
+                                    if (value.equals(tempObject)) {
+                                        result = EntityUtils.getVariableValue(val, valueField);
+                                        break;
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
