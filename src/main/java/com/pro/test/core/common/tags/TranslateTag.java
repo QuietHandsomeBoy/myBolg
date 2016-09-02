@@ -68,6 +68,7 @@ public class TranslateTag extends TagSupport {
                             Object val = e.getValue();
                             if(val != null){
                                 if(val instanceof String){
+                                    result = val;
                                     break;
                                 }
                                 if(result.getClass().isEnum()){

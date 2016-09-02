@@ -7,6 +7,7 @@ import com.pro.test.core.common.springmvc.entity.RequestResolver;
 import com.pro.test.core.controller.BaseController;
 import com.pro.test.core.enumdata.ArticleRange;
 import com.pro.test.core.enumdata.ArticleRights;
+import com.pro.test.core.enumdata.ArticleTags;
 import com.pro.test.core.util.EhcacheUtils;
 import com.pro.test.core.util.UUIDUtils;
 import com.pro.test.core.vo.ArticleRangeVo;
@@ -106,6 +107,7 @@ public class ArticleController extends BaseController {
      */
     @RequestMapping(value = "insertArticle.html", method = RequestMethod.GET)
     public String insertArticle(RequestResolver requestResolver, String articleId) throws Exception {
+        long start = System.currentTimeMillis();
         Map<String, Object> articleRangeEnum = (Map<String, Object>) EhcacheUtils.getValue("articleEnumCache", "articleRangeEnum");
         if (articleRangeEnum == null) {
             articleRangeEnum = ArticleRange.getArticleRangeEnum();
@@ -116,6 +118,13 @@ public class ArticleController extends BaseController {
             articleRightsEnum = ArticleRights.getArticleRightsEnum();
             EhcacheUtils.setValue("articleEnumCache", "articleRightsEnum", articleRightsEnum);
         }
+        Map<String, Object> articleTagsEnum = (Map<String, Object>) EhcacheUtils.getValue("articleEnumCache", "articleTagsEnum");
+        if (articleTagsEnum == null) {
+            articleTagsEnum = ArticleTags.getArticleTagsEnum();
+            EhcacheUtils.setValue("articleEnumCache", "articleTagsEnum", articleTagsEnum);
+        }
+        requestResolver.setAttribute("articleTagsEnumMap", articleTagsEnum);
+        requestResolver.setAttribute("articleTagsJSON", JSONObject.toJSONString(articleTagsEnum));
         requestResolver.setAttribute("articleRangeEnumMap", articleRangeEnum);
         requestResolver.setAttribute("articleRightsEnumMap", articleRightsEnum);
         if (StringUtils.isNotBlank(articleId)) {
@@ -143,11 +152,13 @@ public class ArticleController extends BaseController {
         } else {
             requestResolver.setAttribute("articleId", UUIDUtils.getUUID());
         }
+        long end = System.currentTimeMillis();
+        System.out.println("执行时间::"+(end-start));
         return "admin/article/insertArticle";
     }
 
     /**
-     * 异步提交文章
+     * 异步提交文章，新增/修改
      *
      * @param tbHxpArticle
      * @param content
@@ -173,35 +184,6 @@ public class ArticleController extends BaseController {
         }
         return map;
     }
-
-    @ResponseBody
-    @RequestMapping(value = "/updateArticle.json", method = RequestMethod.POST)
-    public Map<String, Object> updateArticle(@Validated TbHxpArticle tbHxpArticle, String content, BindingResult bindingResult) {
-        Map<String, Object> map = new HashMap<>();
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            map.put("result", "err");
-            map.put("resultMsg", "请按要求输入文章相关信息!");
-            return map;
-        }
-        if (tbHxpArticle != null && tbHxpArticle.getId() == null) {
-            try {
-                content = HtmlUtils.htmlEscape(content);
-                tbHxpArticleManager.update(tbHxpArticle);
-                TbHxpArticleContent tbHxpArticleContent = new TbHxpArticleContent();
-                tbHxpArticleContent.setArticleId(tbHxpArticle.getArticleId());
-                tbHxpArticleContent.setArticleContent(content);
-                tbHxpArticleContentManager.update(tbHxpArticleContent);
-            } catch (Exception e) {
-                e.printStackTrace();
-                map.put("result", "err");
-                map.put("resultMsg", "系统后台错误！");
-                return map;
-            }
-        }
-        return map;
-    }
-
 
     /**
      * 跟根据文章ID判断文章是否存在

@@ -20,8 +20,8 @@ public class TbHxpTagsDao extends GenericDAO<TbHxpTags, TbHxpTagsMapper> {
         return "";
     }
 
-    public List<TbHxpTags> selectTagsByConditions(TbHxpTags tbHxpTags) {
-        return mapper.selectTagsByConditions(tbHxpTags);
+    public List<TbHxpTags> findAllByCondition(TbHxpTags tbHxpTags){
+        return mapper.findAllByCondition(tbHxpTags);
     }
 
 

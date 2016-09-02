@@ -199,7 +199,7 @@ var confimTips = function (params) {
 }
 
 //文章类型枚举
-var changeArticleTag = function (articleRange) {
+var changeArticleType = function (articleRange) {
     switch (articleRange) {
         case "note":
             return "笔记";
@@ -209,6 +209,20 @@ var changeArticleTag = function (articleRange) {
             return "文摘";
         case "other":
             return "其他";
+    }
+    return "文章"
+}
+//文章类型枚举
+var changeArticleTag = function (tagType) {
+    switch (tagType) {
+        case "note":
+            return "笔记标签";
+        case "diary":
+            return "日记标签";
+        case "tabloid":
+            return "文摘标签";
+        case "other":
+            return "其他标签";
     }
     return "文章"
 }

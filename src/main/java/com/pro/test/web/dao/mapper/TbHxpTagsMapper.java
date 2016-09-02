@@ -18,5 +18,5 @@ public interface TbHxpTagsMapper extends GenericMapper {
 
     int updateByPrimaryKey(TbHxpTags record);
 
-    List<TbHxpTags> selectTagsByConditions(TbHxpTags record);
+    List<TbHxpTags> findAllByCondition(TbHxpTags tbHxpTags);
 }

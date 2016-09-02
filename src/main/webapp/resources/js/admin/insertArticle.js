@@ -8,11 +8,11 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
     var init = function () {
 
-        if($('#key-words-list').width() != 0){
+        if ($('#key-words-list').width() != 0) {
             $("input[name='keyWords']").val('').css({
                 'padding-left': $('#key-words-list').width()
             });
-        }else{
+        } else {
             $("input[name='keyWords']").val('').css({'padding-left': "15px"});
         }
 
@@ -400,54 +400,172 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
 
     //操作弹出框
-    var operateTips = function(obj){
+    var operateTips = function (obj) {
 
-        if(obj == null){
-            return ;
+        if (obj == null) {
+            return;
         }
         //obj = {
         //    tipsId : "",
         //    operateType : "",
         //}
+        var selectHtml = '<option value="">--请选择--</option>';
+        if (publicUtil.isNotEmpty($("#tagEnum").val())) {
+            var obj = JSON.parse($("#tagEnum").val());
+            $.each(obj, function (k, v) {
+                selectHtml += '<option value="' + k + '">' + v + '</option>';
+            })
+        }
         var html =
-            '<div class="tips-div" id="'+obj.tipsId+'">' +
+            '<div class="tips-div" id="' + obj.tipsId + '">' +
             '<div class="operate-content">' +
             '<h3>选择标签</h3>' +
             '<div>' +
             '<div class="choose-tags-input-box">' +
             '<p>已选择标签：</p>' +
-            '<div class="choosed-tags-box"></div>' +
+            '<div class="choosed-tags-box"></div><span class="err-tips">最多只能设置五个标签</span>' +
             '</div>' +
             '<div class="choose-tags-sources-box">' +
             '<p>已选择标签：</p>' +
             '<div>' +
-            '<input placeholder="请输入标签名字"/>' +
-            '<select class="selectpicker" name="tagType">' +
-            '<option value="">-请选择-</option>' +
-            '<option value=" ">技术标签</option>' +
-            '<option value=" ">日记标签</option>' +
-            '<option value=" ">文摘标签</option>' +
-            '</select>' +
-            '<button type="button">查询</button>' +
+            '<input placeholder="输入标签查找.." id="typeNameInput"/>' +
+            '<select class="selectpicker" id="tagTypeSelect">' + selectHtml + '</select>' +
+            '<button type="button" id="searcheTags">查询</button>' +
             '</div>' +
-            '<div class="tags-sources-box"></div>' +
+            '<div class="tags-sources-box"><div class="pagination-loading" style="display: none;"></div><ul class="tags-list" style="opacity: 0;"></ul></div>' +
             '</div>' +
-            '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips('+"'"+obj.tipsId+"'"+')">Close me!</button>' +
+            '<div style="overflow: auto; padding: 10px 0;">' +
+            '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips(' + "'" + obj.tipsId + "'" + ')">Close me!</button>' +
+            '<button class="btn btn-default pull-right choose-it" id="chooseBtn">Choose it!</button>' +
+            '<button class="btn btn-default pull-left create-one" id="CreateOne">Create One!</button>' +
+            '</div>'+
+            '<div id="createNewOneTag">' +
+            '<p>新建标签：<span class="tips">标签类型跟随文章类型</span></p>' +
+            '<div>' +
+            '<input placeholder="输入标签名称" id=""/>' +
+            '<button type="button" id="saveTags">保存</button>' +
+            '</div>' +
+            '</div>' +
             '</div>' +
             '</div>' +
             '</div>' +
             '<div class="tips-background-div"></div>';
 
         $("body").append(html);
+        $("#searcheTags").on("click", function () {
+            $(".tags-sources-box").find("ul").css("opacity", "0");
+            $(".pagination-loading").show();
+            searchTags();
+        })
         $('.selectpicker').selectpicker({
             showIcon: true,
             showTick: true,
             style: 'select-btn'
         });
+        $(".choosed-tags-box").on("click", "span", function () {
+            var tagId = $(this).html("").attr("id");
+            $.each($(".tags-sources-box").find("input[type='checkbox']:checked"), function (k, v) {
+                if ($(v).val() == tagId) {
+                    $(v).iCheck('uncheck');
+                }
+            })
+        })
+        $("#CreateOne").on("click",function(){
+            $("#createNewOneTag").toggleClass("createTag-height");
+        })
+        $("#saveTags").on("click",function(){
+            $.ajax({
+                type: "POST",
+                url: ctx + "/admin/tags/findTags.json",
+                dataType: "json",
+                data: {"tagName": tagName, "tagType": tagType},
+                async: false,
+                success: function (data) {
+
+                }
+            })
+        })
 
         setTimeout(function () {
-            $("#"+obj.tipsId).addClass("tips-show");
+            $("#" + obj.tipsId).addClass("tips-show");
         }, 100);
+    }
+
+    var searchTags = function () {
+        var tagName = $("#typeNameInput").val();
+        var tagType = $("#tagTypeSelect").val();
+        $.ajax({
+            type: "POST",
+            url: ctx + "/admin/tags/findTags.json",
+            dataType: "json",
+            data: {"tagName": tagName, "tagType": tagType},
+            async: false,
+            success: function (data) {
+                var spanSet = $(".choosed-tags-box").find("span");
+                var resultObj = JSON.parse(data);
+                var stat = resultObj.stat;
+                if (stat == 'success') {
+                    var tagList = resultObj.tagList;
+                    var resultHtml = "";
+                    $.each(tagList, function (k, v) {
+                        resultHtml += '<li><label class=""><input type="checkbox"';
+                        if (spanSet.length > 0) {
+                            $.each(spanSet, function (z, j) {
+                                if ($(j).attr("id") == v.id) {
+                                    resultHtml += ' checked ';
+                                }
+                            })
+                        }
+                        resultHtml += 'value="' + v.id + '" class="i-checks">' + v.tagName + '</label></li>';
+                    })
+                    setTimeout(function () {
+                        $(".pagination-loading").hide();
+                        $(".tags-sources-box").find("ul").html(resultHtml);
+                        $('.tags-list .i-checks').iCheck({
+                            checkboxClass: 'icheckbox_flat-blue'
+                        });
+                        $(".tags-sources-box ul input[type=checkbox]").on('ifChecked', function () {
+                            bingArticleTag($(this).parents("label").clone(), "add");
+                        });
+                        $(".tags-sources-box ul input[type=checkbox]").on('ifUnchecked', function () {
+                            bingArticleTag($(this).parents("label").clone(), "remove");
+                        });
+                        if (spanSet.length >= 5) {
+                            $(".tags-sources-box").find("input[type='checkbox']").not("input:checked").iCheck('disable');
+                        }
+                        $(".tags-sources-box").find("ul").css("opacity", "1");
+                    }, 500);
+                } else {
+                    $(".tags-sources-box").append("<h5 style='text-align: center;line-height: 40px;'>未查找到相关标签....</h5>");
+                }
+            }
+        })
+    }
+
+    var bingArticleTag = function (tag, type) {
+        var tagId = $(tag).find("input[type='checkbox']").val();
+        if (type == "add") {
+            if ($(".choosed-tags-box").find("span").length >= 5) {
+                $(".err-tips").css("visibility", "visible");
+                return;
+            } else {
+                $(tag).find("div").remove();
+                var tagName = tag.html();
+                $(".choosed-tags-box").append("<span title='" + tagName + "' id='" + tagId + "'>" + tagName + "</span>")
+                if ($(".choosed-tags-box").find("span").length == 5) {
+                    $(".tags-sources-box").find("input[type='checkbox']").not("input:checked").iCheck('disable');
+                }
+            }
+        } else if (type == "remove") {
+            $.each($(".choosed-tags-box").find("span"), function () {
+                if ($(this).attr("id") == tagId) {
+                    $(this).remove();
+                }
+            })
+            if ($(".choosed-tags-box").find("span").length < 5) {
+                $(".tags-sources-box").find("input[type='checkbox']").iCheck('enable');
+            }
+        }
     }
 
 

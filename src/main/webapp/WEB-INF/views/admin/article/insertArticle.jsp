@@ -152,6 +152,7 @@
             <form action="${_Weburl}/admin/article/saveArticle" method="post" id="articleForm">
                 <input type="hidden" id="articleId" value="${tbHxpArticle.articleId}"/>
                 <input type="hidden" id="newArticleId" value="${articleId}"/>
+                <input type="hidden" id="tagEnum" value="${articleTagsJSON}"/>
                 <div>
                     <div class="row">
                         <div class="col-lg-3">
@@ -184,6 +185,7 @@
                                         <h5>标签设置<label class="label label-gray">最多可选择8个标签</label></h5>
                                         <div class="article-tags-box">
                                             <ul class="tags-list" id="tags-list-box">
+                                            </ul>
                                             </ul>
                                             <button type="button" id="choosArticleTagsBtn">添加标签</button>
                                         </div>

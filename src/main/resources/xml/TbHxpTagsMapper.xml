@@ -139,7 +139,17 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
 
-    <!-- 根据条件查询信息 -->
+    <delete id="deleteByIds" parameterType="java.util.List">
+        update tb_hxp_tags
+        set is_deleted = 1 WHERE id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
+
+
+    <!-- 根据条件查询信息 分页-->
     <select id="findPage" resultMap="BaseResultMap" useCache="false">
         select
         <include refid="Base_Column_List"/>
@@ -160,4 +170,21 @@
             order by create_date desc
         </if>
     </select>
+
+    <!-- 根据条件查询所有 -->
+    <select id="findAllByCondition" resultMap="BaseResultMap" parameterType="com.pro.test.web.entity.TbHxpTags">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_hxp_tags
+        <where>
+            <if test="tagType != null and tagType != ''">
+                and tag_type = #{tagType,jdbcType=VARCHAR}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                and tag_name like concat(concat('%', #{tagName,jdbcType=VARCHAR}), '%')
+            </if>
+            and is_deleted = 0
+        </where>
+    </select>
+
 </mapper>

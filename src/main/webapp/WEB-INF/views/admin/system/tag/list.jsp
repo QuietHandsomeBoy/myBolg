@@ -164,16 +164,16 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="left-tags-box animated fadeIn">
-                            <form>
+                            <form id="searchTagParam" method="post" action="${_Weburl}/admin/tags/tagsList.html">
                                 <h5>标签名：</h5>
                                 <div class="form-group">
                                     <input type='text' class="form-control search-title-input"
                                            autocomplete="off"
-                                           name="articleTitle"/>
+                                           name="tagName"/>
                                 </div>
                                 <div class="tags-condition form-group">
                                     <h5>标签类型：</h5>
-                                    <select class="selectpicker" name="articleRights">
+                                    <select class="selectpicker" name="tagType">
                                         <option value="">请选择</option>
                                         <c:forEach items="${articleTagsEnumMap}"
                                                    var="articleTagsEnum">
@@ -263,7 +263,7 @@
                                                 <label class="label label-biji">
                                                     <t:translate source="${articleTagsEnumMap}"
                                                                  value="${tag.tagType}"
-                                                                 sourceKey="key"/>
+                                                                 sourceKey="tagType"/>
                                                 </label>
                                             </td>
                                             <td><fmt:formatDate value="${tag.createDate}"

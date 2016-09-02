@@ -58,23 +58,23 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
 
         $("#delete-some").on("click", function () {
             if (!$('table input[type=checkbox]').is(':checked')) {
-                tips("请选择要删除的文章！");
+                tips("请选择要删除的标签！");
                 return;
             }
             confimTips({
                 'title': '确认提示',
-                'message': '是否确认删除文章？',
+                'message': '是否确认删除标签？',
                 'buttons': {
                     'Yes': {
                         'class': 'btn btn-default pull-right',
                         'action': function () {
-                            var articleIds = '';
-                            var articleArray = new Array();
+                            var tagIds = '';
+                            var tagArray = new Array();
                             $('table input[type=checkbox]:checked').each(function () {
-                                articleIds += $(this).val() + ';';
-                                articleArray.push($(this).closest("tr"));
+                                tagIds += $(this).val() + ';';
+                                tagArray.push($(this).closest("tr"));
                             });
-                            deleteArticle(articleIds, articleArray);
+                            deleteTag(tagIds, tagArray);
                         }
                     },
                     'No': {
@@ -87,7 +87,7 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
         })
 
         $("#refresh-all").on("click", function () {
-            assembling();
+            assembling("refresh");
         })
 
         $("#searchBtn").on("click", function () {
@@ -102,27 +102,25 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             paginationFun($(this));
         })
 
-        var assembling = function () {
+        var assembling = function (type) {
             srearchCondition = "";
-            $.each($("#searchArticleParam").serializeArray(), function (k, v) {
-                if ($("input[name='" + v.name + "']").attr("type") == 'text') {
+            $.each($("#searchTagParam").serializeArray(), function (k, v) {
+                if ($("input[name='" + v.name + "']").attr("type") == 'text' && publicUtil.isNotEmpty($("input[name='" + v.name + "']").val())) {
                     srearchCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
                 }
-                if ($("input[name='" + v.name + "']").attr("type") == 'checkbox') {
+                if ($("input[name='" + v.name + "']").attr("type") == 'checkbox' && $("input[name='" + v.name + "']:checked")) {
                     srearchCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
                 }
-                if ($("select[name='" + v.name + "']").length == 1) {
+                if ($("select[name='" + v.name + "']").length == 1 && $("select[name='" + v.name + "']").val() != "") {
                     srearchCondition += v.name + "=" + $("select[name='" + v.name + "']").val() + "&";
                 }
             })
-            var articleRange = $("input[name='articleRange']").val();
-            if (!publicUtil.isEmpty(articleRange)) {
-                if (articleRange != "all") {
-                    srearchCondition += "articleRange=" + articleRange + "&";
-                }
+            if(type == "refresh"){
+                submitSearchForm(srearchCondition + paginationCondition, "search");
+            }else{
+                srearchCondition = srearchCondition.substring(0, srearchCondition.length - 1);
+                submitSearchForm(srearchCondition, "search");
             }
-            srearchCondition = srearchCondition.substring(0, srearchCondition.length - 1);
-            submitSearchForm(srearchCondition, "search");
         }
 
 
@@ -158,11 +156,9 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             }
 
             paginationCondition = "";
-            $.each($(".list-main-box").find("input"), function (k, v) {
+            $.each($(".right-tags-box").find("input"), function (k, v) {
                 if ($("input[name='" + v.name + "']").attr("type") == 'hidden') {
-                    if (v.name != "articleRange") {
-                        paginationCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
-                    }
+                    paginationCondition += v.name + "=" + $("input[name='" + v.name + "']").val() + "&";
                 }
             })
             paginationCondition = paginationCondition.substring(0, paginationCondition.length - 1);
@@ -191,7 +187,7 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             contextBox.css("opacity", "0");
             $.ajax({
                 type: "POST",
-                url: ctx + "/admin/article/articleList.json",
+                url: ctx + "/admin/tags/tagsList.json",
                 dataType: "json",
                 data: condition,
                 async: false,
@@ -200,25 +196,20 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                         $(".pagination-loading").hide();
                     }, 500);
                     var resultObj = JSON.parse(data);
-                    var articleList = resultObj.articleList;
+                    var articleList = resultObj.tagsList;
                     var pagination = resultObj.pagination;
                     var resultHtml = '';
                     if (articleList.length <= 0) {
                         resultHtml += '<tr>';
-                        resultHtml += '<td style="text-align: center;" colspan="8">未找到相关文章！</td>';
+                        resultHtml += '<td style="text-align: center;" colspan="8">暂无数据.......</td>';
                         resultHtml += "</tr>";
                     }
                     $.each(articleList, function (k, v) {
                         resultHtml += '<tr>';
-                        resultHtml += '<td><input type="checkbox" class="i-checks" value="' + v.articleId + '"></td>';
-                        resultHtml += '<td><a href="javascript:;" class="title-common article-title">' + v.articleTitle + '</a></td>';
-                        resultHtml += '<td><label class="label label-biji">' + changeArticleTag(v.articleRange) + '</label></td>';
-                        //resultHtml += '<td>' + v.likesCount + '</td>';
-                        //resultHtml += '<td>' + v.readCount + '</td>';
-                        //resultHtml += '<td>' + v.commentCount + '</td>';
-                        resultHtml += '<td>' + v.articleAuthorName + '</td>';
+                        resultHtml += '<td><input type="checkbox" class="i-checks" value="' + v.id + '"></td>';
+                        resultHtml += '<td><a href="javascript:;" class="title-common">' + v.tagName + '</a></td>';
+                        resultHtml += '<td><label class="label label-biji">' + changeArticleTag(v.tagType) + '</label></td>';
                         resultHtml += '<td>' + new Date(v.createDate).format("yyyy-MM-dd") + '</td>';
-                        resultHtml += '<td>' + new Date(v.updateDate).format("yyyy-MM-dd") + '</td>';
                         resultHtml += "</tr>";
                     })
                     setTimeout(function () {
@@ -230,7 +221,10 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
 
                     if (type == 'search') {
                         $("#articlePagination").html("");//清空分页div，重新添加
-                        var paginationHtml = '<li><button id="lastBtn" disabled="true">&laquo;</button></li>';
+                        var paginationHtml = '<li><button id="lastBtn">&laquo;</button></li>';
+                        if(pagination.currentPage == 1){
+                            paginationHtml = '<li><button id="lastBtn" disabled="true">&laquo;</button></li>';
+                        }
                         for (var i = 1; i < pagination.totalPages + 1; i++) {
                             if (pagination.currentPage == i) {
                                 paginationHtml += '<li class="active"><button class="paginationNum">' + i + '</button></li>';
@@ -245,7 +239,7 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                         paginationHtml += '>&raquo;</button></li>';
 
                         $("#articlePagination").append(paginationHtml);
-                        currentPage = 1;
+                        currentPage = pagination.currentPage;
                         totalPages = pagination.totalPages;
                         $("#totalRecordsSpan").html(pagination.totalRecords);
                         lastBtn = $("#lastBtn");
@@ -262,12 +256,12 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             });
         }
 
-        var deleteArticle = function (articleIds, articleArray) {
+        var deleteTag = function (tagIds, articleArray) {
             $.ajax({
                 type: "POST",
-                url: ctx + "/admin/article/deleteArticleByIds.json",
+                url: ctx + "/admin/tags/deleteTagByIds.json",
                 dataType: "json",
-                data: {"articleIds": articleIds},
+                data: {"tagIds": tagIds},
                 success: function (data) {
                     if (data == 'success') {
                         $.each(articleArray, function () {
@@ -277,10 +271,10 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                             }, 500);
                         })
                     } else if (data == 'null') {
-                        tips("请选择要删除的文章！");
+                        tips("请选择要删除的标签！");
                         return;
                     } else if (data == 'err') {
-                        tips("后台异常.....");
+                        tips("请正确选择标签进行删除！");
                         return;
                     }
                 }

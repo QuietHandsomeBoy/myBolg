@@ -28,7 +28,7 @@ public class EhcacheUtils {
     /**
      * 缓存的间歇时间
      */
-    public static int TIMETOIDLESECONDS = 600;
+    public static int TIMETOIDLESECONDS = 1800;
     /**
      * 存活时间(默认一天)
      */
