@@ -511,16 +511,18 @@ a:hover, a:active, a:visited, a:focus {
 
 /*insert.css==start*/
 
-.article-content-box{
+.article-content-box {
     position: relative;
 }
 
 .type-confition .icheckbox_line-blue {
     margin: 5px 0;
 }
+
 .type-confition .bootstrap-select {
     width: 100% !important;
 }
+
 .type-confition .icheckbox_line-blue, .iradio_line-blue, .type-confition .icheckbox_line-blue, .iradio_line-blue:hover {
     background: #939ba0;
     padding: 20px 15px 20px 38px;
@@ -542,7 +544,6 @@ a:hover, a:active, a:visited, a:focus {
 }
 
 .tags-list li {
-    width: 120px;
     list-style: none;
 }
 
@@ -671,7 +672,8 @@ a:hover, a:active, a:visited, a:focus {
     width: 100%;
     border: 1px solid #cccccc;
 }
-.uploadFile_box .fileIcon i{
+
+.uploadFile_box .fileIcon i {
     line-height: 100px;
 }
 
@@ -715,7 +717,7 @@ a:hover, a:active, a:visited, a:focus {
     padding: 0;
 }
 
-.left-box-content,.left-tags-box {
+.left-box-content, .left-tags-box {
     background: none;
     border: none;
     padding: 10px;
@@ -726,32 +728,36 @@ a:hover, a:active, a:visited, a:focus {
     padding: 20px 12px;
     background: #efefef;
 }
-#key-words-list{
+
+#key-words-list {
     position: absolute;
     float: left;
 }
-#key-words-list span {
+
+#key-words-list span,#tags-list-box span {
     margin: 5px;
     padding: 10px;
     background: #ccc;
     border-radius: 5px;
     width: 80px;
     display: inline-block;
-    word-break:keep-all;/* 不换行 */
-    white-space:nowrap;/* 不换行 */
-    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
-    text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
-    -moz-user-select:none;/*火狐*/
-    -webkit-user-select:none;/*webkit浏览器*/
-    -ms-user-select:none;/*IE10*/
-    -khtml-user-select:none;/*早期浏览器*/
-    user-select:none;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
     cursor: pointer;
 }
-.key-words-input{
+
+.key-words-input {
     padding-left: 15px;
 }
-.form-group .search-title-input, .form-group .key-words-input,.related-article-box input[type=text],.related-article-box button {
+
+.form-group .search-title-input, .form-group .key-words-input, .related-article-box input[type=text], .related-article-box button {
     height: 49px;
     box-shadow: 0 1px 1px #d3d1d1;
     font-size: 14px;
@@ -768,7 +774,7 @@ a:hover, a:active, a:visited, a:focus {
     padding: 0px 15px;
 }
 
-.article-tags-box{
+.article-tags-box {
     position: relative;
     border: 1px solid #dddddd;
     border-top: 1px solid #ebebeb;
@@ -781,7 +787,8 @@ a:hover, a:active, a:visited, a:focus {
     padding: 5px 0px;
     overflow: auto;
 }
-.article-tags-box button{
+
+.article-tags-box button {
     text-align: center;
     padding: 8px;
     line-height: 1;
@@ -799,12 +806,13 @@ a:hover, a:active, a:visited, a:focus {
     border-bottom: 1px solid #b7b7b7;
     box-shadow: 0 1px 1px #d3d1d1;
 }
-.article-tags-box button:active,.related-article-box button:active {
+
+.article-tags-box button:active, .related-article-box button:active {
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
 }
 
-.left-box-content h5,.left-tags-box h5 {
+.left-box-content h5, .left-tags-box h5 {
     color: #34424e;
     font-weight: bold;
 }
@@ -891,10 +899,12 @@ label:focus {
 .date {
     margin-bottom: 5px;
 }
+
 .other-condition {
     margin-bottom: 20px;
 }
-.tags-condition{
+
+.tags-condition {
     margin-bottom: 50px;
 }
 
@@ -916,27 +926,31 @@ label:focus {
 .other-condition .bootstrap-select {
     width: 100px !important;
 }
-.tags-condition .bootstrap-select{
+
+.tags-condition .bootstrap-select {
     width: 100% !important;
 }
-.related-article-box{
+
+.related-article-box {
     margin-bottom: 20px;
 }
-.related-article-box > div{
+
+.related-article-box > div {
     position: relative;
     overflow: auto;
 }
-.related-article-box input[type=text]{
+
+.related-article-box input[type=text] {
     width: calc(100% - 50px);
     float: left;
 }
-.related-article-box button{
+
+.related-article-box button {
     float: left;
     width: 50px;
 }
 
-
-.search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a,.clean-box a {
+.search-box a, .add-article-box a, .save-as-draft-box a, .view-article-box a, .save-article-box a, .clean-box a {
     text-align: center;
     display: inline-block;
     width: 48%;
@@ -955,34 +969,39 @@ label:focus {
     color: #1ab394;
     border-bottom: 1px solid #b7b7b7;
 }
-.search-box a,.clean-box a{
+
+.search-box a, .clean-box a {
     width: 100%;
     float: left;
 }
-.add-article-box a{
+
+.add-article-box a {
     float: right;
 }
-.save-as-draft-box a{
+
+.save-as-draft-box a {
     width: 100%;
 }
-.view-article-box a{
+
+.view-article-box a {
     float: left;
 }
-.save-article-box a{
+
+.save-article-box a {
     float: right;
 }
 
-
-.search-box a:hover, .add-article-box a:hover, .save-as-draft-box a:hover, .view-article-box a:hover, .save-article-box a:hover,.clean-box a:hover {
+.search-box a:hover, .add-article-box a:hover, .save-as-draft-box a:hover, .view-article-box a:hover, .save-article-box a:hover, .clean-box a:hover {
     background-color: #18a689;
     border-color: #18a689;
     color: #FFFFFF;
 }
 
-.right-animated-box{
+.right-animated-box {
     opacity: 0;
 }
-.list-main-box,.right-tags-box {
+
+.list-main-box, .right-tags-box {
     width: 100%;
     padding: 10px 20px;
     border-radius: 2px;
@@ -1010,7 +1029,7 @@ label:focus {
     animation: nprogress-spinner 400ms linear infinite;
 }
 
-.list-main-box table tbody,.right-tags-box table tbody {
+.list-main-box table tbody, .right-tags-box table tbody {
     -webkit-transition: all .25s ease-out;
     -moz-transition: all .25s ease-out;
     transition: all .25s ease-out;
@@ -1057,7 +1076,7 @@ label:focus {
     border-right: 1px solid #ddd;
 }
 
-.list-header-box .pagination li:active button,.list-header-box .pagination li.active button {
+.list-header-box .pagination li:active button, .list-header-box .pagination li.active button {
     color: #fff;
     cursor: default;
     background-color: #428bca;
@@ -1077,7 +1096,7 @@ label:focus {
     color: #FFFFFF;
 }
 
-.list-main-box h2,.right-tags-box h2 {
+.list-main-box h2, .right-tags-box h2 {
     font-size: 20px;
     margin-top: 0;
 }
@@ -1110,6 +1129,7 @@ label:focus {
 .list-content-box .table > tbody > tr > td:first-child {
     width: 60px;
 }
+
 .list-content-box .table > tbody > tr > td, .list-content-box .table > thead > tr > th {
     text-align: center;
 }
@@ -1149,6 +1169,7 @@ label:focus {
 .pagination > li > a > i {
     line-height: 18px;
 }
+
 .title-common {
     margin-left: 5px;
     font-size: 14px;
@@ -1159,6 +1180,7 @@ label:focus {
     font-weight: bold;
     display: block;
 }
+
 .article-title {
     width: 500px;
 }
@@ -1315,8 +1337,6 @@ label:focus {
     vertical-align: bottom;
     max-width: 100%;
     max-height: 100%;
-    width: expression(this.width > 996 && this.height < this.width ? 996: true);
-    height: expression(this.height > 622 ? 622: true);
 }
 
 .wysiwyg-placeholder {
@@ -1346,12 +1366,14 @@ label:focus {
 .wysiwyg-toolbar a {
     vertical-align: top;
 }
+
 .wysiwyg-toolbar-list {
     max-height: 16em;
     overflow: auto;
     overflow-x: hidden;
     overflow-y: scroll;
 }
+
 .wysiwyg-toolbar-list a, .wysiwyg-toolbar-list a:link, .wysiwyg-toolbar-list a:visited {
     display: block;
     color: black;
@@ -1359,9 +1381,11 @@ label:focus {
     text-decoration: none;
     cursor: pointer;
 }
-.wysiwyg-toolbar-list a:hover{
+
+.wysiwyg-toolbar-list a:hover {
     background: #5987c3;
 }
+
 .wysiwyg-popup {
     position: absolute;
     z-index: 9999;
@@ -1808,7 +1832,7 @@ label:focus {
     visibility: visible;
 }
 
-.tips-content,.operate-content {
+.tips-content, .operate-content {
     background: #ffffff;
     position: relative;
     border-radius: 3px;
@@ -1823,22 +1847,26 @@ label:focus {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
 }
-.operate-content button{
+
+.operate-content button {
     margin: 0px 5px;
 }
-.operate-content .choose-it{
+
+.operate-content .choose-it {
     background: #3ea9ff;
     color: #ffffff;
 }
-.operate-content .create-one{
+
+.operate-content .create-one {
     background: #ff9123;
     color: #ffffff;
 }
-.operate-content button:active,.operate-content button:focus{
-    outline: none!important;
+
+.operate-content button:active, .operate-content button:focus {
+    outline: none !important;
 }
 
-.tips-show .tips-content,.tips-show .operate-content {
+.tips-show .tips-content, .tips-show .operate-content {
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -1851,7 +1879,7 @@ label:focus {
     visibility: visible;
 }
 
-.tips-content h3,.operate-content h3 {
+.tips-content h3, .operate-content h3 {
     font-size: 18PX;
     margin: 0;
     padding: 10PX 10px 10px 20px;
@@ -1860,7 +1888,7 @@ label:focus {
     border-radius: 3px 3px 0 0;
 }
 
-.operate-content h3{
+.operate-content h3 {
     background: rgb(51, 111, 154);
     color: #fff;
 }
@@ -1873,7 +1901,7 @@ label:focus {
     outline: none;
 }
 
-.tips-content > div,.operate-content > div {
+.tips-content > div, .operate-content > div {
     padding: 15px 40px;
     margin: 0;
     font-weight: 300;
@@ -1884,10 +1912,11 @@ label:focus {
     overflow: auto;
 }
 
-.operate-content > div{
+.operate-content > div {
     padding: 15px 10px;
 }
-.choose-tags-input-box .err-tips{
+
+.choose-tags-input-box .err-tips {
     font-size: 12px;
     color: #ff5959;
     font-weight: normal;
@@ -1895,21 +1924,14 @@ label:focus {
     display: block;
     visibility: hidden;
 }
-#createNewOneTag .tips{
-    font-size: 12px;
-    color: #ff5959;
-    font-weight: normal;
-    padding: 5px 0px;
-    display: block;
-    visibility: hidden;
-}
-.operate-content .tags-sources-box{
-    padding:10px 0px;
+
+.operate-content .tags-sources-box {
+    padding: 10px 0px;
     margin: 5px 0px;
 }
-.operate-content .choose-tags-input-box .choosed-tags-box,.tags-sources-box,.choose-tags-sources-box input,
-.choose-tags-sources-box .select-btn,.choose-tags-sources-box button,#createNewOneTag input,#createNewOneTag .select-btn
-,#createNewOneTag button{
+
+.operate-content .choose-tags-input-box .choosed-tags-input, .tags-sources-box, .choose-tags-sources-box input,
+.choose-tags-sources-box .select-btn, .choose-tags-sources-box button {
     height: 49px;
     box-shadow: 0 1px 1px #d3d1d1;
     font-size: 14px;
@@ -1926,82 +1948,82 @@ label:focus {
     padding: 0px 15px;
     width: 100%;
 }
-#createNewOneTag{
-    height: 0px;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-    overflow: hidden;
-}
-.createTag-height{
-    height: 90px!important;
+
+.createTag-height {
+    height: 90px !important;
 }
 
-.choose-tags-sources-box input,#createNewOneTag input{
+.choose-tags-sources-box input {
     width: 45%;
     min-width: 250px;
 }
-.choose-tags-sources-box button,#createNewOneTag button{
+
+.choose-tags-sources-box button {
     width: 20%;
     float: right;
     min-width: 100px;
     margin: 0;
 }
-#createNewOneTag button{
-    float:none;
-    margin-left: 15px;
-}
-.choose-tags-sources-box button:active,#createNewOneTag button:active{
+
+.choose-tags-sources-box button:active {
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
 }
-.choose-tags-sources-box .bootstrap-select,#createNewOneTag .bootstrap-select{
+
+.choose-tags-sources-box .bootstrap-select {
     width: 30% !important;
     min-width: 200px;
     margin: 0px 5px !important;
 }
-.choose-tags-sources-box .select-btn,#createNewOneTag .select-btn{
+
+.choose-tags-sources-box .select-btn {
     margin-top: -3px !important;
     color: #a9a9a9;
 }
-.tags-sources-box{
+
+.tags-sources-box {
     min-height: 180px;
     overflow-x: hidden;
     position: relative;
     overflow-y: hidden;
 }
 
-.tags-sources-box .tags-list{
+.tags-sources-box .tags-list {
     max-height: 160px;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
 }
-.tags-sources-box .tags-list li{
+
+.tags-sources-box .tags-list li {
     width: 32%;
 }
-.tags-sources-box .tags-list li label,.choosed-tags-box span{
+
+.tags-sources-box .tags-list li label, #choosed-tags-box span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.choosed-tags-box{
-    padding: 5px 15px!important;
+
+#choosed-tags-box {
+    position: absolute;
+    float: left;
 }
-.choosed-tags-box span{
+
+#choosed-tags-box span {
+    line-height: 25px;
     display: inline-block;
     padding: 5px 10px;
-    margin: 0px 5px;
+    margin: 5px;
     border-radius: 5px;
     width: 80px;
     cursor: pointer;
     border: 1px solid #d2d2d2;
-    color: rgba(0,0,0,.8);
+    color: rgba(0, 0, 0, .8);
     background-color: #f7f7f7;
     -webkit-transition: all .4s;
     transition: all .4s;
 }
-
 
 .choose-content > div {
     padding: 15px 10px;
@@ -2314,4 +2336,5 @@ button.toast-close-button {
         width: 25em
     }
 }
+
 /*  Toastr============end  */

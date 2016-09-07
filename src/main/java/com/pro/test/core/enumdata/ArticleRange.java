@@ -6,12 +6,12 @@ import java.util.Map;
 /**
  * Created by hxpeng on 2016/7/20.
  */
-public enum  ArticleRange {
+public enum ArticleRange {
 
-    note("note","笔记"),
-    diary("diary","日记"),
-    tabloid("tabloid","文摘"),
-    other("other","其他");
+    note("note", "笔记"),
+    diary("diary", "日记"),
+    tabloid("tabloid", "文摘"),
+    other("other", "其他");
 
     private String key;
     private String value;
@@ -32,14 +32,13 @@ public enum  ArticleRange {
         this.value = value;
     }
 
-    ArticleRange(String key, String value){
+    ArticleRange(String key, String value) {
         this.key = key;
         this.value = value;
     }
 
-    public static ArticleRange getArticleRange(String key){
-        switch (key)
-        {
+    public static ArticleRange getArticleRange(String key) {
+        switch (key) {
             case "note":
                 return note;
             case "diary":
@@ -52,10 +51,10 @@ public enum  ArticleRange {
         return null;
     }
 
-    public static Map<String,Object> getArticleRangeEnum(){
-        Map<String,Object> map = new HashMap<>();
-        for(ArticleRange articleRange : ArticleRange.values()){
-            map.put(articleRange.getKey(),articleRange.getValue());
+    public static Map<String, Object> getArticleRangeEnum() {
+        Map<String, Object> map = new HashMap<>();
+        for (ArticleRange articleRange : ArticleRange.values()) {
+            map.put(articleRange.getKey(), articleRange.getValue());
         }
         return map;
     }

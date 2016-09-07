@@ -28,7 +28,7 @@ public class TbHxpArticle implements Serializable {
 
     private Integer isPublic;
 
-    private String aboutArticleUrl;
+    private String aboutArticleId;
 
     private Integer onTop;
 
@@ -126,12 +126,12 @@ public class TbHxpArticle implements Serializable {
         this.isPublic = isPublic;
     }
 
-    public String getAboutArticleUrl() {
-        return aboutArticleUrl;
+    public String getAboutArticleId() {
+        return aboutArticleId;
     }
 
-    public void setAboutArticleUrl(String aboutArticleUrl) {
-        this.aboutArticleUrl = aboutArticleUrl == null ? null : aboutArticleUrl.trim();
+    public void setAboutArticleId(String aboutArticleId) {
+        this.aboutArticleId = aboutArticleId == null ? null : aboutArticleId.trim();
     }
 
     public Integer getOnTop() {

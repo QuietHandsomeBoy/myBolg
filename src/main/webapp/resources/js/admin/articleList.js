@@ -14,24 +14,6 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
     var nextBtn = $("#nextBtn");
 
     var binding = function () {
-        $('table input[type=checkbox]').on('ifChecked', function () {
-            var len = $(".list-content-box input[type='checkbox']:checked").length;
-            if (len == 1) {
-                $("#edit-one-article").removeAttr("disabled");
-            } else if (len > 1) {
-                $("#edit-one-article").attr("disabled", "disabled");
-            }
-        });
-        $('table input[type=checkbox]').on('ifUnchecked', function () {
-            var len = $(".list-content-box input[type='checkbox']:checked").length;
-            if (len <= 0) {
-                $("#edit-one-article").attr("disabled", "disabled");
-            }
-            if (len < 2 && len > 0) {
-                $("#edit-one-article").removeAttr("disabled");
-            }
-        });
-
         $('.list-content-box .i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green'
         });
@@ -41,6 +23,7 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
      * 初始化====start
      */
     var init = function () {
+
         binding();
 
         $("#content").pjax("a", ".list-main-box", {fragment: '.list-main-box', replace: false, scrollTo: false})
@@ -54,6 +37,7 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                 }, 200);
             })
 
+        $(".datetimepicker").remove();
         if ($(".datetimepicker").length < 1) {
             $(".form-group .date").datetimepicker({
                 autoclose: true,
@@ -61,7 +45,20 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             });
         }
 
-        $('.selectpicker').selectpicker({
+        $("table tbody").on("click",".to-edit",function(){
+            $("#vehicle-a").attr("href",ctx+"/admin/article/insertArticle.html?articleId="+$(this).parent().find("input[type='checkbox']").val());
+            $("#vehicle-a").click();
+        })
+
+        $("#test-btn").on("click",function(){
+            $('.selectpicker').selectpicker({
+                showIcon: true,
+                showTick: true,
+                style: 'select-btn'
+            });
+        })
+
+        $(".selectpicker").selectpicker({
             showIcon: true,
             showTick: true,
             style: 'select-btn'
@@ -122,12 +119,6 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
 
         $("#refresh-all").on("click", function () {
             assembling("refresh");
-        })
-
-        $("#edit-one-article").on("click", function () {
-            var articleid = $(".list-content-box input[type='checkbox']:checked").val();
-            $("#vehicle-a").attr("href", ctx + "/admin/article/insertArticle.html?articleId=" + articleid);
-            $("#vehicle-a").click();
         })
 
         $("#searchBtn").on("click", function () {
@@ -256,11 +247,11 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                 $.each(articleList, function (k, v) {
                     resultHtml += '<tr>';
                     resultHtml += '<td><input type="checkbox" class="i-checks" value="' + v.articleId + '"></td>';
-                    resultHtml += '<td><a href="javascript:;" class="title-common article-title">' + v.articleTitle + '</a></td>';
-                    resultHtml += '<td><label class="label label-biji">' + changeArticleType(v.articleRange) + '</label></td>';
-                    resultHtml += '<td>' + v.articleAuthorName + '</td>';
-                    resultHtml += '<td>' + new Date(v.createDate).format("yyyy-MM-dd") + '</td>';
-                    resultHtml += '<td>' + new Date(v.updateDate).format("yyyy-MM-dd") + '</td>';
+                    resultHtml += '<td class="to-edit"><a href="javascript:;" class="title-common article-title">' + v.articleTitle + '</a></td>';
+                    resultHtml += '<td class="to-edit"><label class="label label-biji">' + changeArticleType(v.articleRange) + '</label></td>';
+                    resultHtml += '<td class="to-edit">' + v.articleAuthorName + '</td>';
+                    resultHtml += '<td class="to-edit">' + new Date(v.createDate).format("yyyy-MM-dd") + '</td>';
+                    resultHtml += '<td class="to-edit">' + new Date(v.updateDate).format("yyyy-MM-dd") + '</td>';
                     resultHtml += "</tr>";
                 })
                 setTimeout(function () {
@@ -296,7 +287,6 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
                     lastBtn = $("#lastBtn");
                     nextBtn = $("#nextBtn");
                 }
-                $("#edit-one-article").attr("disabled", "disabled");//除去edit按钮的禁用元素
             },
             error: function () {
                 setTimeout(function () {

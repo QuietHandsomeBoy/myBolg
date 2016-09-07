@@ -12,8 +12,11 @@ import com.pro.test.web.entity.TbHxpArticleContent;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.ServletContext;
 import java.util.*;
 
 /**
@@ -132,6 +135,10 @@ public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticl
         }
         Collections.sort(result);//排序，从大到小
         EhcacheUtils.setValue("articleRangeCountCache", "articleRanges", result);
+
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        ServletContext servletContext = webApplicationContext.getServletContext();
+        servletContext.setAttribute("article_count_num", Integer.parseInt(servletContext.getAttribute("article_count_num").toString()) + 1);
     }
 
 }

@@ -23,4 +23,6 @@ public interface TbHxpArticleMapper extends GenericMapper {
     List<Map<String,Object>> findArticleRangeCount();
 
     TbHxpArticle findOneByArticleId(@Param(value = "articleId") String articleId);
+
+    int findAllCount();
 }

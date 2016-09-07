@@ -11,7 +11,7 @@
         <result column="article_author_name" property="articleAuthorName" jdbcType="VARCHAR" />
         <result column="article_tags" property="articleTags" jdbcType="VARCHAR" />
         <result column="is_public" property="isPublic" jdbcType="INTEGER" />
-        <result column="about_article_url" property="aboutArticleUrl" jdbcType="VARCHAR" />
+        <result column="about_article_id" property="aboutArticleId" jdbcType="VARCHAR" />
         <result column="on_top" property="onTop" jdbcType="INTEGER" />
         <result column="key_words" property="keyWords" jdbcType="VARCHAR" />
         <result column="article_rights" property="articleRights" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
 
     <sql id="Base_Column_List" >
         id, article_id, article_title, article_introduced, article_range, article_author_id,
-        article_author_name, article_tags, is_public, about_article_url, on_top, key_words,
+        article_author_name, article_tags, is_public, about_article_id, on_top, key_words,
         article_rights, article_status, create_date, create_by, update_date, update_by, remark,
         is_deleted
     </sql>
@@ -49,7 +49,7 @@
         insert into tb_hxp_article (id, article_id, article_title,
         article_introduced, article_range,
         article_author_id, article_author_name, article_tags,
-        is_public, about_article_url, on_top,
+        is_public, about_article_id, on_top,
         key_words, article_rights, article_status,
         create_date, create_by, update_date,
         update_by, remark, is_deleted
@@ -57,7 +57,7 @@
         values (#{id,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, #{articleTitle,jdbcType=VARCHAR},
         #{articleIntroduced,jdbcType=VARCHAR}, #{articleRange,jdbcType=VARCHAR},
         #{articleAuthorId,jdbcType=VARCHAR}, #{articleAuthorName,jdbcType=VARCHAR}, #{articleTags,jdbcType=VARCHAR},
-        #{isPublic,jdbcType=INTEGER}, #{aboutArticleUrl,jdbcType=VARCHAR}, #{onTop,jdbcType=INTEGER},
+        #{isPublic,jdbcType=INTEGER}, #{aboutArticleId,jdbcType=VARCHAR}, #{onTop,jdbcType=INTEGER},
         #{keyWords,jdbcType=VARCHAR}, #{articleRights,jdbcType=VARCHAR}, #{articleStatus,jdbcType=VARCHAR},
         #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
         #{updateBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}
@@ -93,8 +93,8 @@
             <if test="isPublic != null" >
                 is_public,
             </if>
-            <if test="aboutArticleUrl != null" >
-                about_article_url,
+            <if test="aboutArticleId != null" >
+                about_article_id,
             </if>
             <if test="onTop != null" >
                 on_top,
@@ -155,8 +155,8 @@
             <if test="isPublic != null" >
                 #{isPublic,jdbcType=INTEGER},
             </if>
-            <if test="aboutArticleUrl != null" >
-                #{aboutArticleUrl,jdbcType=VARCHAR},
+            <if test="aboutArticleId != null" >
+                #{aboutArticleId,jdbcType=VARCHAR},
             </if>
             <if test="onTop != null" >
                 #{onTop,jdbcType=INTEGER},
@@ -214,8 +214,8 @@
             <if test="isPublic != null" >
                 is_public = #{isPublic,jdbcType=INTEGER},
             </if>
-            <if test="aboutArticleUrl != null" >
-                about_article_url = #{aboutArticleUrl,jdbcType=VARCHAR},
+            <if test="aboutArticleId != null" >
+                about_article_id = #{aboutArticleId,jdbcType=VARCHAR},
             </if>
             <if test="onTop != null" >
                 on_top = #{onTop,jdbcType=INTEGER},
@@ -254,7 +254,7 @@
         article_author_name = #{articleAuthorName,jdbcType=VARCHAR},
         article_tags = #{articleTags,jdbcType=VARCHAR},
         is_public = #{isPublic,jdbcType=INTEGER},
-        about_article_url = #{aboutArticleUrl,jdbcType=VARCHAR},
+        about_article_id = #{aboutArticleId,jdbcType=VARCHAR},
         on_top = #{onTop,jdbcType=INTEGER},
         key_words = #{keyWords,jdbcType=VARCHAR},
         article_rights = #{articleRights,jdbcType=VARCHAR},
@@ -319,6 +319,10 @@
             </if>
             and is_deleted = 0
         </where>
+    </select>
+
+    <select id="findAllCount" resultType="java.lang.Integer">
+        select count(id) from tb_hxp_article where is_deleted = 0
     </select>
 
 </mapper>

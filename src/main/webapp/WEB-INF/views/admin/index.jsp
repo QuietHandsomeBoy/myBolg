@@ -38,7 +38,7 @@
                 <li class="">
                     <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse" style="height: 0px;">
-                        <li><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a></li>
+                        <li><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span class="label label-warning pull-right">${article_count_num}</span></a></li>
                         <li><a href="${_Weburl}/admin/article/insertArticle.html">写笔记</a></li>
                     </ul>
                 </li>
@@ -63,7 +63,7 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">菜单管理</a></li>
-                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理</a></li>
+                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理<span class="label label-warning pull-right">${article_tag_count_num}</span></a></li>
                         <li><a href="javascript:;">权限管理</a></li>
                         <li><a href="javascript:;">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
@@ -141,6 +141,7 @@
                 <!--<li class="active"><strong>Flot Charts</strong></li>-->
             </ol>
         </div>
+        <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
             <script>require(["index"],function(index){
                 index.init();

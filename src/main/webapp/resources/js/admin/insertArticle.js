@@ -43,6 +43,14 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             saveArticle("draft");
         })
 
+        $("#save-article").on("click", function () {
+            saveArticle("normal");
+        })
+
+        $("#tags-list-box").on("click", "span", function () {
+            $(this).remove();
+        })
+
         $(".left-box-content").on("click", ".add-btn", function () {
             var classLength = $(".related-article-box").find("div").length;
 
@@ -56,7 +64,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
                     $(this).attr("data-type", "del").removeClass("fa-plus").addClass("fa-minus");
                 })
                 var html = "<div>" +
-                    '<input type="text" name="aboutArticleUrl" class="form-control key-words-input" autocomplete="off"/>' +
+                    '<input type="text" name="aboutArticleId" class="form-control key-words-input" autocomplete="off"/>' +
                     '<button class="add-btn fa fa-minus" type="button" data-type="del"></button>' +
                     '</div>';
                 $(".related-article-box").append(html);
@@ -71,11 +79,19 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             }
         })
 
-        $("input[name='keyWords']").blur(formatKeyWords).keydown(tagKeydown);
+        $("input[name='keyWords']").blur(formatKeyWords).keydown(keyWordKeydown);
 
         $("#choosArticleTagsBtn").on("click", function () {
+            var tagWords = new Array();
+            $.each($("#tags-list-box").find("span"), function (k, v) {
+                var tag = {};
+                tag.tagId = $(v).attr("id");
+                tag.tagHtml = $(v).html();
+                tagWords.push(tag);
+            })
             var obj = {
-                tipsId: "articleTags"
+                tipsId: "articleTags",
+                tagWords: tagWords
             }
             operateTips(obj);
         })
@@ -217,13 +233,10 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
         var orderBtn = "<a onclick='insertCode()' href='javascript:;' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
         $(".wysiwyg-toolbar").append(orderBtn);
 
-        $("#save-article").on("click", function () {
-            saveArticle("normal");
-        })
 
     }
 
-    function tagKeydown(ev) {
+    function keyWordKeydown(ev) {
         var code = (ev ? ev.which : event.keyCode);
         if (code == 8) {
             //如果是退格键
@@ -239,45 +252,102 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
         }
     }
 
-    var formatKeyWords = function () {
-        if (publicUtil.isNotEmpty(new String($("input[name='keyWords']").val()).trim())) {
-            var keyWords = '';
-            $('#key-words-list span').each(function () {
-                keyWords += this.innerHTML + ',';
-            });
-            keyWords += $("input[name='keyWords']").val().trim(',').replace(/[^\u4e00-\u9fa5\w\s\-+.#,，]+/g, '');
-            keyWords = keyWords.trim(',').split(/[,，]+/g);
-            var s = [];
-            for (var i = 0; i < keyWords.length; i++) {
-                if ($.inArray(keyWords[i], s)) {
-                    if (keyWords[i] != '') {
-                        s.push(keyWords[i].trim().slice(0, 20));
-                    }
-                }
-                if (s.length == 4) break;
+    function tagsWordKeydown(ev) {
+        var code = (ev ? ev.which : event.keyCode);
+        if (code == 8) {
+            //如果是退格键
+            var ss = $('#choosed-tags-box span');
+            if (ss.length > 0 && $("input[name='choosedTagsInput']").val().length == 0) {
+                ss.eq(ss.length - 1).remove();
+                formatTagsWords();
+            } else if (ss.length == 1) {
+                ss.eq(ss.length - 1).remove();
+                formatTagsWords();
+                $("input[name='choosedTagsInput']").css({'padding-left': 15});
             }
-            var resultHtml = '';
-            for (var i = 0; i < s.length; i++) {
-                resultHtml += '<span title="' + s[i] + '">' + s[i] + '</span>';
-            }
-            $('#key-words-list').html(resultHtml);
-            $('#key-words-list span').click(function () {
-                $(this).remove();
-                formatKeyWords();
-            });
-        }
-        if ($('#key-words-list span').length == 0) {
-            $("input[name='keyWords']").css({'padding-left': 15});
-        } else {
-            var w = $('#key-words-list').width();
-            $("input[name='keyWords']").val('').css({
-                'padding-left': w
-            });
         }
     }
 
-    var checkAboutArticleUrl = function () {
-        $.each($("input[name='aboutArticleUrl']"), function (k, v) {
+    /**
+     * 格式化输入字符串获取标签或关键词
+     * @param stringVal 需要格式化的字符串
+     * @param boxClassName 容器className
+     * @param wordsLength 最多可格式化获得的长度
+     */
+    var getFormatWords = function (stringVal, boxClassName, wordsLength) {
+        if (publicUtil.isNotEmpty(new String(stringVal).trim())) {
+            var words = new Array();
+            var wordsHtml = "";
+            var oldwordsHtml = "";
+            $('#' + boxClassName).find("span").each(function () {
+                var word = {};
+                word.wordId = "";
+                word.wordhtml = this.innerHTML;
+                if (publicUtil.isNotEmpty($(this).attr("id"))) {
+                    word.wordId = $(this).attr("id");
+                }
+                words.push(word);
+                wordsHtml += this.innerHTML + ',';
+            });
+            oldwordsHtml = wordsHtml;
+            wordsHtml += stringVal.trim(',').replace(/[^\u4e00-\u9fa5\w\s\-+.#,，]+/g, '');
+            wordsHtml = wordsHtml.trim(',').split(/[,，]+/g);
+            oldwordsHtml = oldwordsHtml.trim(',').split(/[,，]+/g);
+            for (var i = 0; i < wordsHtml.length; i++) {
+                if ($.inArray(wordsHtml[i], oldwordsHtml) == -1) {
+                    var word = {};
+                    word.wordId = "";
+                    word.wordhtml = wordsHtml[i];
+                    words.push(word);
+                }
+                if (words.length == wordsLength) {
+                    $(".tags-sources-box").find("input[type='checkbox']").not("input:checked").iCheck('disable');
+                    break
+                }
+            }
+            var resultHtml = '';
+            $.each(words, function (k, v) {
+                resultHtml += '<span title="' + v.wordhtml + '" id="' + v.wordId + '">' + v.wordhtml + '</span>';
+            });
+            $('#' + boxClassName).html(resultHtml);
+            $('#' + boxClassName).find("span").click(function () {
+                $(this).remove();
+                var wordId = $(this).attr("id");
+                if (publicUtil.isNotEmpty(wordId)) {
+                    cleanTagChecked(wordId);
+                }
+                if ($('#' + boxClassName).find("span").length < 5) {
+                    $(".tags-sources-box").find("input[type='checkbox']").iCheck('enable');
+                }
+                getFormatWords("", boxClassName, wordsLength);
+            });
+        }
+
+        if ($('#' + boxClassName).find("span").length == 0) {
+            $('#' + boxClassName).parent().find("input[type='text']").val('').css({'padding-left': 15});
+        } else {
+            var w = $('#' + boxClassName).width();
+            $('#' + boxClassName).parent().find("input[type='text']").val('').css({'padding-left': w});
+        }
+    }
+    var cleanTagChecked = function (id) {
+        $(".tags-list").find("input[type=checkbox]:checked").each(function () {
+            if ($(this).attr("id") == id) {
+                $(this).iCheck('uncheck');
+                return false;
+            }
+        })
+    }
+
+    var formatKeyWords = function () {
+        getFormatWords($("input[name='keyWords']").val(), "key-words-list", 4);
+    }
+    var formatTagsWords = function () {
+        getFormatWords($("input[name='choosedTagsInput']").val(), "choosed-tags-box", 5);
+    }
+
+    var checkaboutArticleId = function () {
+        $.each($("input[name='aboutArticleId']"), function (k, v) {
             if (publicUtil.isNotEmpty(url)) {
                 var url = $(v).val();
                 if (publicUtil.isNotEmpty(url)) {
@@ -316,7 +386,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
     var checkArticle = function () {
 
-        if (!checkAboutArticleUrl()) {
+        if (!checkaboutArticleId()) {
             tips("请输入正确的文章地址！")
             return false;
         }
@@ -328,7 +398,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             tips("请选择文章所属分类！");
             return false;
         }
-        if ($("input[name='articleTags']:checked").length < 1) {
+        if ($("#tags-list-box").find("span").length < 1) {
             tips("请为笔记选择标签！");
             return false;
         }
@@ -352,18 +422,26 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             var newArticleId = $("#newArticleId").val();
             var articleRights = $("select[name='articleRights']").val();
             var articleRange = $("select[name='articleRange']").val();
-            var articleTags = $("input[name='articleTags']:checked");
+            var articleTags = $("#tags-list-box").find("span");
             var articleTitle = encodeURIComponent($("input[name='articleTitle']").val());
             var articleContent = $("textarea[name='articleContent']").val();
             var isPublic = $("input[name='isPublic']").is(':checked') ? 1 : 0;
             var onTop = $("input[name='onTop']").is(':checked') ? 1 : 0;
             var limitComments = $("input[name='limitComments']").is(':checked') ? 1 : 0;
 
-            var tags = '';
-            $.each(articleTags, function (k, v) {
-                tags += $(v).val() + ',';
-            })
-            tags = tags.substring(0, tags.length - 1);
+            var tagsStr = "";
+            var tagArray = new Array();
+            if (articleTags.length > 0 && articleTags.length < 6) {
+                $.each(articleTags, function (k, v) {
+                    var tag = {};
+                    if (publicUtil.isNotEmpty($(v).attr("id"))) {
+                        tag.id = $(v).attr("id");
+                    }
+                    tag.tagName = $(v).html();
+                    tagArray.push(tag);
+                })
+                tagsStr = JSON.stringify(tagArray);
+            }
 
             var keyWords = '';
             var keyWordsSpan = $("#key-words-list span");
@@ -373,16 +451,19 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
                 })
             }
             keyWords = keyWords.substring(0, keyWords.length - 1);
-            var aboutArticleUrl = '';
-            $.each($("input[name='aboutArticleUrl']"), function (k, v) {
-                aboutArticleUrl += '&aboutArticleUrl1=' + $(v).val() + ''
+            var aboutArticleId = '';
+            $.each($("input[name='aboutArticleId']"), function (k, v) {
+                var splitStr = $(v).val().split("/");
+                //获取相关文章的ID
+                aboutArticleId += splitStr[6].substring(0, splitStr[6].indexOf(".")) + ',';
             })
+            aboutArticleId = aboutArticleId.substring(0,aboutArticleId.length-1);
             var articleIntroduced = publicUtil.isNotEmpty(new String($("textarea[name='articleIntroduced']").val()).trim)
                 ? encodeURIComponent($("textarea[name='articleIntroduced']").val()) : "";
             var content = encodeURIComponent(new String($("textarea[name='articleContent']").val()).trim());
             var articleData = "newArticleId=" + newArticleId + "&articleId=" + articleId + "&articleTitle=" + articleTitle + "&articleIntroduced=" + articleIntroduced + "&articleTags=" + articleTags;
             articleData += "&articleRange=" + articleRange + "&keyWords=" + keyWords + "&isPublic=" + isPublic + "&onTop=" + onTop + "&limitComments=" + limitComments;
-            articleData += "&articleRights=" + articleRights + "&articleStatus=" + status + "&content=" + content;
+            articleData += "&articleRights=" + articleRights + "&articleStatus=" + status + "&content=" + content + "&tagsStr=" + tagsStr + "&aboutArticleId=" + aboutArticleId;
 
             $.ajax({
                 type: "POST",
@@ -391,7 +472,9 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
                 data: articleData,
                 async: false,
                 success: function (data) {
-                    alert("新增成功！");
+                    if (data.result == "success") {
+                        tips("新增成功！！");
+                    }
                 }
 
             })
@@ -409,10 +492,16 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
         //    tipsId : "",
         //    operateType : "",
         //}
+        var tagHtml = "";
+        if (obj.tagWords.length > 0) {
+            $.each(obj.tagWords, function (k, v) {
+                tagHtml += '<span title="' + v.tagHtml + '" id="' + v.tagId + '">' + v.tagHtml + '</span>'
+            })
+        }
         var selectHtml = '<option value="">--请选择--</option>';
         if (publicUtil.isNotEmpty($("#tagEnum").val())) {
-            var obj = JSON.parse($("#tagEnum").val());
-            $.each(obj, function (k, v) {
+            var tagEnum = JSON.parse($("#tagEnum").val());
+            $.each(tagEnum, function (k, v) {
                 selectHtml += '<option value="' + k + '">' + v + '</option>';
             })
         }
@@ -423,7 +512,10 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             '<div>' +
             '<div class="choose-tags-input-box">' +
             '<p>已选择标签：</p>' +
-            '<div class="choosed-tags-box"></div><span class="err-tips">最多只能设置五个标签</span>' +
+            '<div style="position: relative; height: 50px;"><div id="choosed-tags-box">' + tagHtml + '</div>' +
+            '<input type="text" name="choosedTagsInput" class="form-control choosed-tags-input" autocomplete="off"/>' +
+            '</div>' +
+            '<span class="err-tips">最多只能设置五个标签</span>' +
             '</div>' +
             '<div class="choose-tags-sources-box">' +
             '<p>已选择标签：</p>' +
@@ -437,14 +529,6 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             '<div style="overflow: auto; padding: 10px 0;">' +
             '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips(' + "'" + obj.tipsId + "'" + ')">Close me!</button>' +
             '<button class="btn btn-default pull-right choose-it" id="chooseBtn">Choose it!</button>' +
-            '<button class="btn btn-default pull-left create-one" id="CreateOne">Create One!</button>' +
-            '</div>'+
-            '<div id="createNewOneTag">' +
-            '<p>新建标签：<span class="tips">标签类型跟随文章类型</span></p>' +
-            '<div>' +
-            '<input placeholder="输入标签名称" id=""/>' +
-            '<button type="button" id="saveTags">保存</button>' +
-            '</div>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -462,28 +546,47 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             showTick: true,
             style: 'select-btn'
         });
-        $(".choosed-tags-box").on("click", "span", function () {
-            var tagId = $(this).html("").attr("id");
+        $("#choosed-tags-box").on("click", "span", function () {
+            var tagId = $(this).remove().attr("id");
             $.each($(".tags-sources-box").find("input[type='checkbox']:checked"), function (k, v) {
                 if ($(v).val() == tagId) {
                     $(v).iCheck('uncheck');
+                    return false;
                 }
             })
         })
-        $("#CreateOne").on("click",function(){
-            $("#createNewOneTag").toggleClass("createTag-height");
-        })
-        $("#saveTags").on("click",function(){
-            $.ajax({
-                type: "POST",
-                url: ctx + "/admin/tags/findTags.json",
-                dataType: "json",
-                data: {"tagName": tagName, "tagType": tagType},
-                async: false,
-                success: function (data) {
 
+        $("input[name='choosedTagsInput']").blur(formatTagsWords).keydown(tagsWordKeydown);
+        formatTagsWords();
+
+        $("#typeNameInput").keypress(function (e) {
+            var code = (e ? e.which : event.keyCode);
+            if (code == 13) {
+                $(".tags-sources-box").find("ul").css("opacity", "0");
+                $(".pagination-loading").show();
+                searchTags();
+            }
+            return false;
+        })
+        $("#chooseBtn").on("click", function () {
+            var words = new Array();
+            $("#choosed-tags-box").find("span").each(function () {
+                var word = {};
+                word.wordhtml = this.innerHTML;
+                word.wordId = "";
+                if ($(this).attr("id") != "") {
+                    word.wordId = $(this).attr("id");
                 }
-            })
+                words.push(word);
+            });
+            if (words.length > 0) {
+                var resultHtml = "";
+                $.each(words, function (k, v) {
+                    resultHtml += '<li><span id="' + v.wordId + '" title="' + v.wordhtml + '">' + v.wordhtml + '</span></li>'
+                })
+                $("#tags-list-box").html(resultHtml);
+            }
+            $("#closeTipsBox").click();
         })
 
         setTimeout(function () {
@@ -501,7 +604,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             data: {"tagName": tagName, "tagType": tagType},
             async: false,
             success: function (data) {
-                var spanSet = $(".choosed-tags-box").find("span");
+                var spanSet = $("#choosed-tags-box").find("span");
                 var resultObj = JSON.parse(data);
                 var stat = resultObj.stat;
                 if (stat == 'success') {
@@ -545,27 +648,30 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
     var bingArticleTag = function (tag, type) {
         var tagId = $(tag).find("input[type='checkbox']").val();
         if (type == "add") {
-            if ($(".choosed-tags-box").find("span").length >= 5) {
+            if ($("#choosed-tags-box").find("span").length >= 5) {
                 $(".err-tips").css("visibility", "visible");
                 return;
             } else {
                 $(tag).find("div").remove();
                 var tagName = tag.html();
-                $(".choosed-tags-box").append("<span title='" + tagName + "' id='" + tagId + "'>" + tagName + "</span>")
-                if ($(".choosed-tags-box").find("span").length == 5) {
+                $("#choosed-tags-box").append("<span title='" + tagName + "' id='" + tagId + "'>" + tagName + "</span>");
+                if ($("#choosed-tags-box").find("span").length == 5) {
                     $(".tags-sources-box").find("input[type='checkbox']").not("input:checked").iCheck('disable');
                 }
             }
         } else if (type == "remove") {
-            $.each($(".choosed-tags-box").find("span"), function () {
+            $.each($("#choosed-tags-box").find("span"), function () {
                 if ($(this).attr("id") == tagId) {
                     $(this).remove();
                 }
             })
-            if ($(".choosed-tags-box").find("span").length < 5) {
+            if ($("#choosed-tags-box").find("span").length < 5) {
                 $(".tags-sources-box").find("input[type='checkbox']").iCheck('enable');
             }
         }
+        $("input[name='choosedTagsInput']").val('').css({
+            'padding-left': $('#choosed-tags-box').width()
+        });
     }
 
 

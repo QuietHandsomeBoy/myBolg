@@ -31,7 +31,7 @@
         update_by, remark, is_deleted
         )
         values (#{id,jdbcType=VARCHAR}, #{tagType,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR},
-        #{createDate,jdbcType=DATE}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
         #{updateBy,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}
         )
     </insert>
@@ -77,13 +77,13 @@
                 #{tagName,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
-                #{createDate,jdbcType=DATE},
+                #{createDate,jdbcType=TIMESTAMP},
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=VARCHAR},
             </if>
             <if test="updateDate != null">
-                #{updateDate,jdbcType=DATE},
+                #{updateDate,jdbcType=TIMESTAMP},
             </if>
             <if test="updateBy != null">
                 #{updateBy,jdbcType=VARCHAR},
@@ -106,13 +106,13 @@
                 tag_name = #{tagName,jdbcType=VARCHAR},
             </if>
             <if test="createDate != null">
-                create_date = #{createDate,jdbcType=DATE},
+                create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
             <if test="createBy != null">
                 create_by = #{createBy,jdbcType=VARCHAR},
             </if>
             <if test="updateDate != null">
-                update_date = #{updateDate,jdbcType=DATE},
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
             </if>
             <if test="updateBy != null">
                 update_by = #{updateBy,jdbcType=VARCHAR},
@@ -130,9 +130,9 @@
         update tb_hxp_tags
         set tag_type = #{tagType,jdbcType=VARCHAR},
         tag_name = #{tagName,jdbcType=VARCHAR},
-        create_date = #{createDate,jdbcType=DATE},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
         create_by = #{createBy,jdbcType=VARCHAR},
-        update_date = #{updateDate,jdbcType=DATE},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
         update_by = #{updateBy,jdbcType=VARCHAR},
         remark = #{remark,jdbcType=VARCHAR},
         is_deleted = #{isDeleted,jdbcType=INTEGER}
@@ -185,6 +185,10 @@
             </if>
             and is_deleted = 0
         </where>
+    </select>
+
+    <select id="findAllCount" resultType="java.lang.Integer">
+        select count(id) from tb_hxp_tags where is_deleted = 0
     </select>
 
 </mapper>

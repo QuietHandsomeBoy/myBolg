@@ -43,9 +43,7 @@
                     <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a data-a-href="${_Weburl}/admin/article/articleList.html"
-                                              href="javascript:;">笔记列表
-                            <span class="label label-warning pull-right">24</span></a></li>
+                        <li class="active"><a data-a-href="${_Weburl}/admin/article/articleList.html" href="javascript:;">笔记列表<span class="label label-warning pull-right">${article_count_num}</span></a></li>
                         <li><a href="${_Weburl}/admin/article/insertArticle.html" href="javascript:;">写笔记</a></li>
                     </ul>
                 </li>
@@ -71,7 +69,7 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">菜单管理</a></li>
-                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理</a></li>
+                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理<span class="label label-warning pull-right">${article_tag_count_num}</span></a></li>
                         <li><a href="javascript:;">权限管理</a></li>
                         <li><a href="javascript:;">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
@@ -211,7 +209,7 @@
                                             <div class="row">
                                                 <div class="col-lg-3 pull-left">
                                                     <h5>Rights</h5>
-                                                    <select class="selectpicker" name="articleRights">
+                                                    <select id="selectpicker" class="selectpicker" name="articleRights">
                                                         <option value="">请选择</option>
                                                         <c:forEach items="${articleRightsEnumMap}"
                                                                    var="articleRightsEnum">
@@ -298,6 +296,7 @@
                                         </button>
                                         <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
                                         </button>
+                                        <button id="test-btn" class="btn-white btn-sm">测试 </button>
                                         <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
                                     </div>
                                 </div>
@@ -318,20 +317,20 @@
                                             <tr>
                                                 <td><input type="checkbox" class="i-checks"
                                                            value="${article.articleId}"></td>
-                                                <td><a href="javascript:;"
+                                                <td class="to-edit"><a href="javascript:;"
                                                        class="title-common article-title">${article.articleTitle}</a>
                                                 </td>
-                                                <td>
+                                                <td class="to-edit">
                                                     <label class="label label-biji">
                                                         <t:translate source="${articleRangeCount}"
                                                                      value="${article.articleRange}"
                                                                      sourceKey="articleRange,articleRangeName"/>
                                                     </label>
                                                 </td>
-                                                <td>${article.articleAuthorName}</td>
-                                                <td><fmt:formatDate value="${article.createDate}"
+                                                <td class="to-edit">${article.articleAuthorName}</td>
+                                                <td class="to-edit"><fmt:formatDate value="${article.createDate}"
                                                                     pattern="yyyy-MM-dd"/></td>
-                                                <td><fmt:formatDate value="${article.updateDate}"
+                                                <td class="to-edit"><fmt:formatDate value="${article.updateDate}"
                                                                     pattern="yyyy-MM-dd"/></td>
                                             </tr>
                                         </c:forEach>

@@ -14,15 +14,11 @@ import java.util.List;
 @Repository
 public class TbHxpTagsDao extends GenericDAO<TbHxpTags, TbHxpTagsMapper> {
 
-
-    public String test() {
-        mapper.selectByPrimaryKey("111");
-        return "";
-    }
-
-    public List<TbHxpTags> findAllByCondition(TbHxpTags tbHxpTags){
+    public List<TbHxpTags> findAllByCondition(TbHxpTags tbHxpTags) {
         return mapper.findAllByCondition(tbHxpTags);
     }
 
-
+    public TbHxpTags findOneById(String id) {
+        return mapper.selectByPrimaryKey(id);
+    }
 }

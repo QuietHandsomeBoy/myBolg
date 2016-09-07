@@ -42,7 +42,7 @@
                 <li class="active">
                     <a href="layouts.html"><i class="fa fa-book"></i> <span class="nav-label">Article</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span class="label label-warning pull-right">24</span></a></li>
+                        <li><a href="${_Weburl}/admin/article/articleList.html">笔记列表<span class="label label-warning pull-right">${article_count_num}</span></a></li>
                         <li class="active"><a data-a-href="${_Weburl}/admin/article/insertArticle.html" href="javascript:;">写笔记</a></li>
                     </ul>
                 </li>
@@ -68,7 +68,7 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">菜单管理</a></li>
-                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理</a></li>
+                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理<span class="label label-warning pull-right">${article_tag_count_num}</span></a></li>
                         <li><a href="javascript:;">权限管理</a></li>
                         <li><a href="javascript:;">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
@@ -148,6 +148,7 @@
                 <!--<li class="active"><strong>Flot Charts</strong></li>-->
             </ol>
         </div>
+        <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
             <form action="${_Weburl}/admin/article/saveArticle" method="post" id="articleForm">
                 <input type="hidden" id="articleId" value="${tbHxpArticle.articleId}"/>
@@ -182,25 +183,33 @@
                                                 <input type='text' name="keyWords" class="form-control key-words-input" autocomplete="off"/>
                                             </div>
                                         </div>
-                                        <h5>标签设置<label class="label label-gray">最多可选择8个标签</label></h5>
+                                        <h5>标签设置<label class="label label-gray">最多可选择5个标签</label></h5>
                                         <div class="article-tags-box">
                                             <ul class="tags-list" id="tags-list-box">
+                                                <c:forEach items="${tagsList}" var="tag">
+                                                    <li><span id="${tag.id}" title="${tag.tagName}">${tag.tagName}</span></li>
+                                                </c:forEach>
                                             </ul>
                                             </ul>
-                                            <button type="button" id="choosArticleTagsBtn">添加标签</button>
+                                            <button type="button" id="choosArticleTagsBtn">添加/修改标签</button>
                                         </div>
                                         <h5>关联文章<label class="label label-gray">最多可添加两个文章链接</label></h5>
                                         <div class="related-article-box">
                                             <div>
-                                                <c:set var="aboutArticleUrl" value="${fn:split(tbHxpArticle.aboutArticleUrl,',')}"/>
-                                                <c:forEach items="${aboutArticleUrl}" var="url">
-                                                    <input type='text' autocomplete="off" name="aboutArticleUrl" class="form-control key-words-input" value="${url}"/>
+                                                <c:set var="aboutArticleId" value="${aboutUrl}"/>
+                                                <c:if test="${fn:length(aboutArticleId) eq 0}">
+                                                    <input type='text' autocomplete="off" name="aboutArticleId" class="form-control key-words-input" value=""/>
+                                                    <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
+                                                </c:if>
+                                                <c:forEach items="${aboutArticleId}" var="url">
                                                     <c:choose>
-                                                        <c:when test="${fn:length(aboutArticleUrl) eq 2}">
-                                                            <button class="add-btn fa fa-minus" type="button" data-type="del"></button>
-                                                        </c:when>
-                                                        <c:when test="${fn:length(aboutArticleUrl) eq 1 || fn:length(aboutArticleUrl) eq 0}">
+                                                        <c:when test="${fn:length(aboutArticleId) eq 1}">
+                                                            <input type='text' autocomplete="off" name="aboutArticleId" class="form-control key-words-input" value="${url}"/>
                                                             <button class="add-btn fa fa-plus" type="button" data-type="add"></button>
+                                                        </c:when>
+                                                        <c:when test="${fn:length(aboutArticleId) gt 1}">
+                                                            <input type='text' autocomplete="off" name="aboutArticleId" class="form-control key-words-input" value="${url}"/>
+                                                            <button class="add-btn fa fa-minus" type="button" data-type="del"></button>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:forEach>
