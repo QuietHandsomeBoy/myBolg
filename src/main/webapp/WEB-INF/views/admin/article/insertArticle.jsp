@@ -141,15 +141,16 @@
                 </ul>
             </nav>
         </div>
-        <div class="breadcrumb-box">
-            <ol class="breadcrumb">
-                <li><a href="javascript:;">Home</a></li>
-                <li><a HREF="javascript:;">笔记列表</a></li>
-                <!--<li class="active"><strong>Flot Charts</strong></li>-->
-            </ol>
-        </div>
         <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
+            <div class="breadcrumb-box">
+                <ol class="breadcrumb">
+                    <li><a href="javascript:;">Home</a></li>
+                    <li><a HREF="javascript:;">Article</a></li>
+                    <li><a HREF="javascript:;">文章录入</a></li>
+                    <!--<li class="active"><strong>Flot Charts</strong></li>-->
+                </ol>
+            </div>
             <form action="${_Weburl}/admin/article/saveArticle" method="post" id="articleForm">
                 <input type="hidden" id="articleId" value="${tbHxpArticle.articleId}"/>
                 <input type="hidden" id="newArticleId" value="${articleId}"/>
@@ -157,7 +158,7 @@
                 <div>
                     <div class="row">
                         <div class="col-lg-3">
-                            <div id="left-box" class="animated fadeInUp">
+                            <div id="left-box" class="animated fadeIn">
                                 <div class="left-box-content">
                                     <div class="file-manager">
                                         <h5>所属分类</h5>
@@ -236,7 +237,7 @@
                             </div>
                         </div>
                         <div class="col-lg-9">
-                            <div class="right-main-box animated fadeInRight">
+                            <div class="right-main-box animated fadeIn">
                                 <div class="pagination-loading" style="display: none;"></div>
                                 <div class="article-info-box">
                                     <h3> Compose A New Article </h3>

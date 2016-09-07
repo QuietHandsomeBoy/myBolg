@@ -141,15 +141,16 @@
                 </ul>
             </nav>
         </div>
-        <div class="breadcrumb-box">
-            <ol class="breadcrumb">
-                <li><a href="javascript:;">Home</a></li>
-                <li><a HREF="javascript:;">文章列表</a></li>
-                <!--<li class="active"><strong>Flot Charts</strong></li>-->
-            </ol>
-        </div>
         <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
+            <div class="breadcrumb-box">
+                <ol class="breadcrumb">
+                    <li><a href="javascript:;">Home</a></li>
+                    <li><a HREF="javascript:;">Article</a></li>
+                    <li><a HREF="javascript:;">文章列表</a></li>
+                    <!--<li class="active"><strong>Flot Charts</strong></li>-->
+                </ol>
+            </div>
             <div>
                 <div class="row">
                     <div class="col-lg-3">
@@ -303,14 +304,14 @@
                                 <div class="list-content-box">
                                     <table class="table table-hover">
                                         <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Article Title</th>
-                                            <th>Article Type</th>
-                                            <th>Admin</th>
-                                            <th>Create Time</th>
-                                            <th>Last Update Time</th>
-                                        </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>Article Title</th>
+                                                <th>Article Type</th>
+                                                <th>Admin</th>
+                                                <th>Create Time</th>
+                                                <th>Last Update Time</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${articleList}" var="article">

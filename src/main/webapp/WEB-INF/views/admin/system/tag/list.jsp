@@ -150,16 +150,15 @@
                 </ul>
             </nav>
         </div>
-        <div class="breadcrumb-box">
-            <ol class="breadcrumb">
-                <li><a href="javascript:;">Home</a></li>
-                <li><a HREF="javascript:;">System</a></li>
-                <li><a HREF="javascript:;">标签管理</a></li>
-                <!--<li class="active"><strong>Flot Charts</strong></li>-->
-            </ol>
-        </div>
         <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
+            <div class="breadcrumb-box">
+                <ol class="breadcrumb">
+                    <li><a href="javascript:;">Home</a></li>
+                    <li><a HREF="javascript:;">System</a></li>
+                    <li><a HREF="javascript:;">标签管理</a></li>
+                </ol>
+            </div>
             <div>
                 <div class="row">
                     <div class="col-lg-3">

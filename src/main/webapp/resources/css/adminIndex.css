@@ -316,6 +316,8 @@ a:hover, a:active, a:visited, a:focus {
 
 .breadcrumb {
     background-color: #eaeaea;
+    margin-bottom: 0px;
+    margin-left: -15px;
 }
 
 .breadcrumb a {
