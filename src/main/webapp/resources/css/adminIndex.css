@@ -929,6 +929,54 @@ label:focus {
     width: 100px !important;
 }
 
+.logs-condition{
+
+}
+.logs-condition .group{
+    width: 20%;
+    float: left;
+    margin-right: 10px;
+}
+.logs-condition .group .form-group{
+
+}
+.logs-condition .group .input-group input {
+    height: 49px;
+    box-shadow: 0 1px 1px #d3d1d1;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    border: 1px solid #dddddd;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #b7b7b7;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background: #fff;
+    font-weight: normal;
+    padding: 0px 15px;
+    border-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.logs-condition .group .input-group span {
+    background-color: #ddd;
+    border: 1px solid #dddddd;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #b7b7b7;
+    border-left: 0;
+    border-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+.logs-condition .search-box a{
+    height: 49px;
+    padding-top: 20px;
+    width: auto !important;
+}
+
+
+
 .tags-condition .bootstrap-select {
     width: 100% !important;
 }
@@ -1151,6 +1199,9 @@ label:focus {
 .list-content-box .table > tbody > tr > td:nth-child(2), .list-content-box .table > thead > tr > th:nth-child(2) {
     text-align: left;
 }
+.log-table > tbody > tr > td:nth-child(2),.log-table > thead > tr > th:nth-child(2){
+    text-align: center!important;
+}
 
 .list-content-box .table > tbody > tr:last-child {
     border-bottom: 1px solid #d6d6d6;
@@ -1185,6 +1236,15 @@ label:focus {
 
 .article-title {
     width: 500px;
+}
+.log-content {
+    width: 800px;
+    margin: 0;
+}
+.log-user-name{
+    font-weight: bold;
+    font-size: 14px;
+    width: 120px !important;
 }
 
 .article-title:focus, .article-title:visited {

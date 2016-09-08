@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/bootstrap/bootstrap-datetimepicker.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/adminIndex.css">
     <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
-    <title>MyBolg</title>
+    <title>--------</title>
 </head>
 <body>
 <div id="myWorld">
@@ -65,7 +65,7 @@
                         <li><a href="javascript:;">菜单管理</a></li>
                         <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理<span class="label label-warning pull-right">${article_tag_count_num}</span></a></li>
                         <li><a href="javascript:;">权限管理</a></li>
-                        <li><a href="javascript:;">操作日志</a></li>
+                        <li><a href="${_Weburl}/admin/logs/logsList.html">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
                         <li><a href="javascript:;">其他</a></li>
                     </ul>
@@ -134,15 +134,15 @@
                 </ul>
             </nav>
         </div>
-        <div class="breadcrumb-box">
-            <ol class="breadcrumb">
-                <li><a href="javascript:;">Home</a></li>
-                <li><a HREF="javascript:;">&nbsp;</a></li>
-                <!--<li class="active"><strong>Flot Charts</strong></li>-->
-            </ol>
-        </div>
         <div style="display: none;"><a href="" id="vehicle-a"></a></div>
         <div id="content" class="content-container">
+            <div class="breadcrumb-box">
+                <ol class="breadcrumb">
+                    <li><a href="javascript:;">Home</a></li>
+                    <li><a HREF="javascript:;">&nbsp;</a></li>
+                    <!--<li class="active"><strong>Flot Charts</strong></li>-->
+                </ol>
+            </div>
             <script>require(["index"],function(index){
                 index.init();
             });</script>

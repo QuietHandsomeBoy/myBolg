@@ -52,7 +52,7 @@ public class TbHxpArticle implements Serializable {
 
     private String remark;
 
-    private Integer isDeleted;
+    private Integer isDeleted = 0;
 
     public String getId() {
         return id;

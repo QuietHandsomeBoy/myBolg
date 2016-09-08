@@ -38,7 +38,7 @@
                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
             <!--&lt;!&ndash;<property name="useActualColumnNames" value="true"/>&ndash;&gt;-->
         <!--</table>-->
-        <table tableName="TB_HXP_TAGS"
+        <table tableName="TB_HXP_LOGS"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <!--<property name="useActualColumnNames" value="true"/>-->

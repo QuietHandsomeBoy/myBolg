@@ -20,7 +20,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/bootstrap/bootstrap-datetimepicker.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/adminIndex.css">
     <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
-    <title>MyBolg</title>
+    <title>--------</title>
 </head>
 <body>
 <div id="myWorld">

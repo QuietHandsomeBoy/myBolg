@@ -24,10 +24,10 @@ public class EntityUtils {
         String key;
         Method method;
         for (Object o : entityClass.getEnumConstants()) {
-            method = entityClass.getMethod(getMethodName("key"), new Class[0]);
+            method = o.getClass().getMethod(getMethodName("key"), new Class[0]);
             key = method.invoke(obj, new Object[0]).toString();
             if (key.equals(variableName)) {
-                method = entityClass.getMethod(getMethodName("value"), new Class[0]);
+                method = o.getClass().getMethod(getMethodName("value"), new Class[0]);
                 return method.invoke(obj, new Object[0]).toString();
             }
         }

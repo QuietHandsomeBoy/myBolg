@@ -77,10 +77,9 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="javascript:;">菜单管理</a></li>
-                        <li class="active"><a data-a-href="${_Weburl}/admin/tags/tagsList.html"
-                                              href="javascript:;">标签管理</a></li>
+                        <li><a href="${_Weburl}/admin/tags/tagsList.html">标签管理</a></li>
                         <li><a href="javascript:;">权限管理</a></li>
-                        <li><a href="javascript:;">操作日志</a></li>
+                        <li class="active"><a data-a-href="${_Weburl}/admin/logs/logsList.html" href="javascript:;">操作日志</a></li>
                         <li><a href="javascript:;">用户管理</a></li>
                         <li><a href="javascript:;">其他</a></li>
                     </ul>
@@ -156,130 +155,130 @@
                 <ol class="breadcrumb">
                     <li><a href="javascript:;">Home</a></li>
                     <li><a HREF="javascript:;">System</a></li>
-                    <li><a HREF="javascript:;">标签管理</a></li>
+                    <li><a HREF="javascript:;">操作日志</a></li>
                 </ol>
             </div>
             <div>
                 <div class="row">
-                    <div class="col-lg-3">
-                        <div class="left-tags-box animated fadeIn">
-                            <form id="searchTagParam" method="post" action="${_Weburl}/admin/tags/tagsList.html">
-                                <h5>标签名：</h5>
-                                <div class="form-group">
-                                    <input type='text' class="form-control search-title-input"
-                                           autocomplete="off"
-                                           name="tagName"/>
+                    <div class="left-tags-box animated fadeIn">
+                        <form id="searchLogsParam" method="post" action="${_Weburl}/admin/logs/logsList.html">
+                            <div class="logs-condition">
+                                <div class="group">
+                                    <h5>操作人：</h5>
+                                    <div class="form-group">
+                                        <input type='text' class="form-control search-title-input"
+                                               autocomplete="off"
+                                               name="operationUserName"/>
+                                    </div>
                                 </div>
-                                <div class="tags-condition form-group">
-                                    <h5>标签类型：</h5>
-                                    <select class="selectpicker" name="tagType">
-                                        <option value="">请选择</option>
-                                        <c:forEach items="${articleTagsEnumMap}"
-                                                   var="articleTagsEnum">
-                                            <option
-                                                    <c:if test="${tbHxpArticle.articleRights eq articleTagsEnum.value}">selected</c:if>
-                                                    value="${articleTagsEnum.key}">${articleTagsEnum.value}</option>
-                                        </c:forEach>
-                                    </select>
+                                <div class="group">
+                                    <h5>开始时间：</h5>
+                                    <div class="input-group date">
+                                        <input type='text' class="form-control"  name="createDateBegin"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
                                 </div>
-                                <div class="search-box">
-                                    <a href="javascript:;" id="searchBtn">Search</a>
+                                <div class="group">
+                                    <h5>结束时间：</h5>
+                                    <div class="input-group date">
+                                        <input type='text' class="form-control" name="createDateEnd"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
                                 </div>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="right-tags-box animated fadeIn">
-                            <input type="hidden" id="totalPages" value="${pagination.totalPages}">
-                            <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
-                            <input type="hidden" id="page" name="page" value="${pagination.currentPage}">
-                            <input type="hidden" id="order" name="order" value="${order}">
-                            <div class="pagination-loading" style="display: none;"></div>
-                            <div class="list-header-box">
-                                <h2 style="font-size: 16px;margin-bottom: 10px;">共查找出<span id="totalRecordsSpan">${pagination.totalRecords}</span>条记录</h2>
-                                <div class="list-pagination-box pull-right">
-                                    <ul class="pagination" id="articlePagination">
-                                        <li class="page">
-                                            <button id="lastBtn" disabled="true">&laquo;</button>
-                                        </li>
-                                        <li class="active page">
-                                            <button class="paginationNum">1</button>
-                                        </li>
-                                        <c:forEach begin="2" end="${pagination.totalPages}" var="page">
-                                            <li class="page">
-                                                <button class="paginationNum">${page}</button>
-                                            </li>
-                                        </c:forEach>
-                                        <li class="page">
-                                            <c:choose>
-                                                <c:when test="${pagination.totalPages le 1}">
-                                                    <button id="nextBtn" disabled="true">&raquo;</button>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <button id="nextBtn">&raquo;</button>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </li>
-                                    </ul>
+                                <div class="group">
+                                    <h5>&nbsp;</h5>
+                                    <div class="search-box">
+                                        <a href="javascript:;" id="searchBtn">Search</a>
+                                    </div>
                                 </div>
-                                <div class="header-tool-box">
-                                    <button id="toggle-all" class="btn-white btn-sm">
-                                        <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle
-                                        All
-                                    </button>
-                                    <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh
-                                    </button>
-                                    <button id="edit-one-article" class="btn-white btn-sm" disabled="disabled"><i
-                                            class="fa fa-edit"></i>Edit
-                                    </button>
-                                    <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
-                                    </button>
-                                    <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
-                                </div>
-                            </div>
-                            <div class="list-content-box">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Article Title</th>
-                                        <th>Article Type</th>
-                                        <th>Create Time</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:if test="${fn:length(tagsList) le 0}">
-                                        <td style="text-align: center;" colspan="8">暂无数据.......</td>
-                                    </c:if>
-                                    <c:forEach items="${tagsList}" var="tag">
-                                        <tr>
-                                            <td><input type="checkbox" class="i-checks"
-                                                       value="${tag.id}"></td>
-                                            <td><a href="javascript:;"
-                                                   class="title-common">${tag.tagName}</a></td>
-                                            <td>
-                                                <label class="label label-biji">
-                                                    <t:translate source="${articleTagsEnumMap}"
-                                                                 value="${tag.tagType}"
-                                                                 sourceKey="tagType"/>
-                                                </label>
-                                            </td>
-                                            <td><fmt:formatDate value="${tag.createDate}"
-                                                                pattern="yyyy-MM-dd"/></td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
                             </div>
                             <div class="clearfix"></div>
-                            <script>
-                                var ctx = '${_Weburl}';
-                                require(["tagsList"], function (common) {
-                                    common.init();
-                                });
-                            </script>
+                        </form>
+                    </div>
+                    <div class="right-tags-box animated fadeIn">
+                        <input type="hidden" id="totalPages" value="${pagination.totalPages}">
+                        <input type="hidden" id="totalRecords" value="${pagination.totalRecords}">
+                        <input type="hidden" id="page" name="page" value="${pagination.currentPage}">
+                        <input type="hidden" id="order" name="order" value="${order}">
+                        <div class="pagination-loading" style="display: none;"></div>
+                        <div class="list-header-box">
+                            <h2 style="font-size: 16px;margin-bottom: 10px;">共查找出<span id="totalRecordsSpan">${pagination.totalRecords}</span>条记录</h2>
+                            <div class="list-pagination-box pull-right">
+                                <ul class="pagination" id="articlePagination">
+                                    <li class="page">
+                                        <button id="lastBtn" disabled="true">&laquo;</button>
+                                    </li>
+                                    <li class="active page">
+                                        <button class="paginationNum">1</button>
+                                    </li>
+                                    <c:forEach begin="2" end="${pagination.totalPages}" var="page">
+                                        <li class="page">
+                                            <button class="paginationNum">${page}</button>
+                                        </li>
+                                    </c:forEach>
+                                    <li class="page">
+                                        <c:choose>
+                                            <c:when test="${pagination.totalPages le 1}">
+                                                <button id="nextBtn" disabled="true">&raquo;</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button id="nextBtn">&raquo;</button>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="header-tool-box">
+                                <button id="toggle-all" class="btn-white btn-sm" disabled>
+                                    <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle
+                                    All
+                                </button>
+                                <button id="refresh-all" class="btn-white btn-sm" disabled><i class="fa fa-refresh"></i>Refresh
+                                </button>
+                                <button id="delete-some" class="btn-white btn-sm" disabled><i class="fa fa-trash"></i>Delete
+                                </button>
+                            </div>
                         </div>
+                        <div class="list-content-box">
+                            <table class="table table-hover log-table">
+                                <thead>
+                                <tr>
+                                    <th>操作人</th>
+                                    <th>日志类型</th>
+                                    <th>操作方法</th>
+                                    <th>操作描述</th>
+                                    <th>IP地址</th>
+                                    <th>操作时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:if test="${fn:length(logsList) le 0}">
+                                    <td style="text-align: center;" colspan="8">暂无数据.......</td>
+                                </c:if>
+                                <c:forEach items="${logsList}" var="log">
+                                    <tr>
+                                        <td class="log-user-name">${log.operationUserName}</td>
+                                        <td>
+                                            <label class="label label-biji">
+                                                <t:translate source="${logTypeEnum}" value="${log.logType}" sourceKey="logType"/>
+                                            </label>
+                                        </td>
+                                        <td>${log.operationMethod}</td>
+                                        <td><a href="javascript:;" class="title-common log-content">${log.operationContent}</a></td>
+                                        <td>${log.operationIp}</td>
+                                        <td><fmt:formatDate value="${log.operationDate}" pattern="yyyy-MM-dd mm:dd:ss"/></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="clearfix"></div>
+                        <script>
+                            var ctx = '${_Weburl}';
+                            require(["logsList"], function (common) {
+                                common.init();
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

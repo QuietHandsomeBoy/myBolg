@@ -51,6 +51,11 @@ public class BasicIntercepts implements Interceptor {
                     field.set(parameter,"admin");
                     field.setAccessible(false);
                 }
+                if (AnnotationUtils.getAnnotation(field, CreateByUserName.class) != null) {
+                    field.setAccessible(true);
+                    field.set(parameter,"干锅加鲁鲁");
+                    field.setAccessible(false);
+                }
                 if (AnnotationUtils.getAnnotation(field, CreateDate.class) != null) {
                     field.setAccessible(true);
                     field.set(parameter,currentDate);

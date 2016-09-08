@@ -20,7 +20,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/bootstrap/bootstrap-datetimepicker.min.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/adminIndex.css">
     <script data-main="${_adminJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
-    <title>MyBolg</title>
+    <title>--------</title>
 </head>
 <body>
 <div id="myWorld">
@@ -186,24 +186,19 @@
                                         </div>
                                         <h5>Title Like</h5>
                                         <div class="form-group">
-                                            <input type='text' class="form-control search-title-input"
-                                                   autocomplete="off"
-                                                   name="articleTitle"/>
+                                            <input type='text' class="form-control search-title-input" autocomplete="off" name="articleTitle"/>
                                         </div>
                                         <h5>Time Frame</h5>
                                         <div class="form-group">
                                             <span>startDate：</span>
                                             <div class='input-group date'>
-                                                <input type='text' class="form-control" readonly
-                                                       name="createDateBegin"/>
-                                                <span class="input-group-addon"><span
-                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                                <input type='text' class="form-control" name="createDateBegin"/>
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                             <span>endDate：</span>
                                             <div class='input-group date'>
-                                                <input type='text' class="form-control" readonly name="createDateEnd"/>
-                                                <span class="input-group-addon"><span
-                                                        class="glyphicon glyphicon-calendar"></span></span>
+                                                <input type='text' class="form-control" name="createDateEnd"/>
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </div>
                                         <div class="other-condition form-group">
@@ -222,10 +217,8 @@
                                                 </div>
                                                 <div class="col-lg-8 pull-right">
                                                     <h5>Others</h5>
-                                                    <label class=""><input type="checkbox" class="i-checks"
-                                                                           name="isPublic" value="1">公开</label>
-                                                    <label class=""><input type="checkbox" class="i-checks" name="onTop"
-                                                                           value="1">置顶</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="isPublic" value="1">公开</label>
+                                                    <label class=""><input type="checkbox" class="i-checks" name="onTop" value="1">置顶</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,18 +280,11 @@
                                     </div>
                                     <div class="header-tool-box">
                                         <button id="toggle-all" class="btn-white btn-sm">
-                                            <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle
-                                            All
+                                            <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle All
                                         </button>
-                                        <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh
-                                        </button>
-                                        <button id="edit-one-article" class="btn-white btn-sm" disabled="disabled"><i
-                                                class="fa fa-edit"></i>Edit
-                                        </button>
-                                        <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete
-                                        </button>
-                                        <button id="test-btn" class="btn-white btn-sm">测试 </button>
-                                        <%--<button class="btn-white btn-sm"><i class="fa fa-level-up"></i> Top</button>--%>
+                                        <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh</button>
+                                        <button id="edit-one-article" class="btn-white btn-sm" disabled="disabled"><i class="fa fa-edit"></i>Edit</button>
+                                        <button id="delete-some" class="btn-white btn-sm"><i class="fa fa-trash"></i>Delete</button>
                                     </div>
                                 </div>
                                 <div class="list-content-box">
@@ -323,16 +309,12 @@
                                                 </td>
                                                 <td class="to-edit">
                                                     <label class="label label-biji">
-                                                        <t:translate source="${articleRangeCount}"
-                                                                     value="${article.articleRange}"
-                                                                     sourceKey="articleRange,articleRangeName"/>
+                                                        <t:translate source="${articleRangeCount}" value="${article.articleRange}" sourceKey="articleRange,articleRangeName"/>
                                                     </label>
                                                 </td>
                                                 <td class="to-edit">${article.articleAuthorName}</td>
-                                                <td class="to-edit"><fmt:formatDate value="${article.createDate}"
-                                                                    pattern="yyyy-MM-dd"/></td>
-                                                <td class="to-edit"><fmt:formatDate value="${article.updateDate}"
-                                                                    pattern="yyyy-MM-dd"/></td>
+                                                <td class="to-edit"><fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd"/></td>
+                                                <td class="to-edit"><fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd"/></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

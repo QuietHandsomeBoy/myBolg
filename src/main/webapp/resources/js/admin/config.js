@@ -25,7 +25,8 @@ require.config({
         "articleList": "admin/articleList",
         "insertArticle": 'admin/insertArticle',
         "baseutil": 'common/util/base-util',
-        "tagsList": 'admin/tagsList'
+        "tagsList": 'admin/tagsList',
+        "logsList": 'admin/logsList'
     },
     shim: {
         "bootstrap": ['jQuery'],
@@ -225,6 +226,20 @@ var changeArticleTag = function (tagType) {
             return "其他标签";
     }
     return "文章"
+}
+
+//日志操作类型
+var changeOperationType = function (logType) {
+    switch (logType) {
+        case "err":
+            return "异常日志";
+        case "operation":
+            return "操作日志";
+        case "system":
+            return "系统日志";
+        case "other":
+            return "其他日志";
+    }
 }
 
 

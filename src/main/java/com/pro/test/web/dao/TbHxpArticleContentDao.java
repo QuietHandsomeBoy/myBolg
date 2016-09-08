@@ -12,11 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TbHxpArticleContentDao extends GenericDAO<TbHxpArticleContent, TbHxpArticleContentMapper> {
 
-
-    public String test() {
-        return "";
-    }
-
     public int update(TbHxpArticleContent tbHxpArticleContent) {
         return this.mapper.updateByArticleIdSelective(tbHxpArticleContent);
     }

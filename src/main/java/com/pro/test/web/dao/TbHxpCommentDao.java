@@ -13,11 +13,4 @@ import org.springframework.stereotype.Repository;
 public class TbHxpCommentDao extends GenericDAO<TbHxpComment, TbHxpCommentMapper> {
 
 
-    public String test(){
-        mapper.selectByPrimaryKey("111");
-        return "";
-    }
-
-
-
 }

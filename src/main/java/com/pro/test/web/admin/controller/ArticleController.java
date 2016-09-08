@@ -210,6 +210,7 @@ public class ArticleController extends BaseController {
             for (TbHxpTags tbHxpTags : list) {
                 if (StringUtils.isBlank(tbHxpTags.getId())) {
                     tbHxpTags.setTagType(tbHxpArticle.getArticleRange());
+                    tbHxpTags.setIsDeleted(0);
                     tbHxpTagsManager.insert(tbHxpTags);
                 }
                 tagsIdStr.append(tbHxpTags.getId() + ",");

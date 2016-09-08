@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pro.test.web.dao.mapper.TbHxpLogsMapper" >
+  <resultMap id="BaseResultMap" type="com.pro.test.web.entity.TbHxpLogs" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="operation_method" property="operationMethod" jdbcType="VARCHAR" />
+    <result column="operation_content" property="operationContent" jdbcType="VARCHAR" />
+    <result column="operation_ip" property="operationIp" jdbcType="VARCHAR" />
+    <result column="operation_user_id" property="operationUserId" jdbcType="VARCHAR" />
+    <result column="operation_user_name" property="operationUserName" jdbcType="VARCHAR" />
+    <result column="operation_date" property="operationDate" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="log_type" property="logType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operation_method, operation_content, operation_ip, operation_user_id, operation_user_name,
+    operation_date, is_deleted, log_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_hxp_logs
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_hxp_logs
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pro.test.web.entity.TbHxpLogs" >
+    insert into tb_hxp_logs (id, operation_method, operation_content,
+    operation_ip, operation_user_id, operation_user_name,
+    operation_date, is_deleted, log_type
+    )
+    values (#{id,jdbcType=VARCHAR}, #{operationMethod,jdbcType=VARCHAR}, #{operationContent,jdbcType=VARCHAR},
+    #{operationIp,jdbcType=VARCHAR}, #{operationUserId,jdbcType=VARCHAR}, #{operationUserName,jdbcType=VARCHAR},
+    #{operationDate,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}, #{logType,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pro.test.web.entity.TbHxpLogs" >
+    insert into tb_hxp_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operationMethod != null" >
+        operation_method,
+      </if>
+      <if test="operationContent != null" >
+        operation_content,
+      </if>
+      <if test="operationIp != null" >
+        operation_ip,
+      </if>
+      <if test="operationUserId != null" >
+        operation_user_id,
+      </if>
+      <if test="operationUserName != null" >
+        operation_user_name,
+      </if>
+      <if test="operationDate != null" >
+        operation_date,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="logType != null" >
+        log_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="operationMethod != null" >
+        #{operationMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="operationContent != null" >
+        #{operationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operationIp != null" >
+        #{operationIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUserId != null" >
+        #{operationUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUserName != null" >
+        #{operationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null" >
+        #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="logType != null" >
+        #{logType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pro.test.web.entity.TbHxpLogs" >
+    update tb_hxp_logs
+    <set >
+      <if test="operationMethod != null" >
+        operation_method = #{operationMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="operationContent != null" >
+        operation_content = #{operationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operationIp != null" >
+        operation_ip = #{operationIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUserId != null" >
+        operation_user_id = #{operationUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationUserName != null" >
+        operation_user_name = #{operationUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null" >
+        operation_date = #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="logType != null" >
+        log_type = #{logType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pro.test.web.entity.TbHxpLogs" >
+    update tb_hxp_logs
+    set operation_method = #{operationMethod,jdbcType=VARCHAR},
+      operation_content = #{operationContent,jdbcType=VARCHAR},
+      operation_ip = #{operationIp,jdbcType=VARCHAR},
+      operation_user_id = #{operationUserId,jdbcType=VARCHAR},
+      operation_user_name = #{operationUserName,jdbcType=VARCHAR},
+      operation_date = #{operationDate,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      log_type = #{logType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.util.List">
+    update tb_hxp_tags
+    set is_deleted = 1 WHERE id IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <!-- 根据条件查询信息 分页-->
+  <select id="findPage" resultMap="BaseResultMap" useCache="false">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_hxp_logs
+    <where>
+      <if test="tbHxpLogs != null and tbHxpLogs.operationUserName != null  and tbHxpLogs.operationUserName != '' ">
+        and operation_user_name like concat(concat('%', #{tbHxpLogs.operationUserName}), '%')
+      </if>
+      <if test="createDateBegin != null and createDateBegin != ''">
+        and operation_date <![CDATA[ >= ]]>   #{createDateBegin}
+      </if>
+      <if test="createDateEnd != null and createDateEnd != ''">
+        and operation_date <![CDATA[ <= ]]> #{createDateEnd}
+      </if>
+      and is_deleted = 0
+    </where>
+    <if test="order != null and order != '' ">
+      order by ${order} ${sort}
+    </if>
+    <if test="order == null or order == '' ">
+      order by operation_date desc
+    </if>
+  </select>
+
+  <select id="findAllCount" resultType="java.lang.Integer">
+    select count(id) from tb_hxp_logs where is_deleted = 0
+  </select>
+
+</mapper>
