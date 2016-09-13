@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/WEB-INF/views/common/top.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/main.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl }/animate.min.css">
     <script data-main="${_outsideJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
-    <title>MyBolg</title>
+    <title>--------</title>
 </head>
 <body>
 <div id="st-container" class="st-container">
@@ -41,38 +42,26 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="http://localhost:8084/springDemo3/article/articleDetail.html" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
+                            <c:forEach items="${articleList}" var="article">
+                                <article av-animation="fadeInUp" class="aniview fast">
+                                    <div class="article-info">
+                                        <div class="article-content">
+                                            <h2 class="article_title">
+                                                <a href="http://localhost:8082/springDemo3/article/articleDetail/${article.articleId}.html" rel="bookmark">${article.articleTitle}</a>
+                                            </h2>
+                                            <div class="article-meta">
+                                                <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
+                                                <span><i class="fa fa-clock-o"></i><fmt:formatDate value="${article.createDate}" pattern="yyyy/MM/dd"/></span>
+                                                <div class="clear"></div>
+                                            </div>
+                                            <div class="article_about">
+                                                <p>${article.articleIntroduced}</p>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
                                     </div>
-                                </div>
-                            </article>
+                                </article>
+                            </c:forEach>
 
                             <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
@@ -83,221 +72,12 @@
                                         <div class="article-meta">
                                             <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
                                             <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
                                             <div class="clear"></div>
                                         </div>
                                         <div class="article_about">
                                             <p>
                                                 首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
                                             </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <span><i class="fa fa-comments"></i>3</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-
-                                                为什么选用英国的 当代纪实摄影，是因为 在这个时期出现了 3
-                                                位英国的纪实摄影巨头，并且是注入了时代的新内容，可称之为“新纪实”，而他们的手法和内容又多有共通之处。
-                                                要了解当代摄影，先简单看一下“纪实”摄影
-
-                                                在《如何看待英国摄影的英国性》中顾铮这样描述，“纪实”（documentary）一词，直至 1920
-                                                年才出现，由英国电影导演约翰·格里森（John Grierson）提出。但他原来用这个词意指移动影像，而非静止照片。
-
-                                            </p>
-                                        </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -313,151 +93,151 @@
 
                 </div>
 
-                <div id="rightBox" class="rightBox aniview" av-animation="slideInRight">
-                    <div class="hideRigthBox">
-                        <a class="hidelink">隐藏右边栏目</a>
-                    </div>
-                    <section>
-                        <div class="searchBox">
-                            <form role="search" method="get" class="search-form" action="">
-                                <label>
-                                    <i class="fa fa-search"></i>
-                                    <input required="required" autocomplete="off" type="search" class="search-field" placeholder="Search..."
-                                           value="" name="s" title="Search for">
-                                </label>
-                                <input type="submit" class="search-submit fa fa-search" value="Search">
-                            </form>
-                        </div>
-                        <div class="about-website-box">
-                            <h3 class="about-website-title title">About</h3>
-                            <div class="about-website-info">
-                                <p>Lovecraft is a beautiful WordPress theme for bloggers. It is available as a free
-                                    download
-                                    from the official WordPress theme depository .</p>
-                                <p>Lovecraft is developed by <a href="http://www.andersnoren.se">Anders Norén</a>.</p>
-                            </div>
-                        </div>
-                        <div class="tags_box">
-                            <h3 class="tags_title title">Tags</h3>
-                            <div class="tags">
-                                <ul>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                    <li>XX</li>
-                                    <li>XXX</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="recent_posts_box">
-                            <h3 class="recent_posts_title title">Recent Posts</h3>
-                            <div class="recent_posts">
-                                <ul>
-                                    <li>
-                                        <a href="javascript:void(0);">There is something in the New York air that makes
-                                            sleep useless</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">Bears are classified as caniforms, or doglike
-                                            carnivorans</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">Pure mathematics is, in its way, the poetry of
-                                            logical ideas.</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">I like coffee because it gives me the illusion
-                                            that I might be awake</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">It is not down in any map; true places never
-                                            are</a>
-                                    </li>
-                                </ul>
-                                <div class="clear"></div>
-                            </div>
-                        </div>
-                        <div class="recent_comments_box">
-                            <h3 class="recent_comments_title title">Comments</h3>
-                            <div class="recent_comments_container">
-                                <ul>
-                                    <li>
-                                        <div class="comments">
-                                            <img src="${_imagesUrl}/head.png">
-                                            <h4>干锅加鲁鲁</h4>
-                                            <p>
-                                                Really amazing wordpress theme list. there are many interesting themes
-                                                in your list. I will use these themes in my upcoming projects.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="comments">
-                                            <img src="${_imagesUrl}/head.png">
-                                            <h4>干锅加鲁鲁</h4>
-                                            <p>
-                                                Really amazing wordpress theme list. there are many interesting themes
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="comments">
-                                            <img src="${_imagesUrl}/head.png">
-                                            <h4>干锅加鲁鲁</h4>
-                                            <p>
-                                                Really amazing wordpress theme list.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="comments">
-                                            <img src="${_imagesUrl}/head.png">
-                                            <h4>干锅加鲁鲁</h4>
-                                            <p>
-                                                Really amazing wordpress theme list. there are many interesting themes
-                                                in your list.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="comments">
-                                            <img src="${_imagesUrl}/head.png">
-                                            <h4>干锅加鲁鲁</h4>
-                                            <p>
-                                                there are many interesting themes
-                                                in your list. I will use these themes in my upcoming projects.
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="comments">
-                                            <img src="${_imagesUrl}/head.png">
-                                            <h4>干锅加鲁鲁</h4>
-                                            <p>
-                                                Really amazing wordpress theme list,I will use these themes in my
-                                                upcoming projects.
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="comment-info_button">
-                                <button style="float: left;">Read Comments</button>
-                                <button style="float: right;">Leave Comments</button>
-                                <div class="clear"></div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+                <%--<div id="rightBox" class="rightBox aniview" av-animation="slideInRight">--%>
+                    <%--<div class="hideRigthBox">--%>
+                        <%--<a class="hidelink">隐藏右边栏目</a>--%>
+                    <%--</div>--%>
+                    <%--<section>--%>
+                        <%--<div class="searchBox">--%>
+                            <%--<form role="search" method="get" class="search-form" action="">--%>
+                                <%--<label>--%>
+                                    <%--<i class="fa fa-search"></i>--%>
+                                    <%--<input required="required" autocomplete="off" type="search" class="search-field" placeholder="Search..."--%>
+                                           <%--value="" name="s" title="Search for">--%>
+                                <%--</label>--%>
+                                <%--<input type="submit" class="search-submit fa fa-search" value="Search">--%>
+                            <%--</form>--%>
+                        <%--</div>--%>
+                        <%--<div class="about-website-box">--%>
+                            <%--<h3 class="about-website-title title">About</h3>--%>
+                            <%--<div class="about-website-info">--%>
+                                <%--<p>Lovecraft is a beautiful WordPress theme for bloggers. It is available as a free--%>
+                                    <%--download--%>
+                                    <%--from the official WordPress theme depository .</p>--%>
+                                <%--<p>Lovecraft is developed by <a href="http://www.andersnoren.se">Anders Norén</a>.</p>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="tags_box">--%>
+                            <%--<h3 class="tags_title title">Tags</h3>--%>
+                            <%--<div class="tags">--%>
+                                <%--<ul>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                    <%--<li>XX</li>--%>
+                                    <%--<li>XXX</li>--%>
+                                <%--</ul>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="recent_posts_box">--%>
+                            <%--<h3 class="recent_posts_title title">Recent Posts</h3>--%>
+                            <%--<div class="recent_posts">--%>
+                                <%--<ul>--%>
+                                    <%--<li>--%>
+                                        <%--<a href="javascript:void(0);">There is something in the New York air that makes--%>
+                                            <%--sleep useless</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li>--%>
+                                        <%--<a href="javascript:void(0);">Bears are classified as caniforms, or doglike--%>
+                                            <%--carnivorans</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li>--%>
+                                        <%--<a href="javascript:void(0);">Pure mathematics is, in its way, the poetry of--%>
+                                            <%--logical ideas.</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li>--%>
+                                        <%--<a href="javascript:void(0);">I like coffee because it gives me the illusion--%>
+                                            <%--that I might be awake</a>--%>
+                                    <%--</li>--%>
+                                    <%--<li>--%>
+                                        <%--<a href="javascript:void(0);">It is not down in any map; true places never--%>
+                                            <%--are</a>--%>
+                                    <%--</li>--%>
+                                <%--</ul>--%>
+                                <%--<div class="clear"></div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--&lt;%&ndash;<div class="recent_comments_box">&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<h3 class="recent_comments_title title">Comments</h3>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<div class="recent_comments_container">&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<ul>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<div class="comments">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<img src="${_imagesUrl}/head.png">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<h4>干锅加鲁鲁</h4>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<p>&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;Really amazing wordpress theme list. there are many interesting themes&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;in your list. I will use these themes in my upcoming projects.&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</p>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<div class="comments">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<img src="${_imagesUrl}/head.png">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<h4>干锅加鲁鲁</h4>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<p>&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;Really amazing wordpress theme list. there are many interesting themes&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</p>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<div class="comments">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<img src="${_imagesUrl}/head.png">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<h4>干锅加鲁鲁</h4>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<p>&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;Really amazing wordpress theme list.&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</p>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<div class="comments">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<img src="${_imagesUrl}/head.png">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<h4>干锅加鲁鲁</h4>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<p>&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;Really amazing wordpress theme list. there are many interesting themes&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;in your list.&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</p>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<div class="comments">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<img src="${_imagesUrl}/head.png">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<h4>干锅加鲁鲁</h4>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<p>&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;there are many interesting themes&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;in your list. I will use these themes in my upcoming projects.&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</p>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;<li>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<div class="comments">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<img src="${_imagesUrl}/head.png">&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<h4>干锅加鲁鲁</h4>&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;<p>&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;Really amazing wordpress theme list,I will use these themes in my&ndash;%&gt;--%>
+                                                <%--&lt;%&ndash;upcoming projects.&ndash;%&gt;--%>
+                                            <%--&lt;%&ndash;</p>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</li>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;</ul>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;<div class="comment-info_button">&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<button style="float: left;">Read Comments</button>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<button style="float: right;">Leave Comments</button>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<div class="clear"></div>&ndash;%&gt;--%>
+                            <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                    <%--</section>--%>
+                <%--</div>--%>
 
                 <div class="clear" style=""></div>
             </div>

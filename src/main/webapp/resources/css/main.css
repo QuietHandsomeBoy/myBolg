@@ -223,7 +223,7 @@ body {
 
 /*container start*/
 #container {
-    width: 75%;
+    width: 60%;
     margin: 20px auto;
     font-size: 1.6em;
     line-height: 1.625;
@@ -239,7 +239,7 @@ body {
 }
 
 #leftBox {
-    width: 65%;
+    width: 100%;
     float: left;
 
 }
@@ -696,10 +696,6 @@ body {
         width: 90%;
     }
 
-    #leftBox {
-        width: 62%;
-    }
-
     #rightBox {
         width: 35%;
     }
@@ -718,10 +714,6 @@ body {
         width: 95%;
     }
 
-    #leftBox {
-        width: 62%;
-    }
-
     #rightBox {
         width: 35%;
     }
@@ -731,7 +723,7 @@ body {
     }
 
     #rightBox section {
-        padding: 40px 25px 60px !important;
+        padding: 50px 25px 60px !important;
     }
 }
 

@@ -16,8 +16,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
+ * 日志录入线程
  * Created by hxpeng on 2016/9/9.
  */
+
 public class LogHandleThread extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(LogHandleThread.class);
@@ -41,6 +43,7 @@ public class LogHandleThread extends Thread {
         // 打印log间隔
         long timeMillis = System.currentTimeMillis();
 
+        @SuppressWarnings("unchecked")
         ConcurrentLinkedQueue<TbHxpLogs> logsQueue = (ConcurrentLinkedQueue<TbHxpLogs>)
                 servletContext.getAttribute(WebConstants.APPLICATION_ATTR_NAME_LOGGING_OPER);
 

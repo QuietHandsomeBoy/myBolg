@@ -48,10 +48,19 @@ public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticl
         Map<String, Object> map = new HashMap<>();
         try {
             if (tbHxpArticle != null) {
+                String articleIntroduced = tbHxpArticle.getArticleIntroduced();
+                if(StringUtils.isNotBlank(articleIntroduced)){
+                    tbHxpArticle.setArticleIntroduced(HtmlUtils.htmlEscape(articleIntroduced));
+                }
+                String articleTitle = tbHxpArticle.getArticleTitle();
+                if(StringUtils.isNotBlank(articleTitle)){
+                    tbHxpArticle.setArticleTitle(HtmlUtils.htmlEscape(articleTitle));
+                }
                 if (StringUtils.isNotBlank(newArticleId) && StringUtils.isBlank(tbHxpArticle.getArticleId())) {
                     tbHxpArticle.setArticleAuthorName("干锅加鲁鲁");
                     tbHxpArticle.setArticleId(newArticleId);
                     tbHxpArticle.setIsDeleted(0);
+
                     tbHxpArticle.setArticleId(UUIDUtils.getUUID());
                     if (tbHxpArticle.getArticleRange() == null) {
                         tbHxpArticle.setArticleRange(ArticleRange.other.getKey());
@@ -60,14 +69,14 @@ public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticl
                     //保存文章正文
                     TbHxpArticleContent tbHxpArticleContent = new TbHxpArticleContent();
                     tbHxpArticleContent.setArticleId(tbHxpArticle.getArticleId());
-                    tbHxpArticleContent.setArticleContent(HtmlUtils.htmlEscape(content));
+                    tbHxpArticleContent.setArticleContent(content);
                     tbHxpArticleContentManager.insert(tbHxpArticleContent);
                     updateArticleRangsCountInfo(tbHxpArticle.getArticleRange(), 1);
                 } else if (StringUtils.isNotBlank(tbHxpArticle.getArticleId())) {
                     this.dao.update(tbHxpArticle);
                     TbHxpArticleContent tbHxpArticleContent = new TbHxpArticleContent();
                     tbHxpArticleContent.setArticleId(tbHxpArticle.getArticleId());
-                    tbHxpArticleContent.setArticleContent(HtmlUtils.htmlEscape(content));
+                    tbHxpArticleContent.setArticleContent(content);
                     tbHxpArticleContent.setIsDeleted(0);
                     tbHxpArticleContentManager.update(tbHxpArticleContent);
                 } else {

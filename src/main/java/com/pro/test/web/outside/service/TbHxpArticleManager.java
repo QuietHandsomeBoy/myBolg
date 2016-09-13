@@ -8,11 +8,17 @@ import org.springframework.stereotype.Service;
 /**
  * Created by hxpeng on 2016/7/1.
  */
-@Service("outsideArticleManager")
+@Service(value = "outsideArticleManager")
 public class TbHxpArticleManager extends SimpleManager<TbHxpArticle, TbHxpArticleDao> {
 
     public TbHxpArticle findOneById(String id){
         return dao.selectByPrimaryKey(id);
     }
+
+    public TbHxpArticle findOneByArticleId(String articleId){
+        return dao.findOneByArticleID(articleId);
+    }
+
+
 
 }

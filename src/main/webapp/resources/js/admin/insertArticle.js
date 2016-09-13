@@ -458,8 +458,7 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
                 }
             })
             aboutArticleId = aboutArticleId.substring(0,aboutArticleId.length-1);
-            var articleIntroduced = publicUtil.isNotEmpty(new String($("textarea[name='articleIntroduced']").val()).trim)
-                ? encodeURIComponent($("textarea[name='articleIntroduced']").val()) : "";
+            var articleIntroduced = encodeURIComponent($("textarea[name='articleIntroduced']").val());
             var content = encodeURIComponent(new String($("textarea[name='articleContent']").val()).trim());
             var articleData = "newArticleId=" + newArticleId + "&articleId=" + articleId + "&articleTitle=" + articleTitle + "&articleIntroduced=" + articleIntroduced + "&articleTags=" + articleTags;
             articleData += "&articleRange=" + articleRange + "&keyWords=" + keyWords + "&isPublic=" + isPublic + "&onTop=" + onTop + "&limitComments=" + limitComments;

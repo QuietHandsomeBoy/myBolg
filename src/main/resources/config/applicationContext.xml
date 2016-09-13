@@ -109,7 +109,7 @@
     </tx:advice>
 
     <!-- 事务 aop 配置 -->
-    <aop:config>
+    <aop:config proxy-target-class="false">
         <aop:pointcut id="serviceMethods" expression="execution(* com.pro.test.web.*.service..*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
     </aop:config>
@@ -118,7 +118,7 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- 启用对事务注解的支持 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <bean id="SpringContextHolder" class = "com.pro.test.core.common.springmvc.context.SpringContextHolder"/>
 

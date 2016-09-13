@@ -22,8 +22,7 @@ import javax.servlet.ServletContextListener;
  */
 public class MyContextInitListener implements ServletContextListener {
 
-
-    private Logger logger = LoggerFactory.getLogger(MyContextInitListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyContextInitListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {

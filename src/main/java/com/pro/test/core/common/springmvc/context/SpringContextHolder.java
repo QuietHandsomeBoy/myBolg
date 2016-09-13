@@ -16,9 +16,8 @@ import java.util.Map;
 public class SpringContextHolder implements ApplicationContextAware {
 
 
-    private static Logger log = LoggerFactory.getLogger(SpringContextHolder.class);
+    private static final Logger log = LoggerFactory.getLogger(SpringContextHolder.class);
     private static ApplicationContext applicationContext;
-
 
 
     public static ApplicationContext getApplicationContext() {
@@ -28,14 +27,15 @@ public class SpringContextHolder implements ApplicationContextAware {
         return applicationContext;
     }
 
-    private static Map<Class,Object> beans = new HashMap<Class, Object>();
+    private static Map<Class, Object> beans = new HashMap<Class, Object>();
+
     public static <T> T getBean(Class<T> requiredType) {
-        if(beans.get(requiredType)!=null){
-            return (T)beans.get(requiredType);
+        if (beans.get(requiredType) != null) {
+            return (T) beans.get(requiredType);
         } else {
             Object instance = getApplicationContext().getBean(requiredType);
-            beans.put(requiredType,instance);
-            return (T)instance;
+            beans.put(requiredType, instance);
+            return (T) instance;
         }
     }
 
@@ -52,11 +52,11 @@ public class SpringContextHolder implements ApplicationContextAware {
         return getApplicationContext().getBean(beanName);
     }
 
-    public static <T> Map<String, T> getBeansOfType(Class<T> requiredType){
+    public static <T> Map<String, T> getBeansOfType(Class<T> requiredType) {
         return getApplicationContext().getBeansOfType(requiredType);
     }
 
-    public static SystemConfigSevice getSystemConfigSevice(){
+    public static SystemConfigSevice getSystemConfigSevice() {
         return getBean(SystemConfigSevice.class);
     }
 
