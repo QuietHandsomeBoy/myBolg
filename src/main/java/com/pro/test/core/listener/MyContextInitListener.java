@@ -1,6 +1,8 @@
-package com.pro.test.core.servlet;
+package com.pro.test.core.listener;
 
+import com.pro.test.core.common.global.BaseVariables;
 import com.pro.test.core.common.springmvc.context.SpringContextHolder;
+import com.pro.test.core.common.springmvc.thread.LogHandleThread;
 import com.pro.test.core.enumdata.ArticleRange;
 import com.pro.test.core.enumdata.ArticleRights;
 import com.pro.test.core.enumdata.ArticleTags;
@@ -11,22 +13,21 @@ import com.pro.test.web.dao.TbHxpTagsDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
- * Created by hxpeng on 2016/6/16.
+ * Created by hxpeng on 2016/9/9.
  */
-public class InitServlet extends HttpServlet {
+public class MyContextInitListener implements ServletContextListener {
 
-    private Logger logger = LoggerFactory.getLogger(InitServlet.class);
 
-    public void init(ServletConfig config) {
+    private Logger logger = LoggerFactory.getLogger(MyContextInitListener.class);
 
-        ServletContext servletContext = config.getServletContext();
-//        ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+        ServletContext servletContext = servletContextEvent.getServletContext();
         logger.info("================================开始初始化静态资源路径信息！");
         String contextPath = servletContext.getContextPath();
         String resourcesPath = contextPath + "/resources";
@@ -63,5 +64,16 @@ public class InitServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+
+
+        //执行录入操作日志线程
+        new LogHandleThread(servletContext).start();
+
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        BaseVariables.global_running_flag = false;
+        logger.info("[系统监听]：程序关闭");
     }
 }

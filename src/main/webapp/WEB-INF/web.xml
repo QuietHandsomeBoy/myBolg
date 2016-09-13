@@ -39,6 +39,10 @@
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
 
+    <!-- 配置自定义监听器 -->
+    <listener>
+        <listener-class>com.pro.test.core.listener.MyContextInitListener</listener-class>
+    </listener>
 
     <!-- Spring MVC 核心控制器 DispatcherServlet 配置 -->
     <servlet>
@@ -61,14 +65,6 @@
         <url-pattern>/resources/images/*</url-pattern>
         <url-pattern>/resources/fonts/*</url-pattern>
     </servlet-mapping>
-
-    <!-- 服务初始化 -->
-    <servlet>
-        <servlet-name>InitServlet</servlet-name>
-        <servlet-class>com.pro.test.core.servlet.InitServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-
 
     <!-- 配置Spring字符编码过滤器 -->
     <filter>

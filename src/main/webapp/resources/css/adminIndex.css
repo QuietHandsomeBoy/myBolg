@@ -1191,6 +1191,18 @@ label:focus {
     -moz-transition: all .25s ease-in-out;
     transition: all .25s ease-in-out;
 }
+.list-content-box .table > thead > tr > th,
+.list-content-box .table > tbody > tr > th,
+.list-content-box .table > tfoot > tr > th,
+.list-content-box .table > thead > tr > td,
+.list-content-box .table > tbody > tr > td,
+.list-content-box .table > tfoot > tr > td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-top:0px;
+}
+
 
 .list-content-box .table > tbody > tr > td label {
     line-height: normal;
@@ -1244,7 +1256,7 @@ label:focus {
 .log-user-name{
     font-weight: bold;
     font-size: 14px;
-    width: 120px !important;
+    width: 6% !important;
 }
 
 .article-title:focus, .article-title:visited {

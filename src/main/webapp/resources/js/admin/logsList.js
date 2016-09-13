@@ -40,6 +40,10 @@ define(['bootstrapSelect', 'bootstrapDatetimepicker', 'icheck', 'pjax', 'baseuti
             paginationFun($(this));
         })
 
+        $("#refresh-all").on("click", function () {
+            assembling("refresh");
+        })
+
         var assembling = function (type) {
             srearchCondition = "";
             $.each($("#searchLogsParam").serializeArray(), function (k, v) {

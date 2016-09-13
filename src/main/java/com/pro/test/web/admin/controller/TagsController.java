@@ -1,6 +1,7 @@
 package com.pro.test.web.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.pro.test.core.common.annotation.Logging;
 import com.pro.test.core.common.mybatis.ContextData;
 import com.pro.test.core.common.mybatis.entity.Pagination;
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
@@ -103,6 +104,7 @@ public class TagsController {
      * @param tagIds
      * @return
      */
+    @Logging(type = Logging.LogType.DEL, remarke = "批量或单个删除标签")
     @ResponseBody
     @RequestMapping(value = "deleteTagByIds.json", method = RequestMethod.POST)
     public String deleteTagByIds(String tagIds) {
@@ -118,6 +120,7 @@ public class TagsController {
         return "success";
     }
 
+    @Logging(type = Logging.LogType.ADD, remarke = "新增标签")
     @ResponseBody
     @RequestMapping(value = "saveTgas.json", method = RequestMethod.POST)
     public String saveTags(String articleId,String tagsName){

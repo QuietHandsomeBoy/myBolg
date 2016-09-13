@@ -348,35 +348,33 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
     var checkaboutArticleId = function () {
         $.each($("input[name='aboutArticleId']"), function (k, v) {
+            var url = $(v).val();
             if (publicUtil.isNotEmpty(url)) {
-                var url = $(v).val();
-                if (publicUtil.isNotEmpty(url)) {
-                    //if (url.toLowerCase().indexOf("http://localhost:8082") == -1 || url.toLowerCase().indexOf("/article/articleDetail/") == -1) {
-                    if (url.indexOf("http://localhost:8082") == -1 || url.indexOf("/article/articleDetail/") == -1 || url.indexOf(".html") == -1) {
-                        return false;
-                    }
-                    var splitStr = url.split("/");
-                    var articleId = 0;
-                    if (splitStr.length == 6) {
-                        articleId = splitStr[5];
-                        articleId = articleId.substring(articleId.indexOf("."), articleId.length);
-                    }
-                    if (publicUtil.isNotEmpty(articleId)) {
-                        $.ajax({
-                            type: "POST",
-                            url: ctx + "/admin/article/isArticle.json",
-                            dataType: "json",
-                            data: {"articleId": articleId},
-                            async: false,
-                            success: function (data) {
-                                if (data.result == 'true') {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
+                //if (url.toLowerCase().indexOf("http://localhost:8082") == -1 || url.toLowerCase().indexOf("/article/articleDetail/") == -1) {
+                if (url.indexOf("http://localhost:8082") == -1 || url.indexOf("/article/articleDetail/") == -1 || url.indexOf(".html") == -1) {
+                    return false;
+                }
+                var splitStr = url.split("/");
+                var articleId = 0;
+                if (splitStr.length == 6) {
+                    articleId = splitStr[5];
+                    articleId = articleId.substring(articleId.indexOf("."), articleId.length);
+                }
+                if (publicUtil.isNotEmpty(articleId)) {
+                    $.ajax({
+                        type: "POST",
+                        url: ctx + "/admin/article/isArticle.json",
+                        dataType: "json",
+                        data: {"articleId": articleId},
+                        async: false,
+                        success: function (data) {
+                            if (data.result == 'true') {
+                                return true;
+                            } else {
+                                return false;
                             }
-                        })
-                    }
+                        }
+                    })
                 }
             }
         })
@@ -453,9 +451,11 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             keyWords = keyWords.substring(0, keyWords.length - 1);
             var aboutArticleId = '';
             $.each($("input[name='aboutArticleId']"), function (k, v) {
-                var splitStr = $(v).val().split("/");
-                //获取相关文章的ID
-                aboutArticleId += splitStr[6].substring(0, splitStr[6].indexOf(".")) + ',';
+                if (publicUtil.isNotEmpty($(v).val())) {
+                    var splitStr = $(v).val().split("/");
+                    //获取相关文章的ID
+                    aboutArticleId += splitStr[6].substring(0, splitStr[6].indexOf(".")) + ',';
+                }
             })
             aboutArticleId = aboutArticleId.substring(0,aboutArticleId.length-1);
             var articleIntroduced = publicUtil.isNotEmpty(new String($("textarea[name='articleIntroduced']").val()).trim)

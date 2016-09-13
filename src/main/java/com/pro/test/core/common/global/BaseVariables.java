@@ -24,6 +24,7 @@ public class BaseVariables {
     /** 开发类型 */
     public static boolean global_develope_flag = false;
 
+    public static boolean global_running_flag = true;
 
 
 }

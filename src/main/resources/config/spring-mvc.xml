@@ -14,15 +14,19 @@
     </context:component-scan>
 
     <!-- 定义基础拦截器，主要进行权限拦截  -->
-    <!--<mvc:interceptors>-->
-        <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
-        <!--<bean class="com.pro.test.core.common.springmvc.Interceptor.BaseInterceptor"/>-->
+    <mvc:interceptors>
+        <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+        <bean class="com.pro.test.core.common.springmvc.Interceptor.BaseInterceptor">
+            <property name="logOperationCount" value="1000" />
+            <property name="userSessionKey" value="userId" />
+        </bean>
+
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/test/number.do"/>-->
             <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
             <!--<bean class="com.host.app.web.interceptor.LoginInterceptor"/>-->
         <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    </mvc:interceptors>
 
     <!-- 路径映射处理适配器，包括参数的处理 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

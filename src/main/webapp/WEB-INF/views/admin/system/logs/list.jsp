@@ -229,18 +229,11 @@
                                 </ul>
                             </div>
                             <div class="header-tool-box">
-                                <button id="toggle-all" class="btn-white btn-sm" disabled>
-                                    <input type="hidden" value="0"/><i class="fa fa-check-square-o"></i> Toggle
-                                    All
-                                </button>
-                                <button id="refresh-all" class="btn-white btn-sm" disabled><i class="fa fa-refresh"></i>Refresh
-                                </button>
-                                <button id="delete-some" class="btn-white btn-sm" disabled><i class="fa fa-trash"></i>Delete
-                                </button>
+                                <button id="refresh-all" class="btn-white btn-sm"><i class="fa fa-refresh"></i>Refresh</button>
                             </div>
                         </div>
                         <div class="list-content-box">
-                            <table class="table table-hover log-table">
+                            <table class="table table-hover log-table" style="table-layout: fixed;">
                                 <thead>
                                 <tr>
                                     <th>操作人</th>
@@ -264,9 +257,9 @@
                                             </label>
                                         </td>
                                         <td>${log.operationMethod}</td>
-                                        <td><a href="javascript:;" class="title-common log-content">${log.operationContent}</a></td>
+                                        <td>${log.operationContent}</td>
                                         <td>${log.operationIp}</td>
-                                        <td><fmt:formatDate value="${log.operationDate}" pattern="yyyy-MM-dd mm:dd:ss"/></td>
+                                        <td><fmt:formatDate value="${log.operationDate}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

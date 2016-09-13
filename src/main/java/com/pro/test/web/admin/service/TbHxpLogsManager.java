@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by hxpeng on 2016/9/8.
  */
-@Service
+@Service(value = "tbHxpLogsManager")
 public class TbHxpLogsManager extends SimpleManager<TbHxpLogs, TbHxpLogsDao> {
 
 }

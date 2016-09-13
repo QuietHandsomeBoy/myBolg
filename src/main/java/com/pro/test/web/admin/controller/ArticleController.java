@@ -1,6 +1,7 @@
 package com.pro.test.web.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.pro.test.core.common.annotation.Logging;
 import com.pro.test.core.common.mybatis.ContextData;
 import com.pro.test.core.common.mybatis.entity.Pagination;
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
@@ -88,6 +89,8 @@ public class ArticleController extends BaseController {
      * @param articleIds
      * @return
      */
+
+    @Logging(type = Logging.LogType.DEL,remarke = "批量或单个删除文章")
     @ResponseBody
     @RequestMapping(value = "deleteArticleByIds.json", method = RequestMethod.POST)
     public String deleteArticleByIds(String articleIds) {
@@ -151,24 +154,28 @@ public class ArticleController extends BaseController {
                 }
                 List<TbHxpTags> tagsList = new ArrayList<>();
                 String tagsStr = tbHxpArticle.getArticleTags();
-                String[] tag = tagsStr.split(",");
-                if (tag.length >= 1) {
-                    for (String s : tag) {
-                        TbHxpTags entity = tbHxpTagsManager.findOneByID(s);
-                        if (entity != null) {
-                            tagsList.add(entity);
+                if(StringUtils.isNotBlank(tagsStr)){
+                    String[] tag = tagsStr.split(",");
+                    if (tag.length >= 1) {
+                        for (String s : tag) {
+                            TbHxpTags entity = tbHxpTagsManager.findOneByID(s);
+                            if (entity != null) {
+                                tagsList.add(entity);
+                            }
                         }
+                        requestResolver.setAttribute("tagsList", tagsList);
                     }
-                    requestResolver.setAttribute("tagsList", tagsList);
                 }
                 List<String> aboutUrl = new ArrayList<>();
                 String aboutUrlStr = tbHxpArticle.getAboutArticleId();
-                String[] ids = aboutUrlStr.split(",");
-                if (ids.length >= 1) {
-                    for (String s : ids) {
-                        aboutUrl.add("http://localhost:8082/springDemo3/article/articleDetail/" + s + ".html");
+                if(StringUtils.isNotBlank(aboutUrlStr)){
+                    String[] ids = aboutUrlStr.split(",");
+                    if (ids.length >= 1) {
+                        for (String s : ids) {
+                            aboutUrl.add("http://localhost:8082/springDemo3/article/articleDetail/" + s + ".html");
+                        }
+                        requestResolver.setAttribute("aboutUrl", aboutUrl);
                     }
-                    requestResolver.setAttribute("aboutUrl", aboutUrl);
                 }
 
                 TbHxpArticleContent tbHxpArticleContent = tbHxpArticleContentManager.findOneByArticleId(tbHxpArticle.getArticleId());
@@ -194,6 +201,7 @@ public class ArticleController extends BaseController {
      * @return
      */
 
+    @Logging(type = Logging.LogType.ADDORDEL, remarke = "异步提交文章，新增/修改")
     @ResponseBody
     @RequestMapping(value = "/saveArticle.json", method = RequestMethod.POST)
     public Map<String, Object> saveArticle(@Validated TbHxpArticle tbHxpArticle, String content, BindingResult bindingResult, String newArticleId, String tagsStr) {
