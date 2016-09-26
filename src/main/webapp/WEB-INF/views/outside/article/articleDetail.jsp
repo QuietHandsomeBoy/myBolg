@@ -41,7 +41,7 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <article av-animation="fadeIn" class="aniview article">
+                            <article class="animated fadeIn">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">${tbHxpArticle.articleTitle}</a></h2>
@@ -67,6 +67,13 @@
 
                         </div>
                     </section>
+
+                    <script>
+                        var ctx = '${_Weburl}';
+                        require(["articleDetail"], function (common) {
+                            common.init();
+                        });
+                    </script>
                 </div>
                 <div class="clear" style=""></div>
             </div>

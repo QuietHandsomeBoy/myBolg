@@ -42,12 +42,12 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <c:forEach items="${articleList}" var="article">
+                            <c:forEach items="${articleList}" var="article" varStatus="status">
                                 <article av-animation="fadeInUp" class="aniview fast">
                                     <div class="article-info">
                                         <div class="article-content">
                                             <h2 class="article_title">
-                                                <a href="http://localhost:8082/springDemo3/article/articleDetail/${article.articleId}.html" rel="bookmark">${article.articleTitle}</a>
+                                                <a class="article_link" href="http://localhost:8082/springDemo3/article/articleDetail/${article.articleId}.html" rel="bookmark">${article.articleTitle}</a>
                                             </h2>
                                             <div class="article-meta">
                                                 <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
@@ -64,25 +64,25 @@
                             </c:forEach>
 
                             <article av-animation="fadeInUp" class="aniview fast">
-                                <div class="article-info">
-                                    <div class="article-content">
-                                        <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
-                                            something
-                                            in the New York air that makes sleep useless</a></h2>
-                                        <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
-                                            <span><i class="fa fa-clock-o"></i>2014/04/16</span>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="article_about">
-                                            <p>
-                                                首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
+                            <div class="article-info">
+                                <div class="article-content">
+                                    <h2 class="article_title"><a href="javascript:;" rel="bookmark">There is
+                                        something
+                                        in the New York air that makes sleep useless</a></h2>
+                                    <div class="article-meta">
+                                        <span class="article_meta_tags"><i class="fa fa-tags"></i>Java,多线程,Html</span>
+                                        <span><i class="fa fa-clock-o"></i>2014/04/16</span>
+                                        <div class="clear"></div>
                                     </div>
+                                    <div class="article_about">
+                                        <p>
+                                            首先申明只是学摄影的弱犬，刚好这段时间在学习当代摄影，于是自己做一些功课，而知乎上又貌似在这块上存在空白，就全当分享个人学习体验。关于历史事件描述大多参考搜索结果，想了解更多相关内容请自行查找，其中对摄影师作品评说具有强烈的个人情感。不喜勿怪。
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                            </article>
+                            </div>
+                        </article>
                         </div>
 
                         <div class="pagination_box">
@@ -90,6 +90,13 @@
                         </div>
                     </section>
 
+
+                    <script>
+                        var ctx = '${_Weburl}';
+                        require(["index"], function (common) {
+                            common.init();
+                        });
+                    </script>
 
                 </div>
 

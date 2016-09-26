@@ -1,7 +1,5 @@
 package com.pro.test.web.test;
 
-import com.pro.test.core.enumdata.ArticleRange;
-
 import java.text.ParseException;
 import java.util.Random;
 
@@ -31,20 +29,32 @@ public class test {
 //        }
 
 
-        Class t = ArticleRange.class;
-        for(Object o : t.getEnumConstants()){
-            ArticleRange a = (ArticleRange) o;
-            if(a.getKey().equals("other")){
-                System.out.println(a.getValue());
-            }
-        }
+//        Class t = ArticleRange.class;
+//        for (Object o : t.getEnumConstants()) {
+//            ArticleRange a = (ArticleRange) o;
+//            if (a.getKey().equals("other")) {
+//                System.out.println(a.getValue());
+//            }
+//        }
+
+
+//        for (int i = 0; i < 10; i++){
+//            for(int j = 0; j < 5; j++){
+//                if(j == 3){
+//                    break;
+//                }
+//                System.out.println("i:"+i+",j:"+j);
+//            }
+//        }
+
+
 
     }
 
     //随机生成用户推荐码
-    public static String getMyRecommendCode(){
+    public static String getMyRecommendCode() {
         Random random = new Random();
-        int length = random.nextInt(5)+6;
+        int length = random.nextInt(5) + 6;
         StringBuffer sb = new StringBuffer();
         sb.append("");
         for (int i = 0; i < length; i++) {

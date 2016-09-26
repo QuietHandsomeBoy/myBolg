@@ -74,6 +74,7 @@
         if ($.isFunction(options.url)) {
             options.url = options.url()
         }
+
         var target = options.target;
         var hash = parseURL(options.url).hash;
         var context = options.context = findContainerFor(options.container);
@@ -176,6 +177,8 @@
                 state: pjax.state,
                 previousState: previousState
             });
+            //alert($("#"+decodeURIComponent(hash.slice(1))).offset().top);
+
             context.html(container.contents);
             var autofocusEl = context.find("input[autofocus], textarea[autofocus]").last()[0];
             if (autofocusEl && document.activeElement !== autofocusEl) {
@@ -190,6 +193,7 @@
                     scrollTo = $(target).offset().top
                 }
             }
+
             if (typeof scrollTo == "number") {
                 $(window).scrollTop(scrollTo)
             }
@@ -258,8 +262,13 @@
             }
             var cache = cacheMapping[state.id] || [];
             var container = $(cache[0] || state.container);
-            //var contents = cache[1];
-            var contents = false;
+            var contents;
+            if(state.url.indexOf("admin") > 0){
+                contents = false;
+            }
+            //else{
+            //    contents = cache[1];
+            //}
             if (container.length) {
                 if (previousState) {
                     cachePop(direction, previousState.id, cloneContents(container))
@@ -291,6 +300,13 @@
                 } else {
                     pjax(options)
                 }
+
+                //從cookie中找出上一頁的下拉條位置
+                var leftBoxScrollTo = $.cookie("scrollTo");
+                if(container.find("article").length > 1 && leftBoxScrollTo){
+                    $("#leftBox").offset({top:leftBoxScrollTo});
+                }
+
                 container[0].offsetHeight
             } else {
                 locationReplace(location.href)

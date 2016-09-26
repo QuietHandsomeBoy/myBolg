@@ -207,9 +207,8 @@ public class ArticleController extends BaseController {
     public Map<String, Object> saveArticle(@Validated TbHxpArticle tbHxpArticle, String content, BindingResult bindingResult, String newArticleId, String tagsStr) {
         Map<String, Object> map = new HashMap<>();
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError().getDefaultMessage());
             map.put("result", "err");
-            map.put("resultMsg", "请按要求输入文章相关信息!");
+            map.put("resultMsg", "bindingResult.getFieldError().getDefaultMessage()");
             return map;
         }
         try {

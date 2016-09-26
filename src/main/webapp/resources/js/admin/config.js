@@ -14,7 +14,7 @@ require.config({
         "bootstrap": "admin/bootstrap/bootstrap",
         "bootstrapDatetimepicker": "admin/bootstrap/bootstrap-datetimepicker.min",
         "bootstrapSelect": "admin/bootstrap/bootstrap-select",
-        "pjax": "common/pjax/pjax",
+        "pjax": "common/pjax/admin/pjax",
         "nprogress": "common/nprogress/nprogress",
         "jqueryCookie": "common/jquery/jquery.cookie",
         "metismenu": "admin/metismenu/jquery.metisMenu",

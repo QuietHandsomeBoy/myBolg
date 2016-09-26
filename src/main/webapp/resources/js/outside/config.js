@@ -3,16 +3,19 @@
  */
 
 require.config({
-    baseUrl : "/" + document.URL.split("/")[3] + "/resources",
+    baseUrl: "/" + document.URL.split("/")[3] + "/resources/js",
     paths:{
-        "jQuery":"js/common/jquery/jquery",
-        "sidebar":"js/outside/sidebar/sidebar-transitions",
-        "jqueryAniview":"js/outside/aniview/jquery.aniview.min",
-        "ie":"js/common/ie",
-        "pjax":"js/common/pjax/pjax",
-        "nprogress":"js/common/nprogress/nprogress",
-        "jqueryCookie":"js/common/jquery/jquery.cookie",
-        "icheck":"js/common/icheck/icheck"
+        "jQuery":"common/jquery/jquery",
+        "sidebar":"outside/sidebar/sidebar-transitions",
+        "jqueryAniview":"outside/aniview/jquery.aniview.min",
+        "ie":"common/ie",
+        "pjax":"common/pjax/outside/pjax",
+        "nprogress":"common/nprogress/nprogress",
+        "jqueryCookie":"common/jquery/jquery.cookie",
+        "icheck":"common/icheck/icheck",
+        "baseutil": 'common/util/base-util',
+        "index":"outside/index",
+        "articleDetail":"outside/articleDetail"
     },
     shim : {
         "jqueryAniview":['jQuery'],
@@ -20,14 +23,21 @@ require.config({
         "nprogress":['jQuery'],
         "jqueryCookie":['jQuery'],
         "icheck":['jQuery'],
-        "sidebar":['jQuery','ie']
+        "sidebar":['jQuery','ie'],
+        "baseutil":['jQuery']
     },
     urlArgs: "bust=" +  (new Date()).getTime()
 });
 
 require(['nprogress'],function(NProgress){
-    require(['jQuery', 'jqueryAniview', 'pjax','sidebar'], function() {
+    require(['jQuery', 'jqueryAniview', 'pjax','sidebar','jqueryCookie'], function() {
+
+        $.pjax.defaults.scrollTo = false;
         $(document).pjax('a', '#leftBox', {fragment:'#leftBox', timeout:5000})
+            .on("pjax:click", function(){
+
+                alert($("#leftBox").offset().top);
+            })
             .on("pjax:timeout", function (event) {
                 event.preventDefault()
             })
@@ -41,7 +51,7 @@ require(['nprogress'],function(NProgress){
             .on("pjax:popstate",function(){
             })
             .on("pjax:end",function(){
-                $('#leftBox .aniview').AniView();
+                //$('#leftBox .aniview').AniView();
             })
             .on("pjax:complete",function(){
                 setTimeout(function(){NProgress.done();}, 500);
@@ -70,32 +80,28 @@ require(['nprogress'],function(NProgress){
 
             })
 
-
-        $('.aniview').AniView();
-
-        $(window).resize(function () {
-            var leftPX = ($(window).width() - $('#loginBox').outerWidth()) / 2;
-            var topPX = ($(window).height() - $('#loginBox').outerHeight()) / 2 + $(document).scrollTop();
-
-            if (topPX < 70) {
-                topPX = 70;
-            }
-            $('#loginBox').css({
-                position: 'absolute',
-                left: leftPX,
-                top: topPX
-            });
-        });
-
-        $(window).resize();
-        //隐藏右侧栏
-        $(".hidelink").click(function(){
-            $("#rightBox").attr("av-animation","bounceOutRight");
-            $("#rightBox").removeClass("bounceInRight").addClass("bounceOutRight");
-            setTimeout(function(){$("#leftBox").css("width","100%");},300);
-            setTimeout(function(){$("#rightBox").css("display","none");},500);
-
-        })
+        //$(window).resize(function () {
+        //    var leftPX = ($(window).width() - $('#loginBox').outerWidth()) / 2;
+        //    var topPX = ($(window).height() - $('#loginBox').outerHeight()) / 2 + $(document).scrollTop();
+        //
+        //    if (topPX < 70) {
+        //        topPX = 70;
+        //    }
+        //    $('#loginBox').css({
+        //        position: 'absolute',
+        //        left: leftPX,
+        //        top: topPX
+        //    });
+        //});
+        //$(window).resize();
+        ////隐藏右侧栏
+        //$(".hidelink").click(function(){
+        //    $("#rightBox").attr("av-animation","bounceOutRight");
+        //    $("#rightBox").removeClass("bounceInRight").addClass("bounceOutRight");
+        //    setTimeout(function(){$("#leftBox").css("width","100%");},300);
+        //    setTimeout(function(){$("#rightBox").css("display","none");},500);
+        //
+        //})
     });
 })
 
