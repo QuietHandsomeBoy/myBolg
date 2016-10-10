@@ -1,5 +1,7 @@
 package com.pro.test.web.test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.Random;
 
@@ -8,7 +10,7 @@ import java.util.Random;
  */
 public class test {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, MalformedURLException {
 //        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 //        Validator validator = factory.getValidator();
 //
@@ -47,6 +49,15 @@ public class test {
 //            }
 //        }
 
+        URL url = new URL("http://file.gzl.cn/group1/M00/00/0B/wKkBHlf4S2qAQBg_AAAMHkwnAg0406.jpg");
+        System.out.println(url.getPath());
+
+//        String s = "http://topic.csdn.net/u/20120604/22/2479ec15-887a-4a7f-9ca6-042d37214302.html";
+//        Pattern p = Pattern.compile("(?<=//|)((\\w)+\\.)+\\w+");
+//        Matcher m = p.matcher(s);
+//        if(m.find()){
+//            System.out.println(m.group());
+//        }
 
 
     }

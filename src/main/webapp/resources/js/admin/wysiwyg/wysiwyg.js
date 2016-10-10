@@ -646,6 +646,7 @@
                     format: dummy_this,
                     indent: dummy_this,
                     insertLink: dummy_this,
+                    //insertCode: dummy_this,
                     insertImage: dummy_this,
                     insertHTML: dummy_this,
                     insertList: dummy_this
@@ -1233,6 +1234,12 @@
                 callUpdates( true ); // selection destroyed
                 return this;
             },
+            //insertCode: function( url )
+            //{
+            //    execCommand( 'insertCode', url );
+            //    callUpdates( true ); // selection destroyed
+            //    return this;
+            //},
             insertImage: function( url )
             {
                 execCommand( 'insertImage', url, true );

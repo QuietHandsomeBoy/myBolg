@@ -610,7 +610,7 @@ a:hover, a:active, a:visited, a:focus {
 
 }
 
-.title-introduce-box textarea {
+.title-introduce-box textarea,.insert-code-box textarea {
     margin: 0px;
     width: 100%;
     resize: none;
@@ -1539,6 +1539,10 @@ label:focus {
     color: #ffffff;
     background-color: #306994;
 }
+.wysiwyg-toolbar-icon ~ .active {
+    color: #ffffff;
+    background-color: #306994;
+}
 
 .wysiwyg-toolbar-form {
     padding: 10px;
@@ -1909,9 +1913,9 @@ label:focus {
 .tips-content, .operate-content {
     background: #ffffff;
     position: relative;
-    border-radius: 3px;
+    border-radius: 5px;
     margin: 0 auto;
-    box-shadow: 0 0 20px rgba(156, 156, 156, 0.8);
+    /*box-shadow: 0 0 20px rgba(156, 156, 156, 0.8);*/
     webkit-transform: scale(0.7);
     -moz-transform: scale(0.7);
     -ms-transform: scale(0.7);
@@ -2003,6 +2007,21 @@ label:focus {
     padding: 10px 0px;
     margin: 5px 0px;
 }
+
+.operate-content .insert-code-box{
+    min-height: 250px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.operate-content .insert-code-box .insert-code-box{
+    min-height: 250px;
+}
+.operate-content .insert-code-box .insert-code-box textarea{
+    height: 250px;
+}
+
+
+
 
 .operate-content .choose-tags-input-box .choosed-tags-input, .tags-sources-box, .choose-tags-sources-box input,
 .choose-tags-sources-box .select-btn, .choose-tags-sources-box button {

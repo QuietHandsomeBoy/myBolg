@@ -223,10 +223,12 @@ body {
 
 /*container start*/
 #container {
-    width: 60%;
-    margin: 20px auto;
+    overflow-y: scroll;
+    width: 100%;
     font-size: 1.6em;
     line-height: 1.625;
+    height:100%;
+    overflow-x: hidden;
 }
 
 #leftBox, #rightBox {
@@ -239,8 +241,8 @@ body {
 }
 
 #leftBox {
-    width: 100%;
-    float: left;
+    width: 60%;
+    margin: 0px auto;
 
 }
 
@@ -253,7 +255,7 @@ body {
     border: 0px;
     background: none;
     outline: none;
-    padding: 10px 0px;
+    padding: 10px 5px;
 }
 #leftBox .content article,#rightBox{
     opacity: 0;
@@ -339,130 +341,6 @@ body {
     color: #fff;
     text-decoration: none;
     -webkit-backface-visibility: hidden;
-}
-
-/*#leftBox .content article .article-meta span a:hover {*/
-/*color: #13C4A5;*/
-/*text-decoration: none;*/
-/*}*/
-
-#rightBox {
-    width: 32%;
-    float: right;
-
-}
-
-#rightBox section {
-    padding: 4rem 2.5rem 3.75rem;
-    background-color: #fff;
-}
-
-#rightBox section .searchBox {
-    position: relative;
-    color: #aaaaaa;
-}
-
-#rightBox section .searchBox label {
-    position: relative;
-    display: block;
-}
-
-#rightBox section .searchBox label i {
-    position: absolute;
-    z-index: 1;
-    line-height: 2.3rem;
-    right: 0.8rem;
-
-}
-
-/*#rightBox section .searchBox label:before {*/
-/*display: block;*/
-/*font-family: FontAwesome;*/
-/*text-decoration: inherit;*/
-/*content: "";*/
-/*position: absolute;*/
-/*right: 15px;*/
-/*line-height: 40px;*/
-/*z-index: 1;*/
-/*}*/
-
-#rightBox section .searchBox label input[type="search"] {
-    width: 100%;
-    position: relative;
-    font-weight: normal;
-    display: block;
-    width: 100%;
-    height: 40px;
-    padding: 6px 12px;
-    font-size: 1.1em;
-    line-height: 1.625;
-    color: #555555;
-    vertical-align: middle;
-    border: 2px solid #eeeeee;
-    border-radius: 3px;
-    margin-bottom: 0.71428571428571em;
-    -webkit-transition: border-color ease-in-out .3s;
-    -o-transition: border-color ease-in-out .3s;
-    transition: border-color ease-in-out .3s;
-    font-family: "opensans", "Optima", "Microsoft Yahei", sans-serif;
-}
-
-#rightBox section .searchBox label input[type="search"]:focus {
-    outline: none;
-    border: 2px solid #1b8ecc;
-}
-
-#rightBox section .searchBox input[type="submit"] {
-    background: none;
-    border: none;
-    width: 40px;
-    height: 40px;
-    display: block;
-    text-indent: -9999px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-    line-height: 0;
-    box-shadow: none;
-    margin-bottom: 0;
-    z-index: 2;
-    outline: none;
-}
-
-#rightBox section .title {
-    font-size: 1.5em;
-    display: inline-block;
-    color: #332626;
-}
-
-#rightBox section .about-website-box .about-website-info p {
-    margin: 0 0 13px;
-    font-size: 0.95rem;
-}
-
-#rightBox .hideRigthBox {
-    position: absolute;
-    width: 100%;
-}
-
-
-#rightBox .hideRigthBox .hidelink {
-    display: block;
-    background: rgba(142, 140, 138, 0.53);
-    line-height: 3rem;
-    text-align: center;
-    color: #1275b1;
-    cursor: pointer;
-    border-top-left-radius:4px;
-    border-top-right-radius:4px;
-    -webkit-transition: all ease-in-out .3s;
-    -o-transition: all ease-in-out .3s;
-    transition: all ease-in-out .3s;
-}
-#rightBox .hideRigthBox .hidelink:hover {
-    background: rgba(92, 95, 93, 1);
-    color: #FFFFFF;
 }
 
 /** =======================
@@ -692,13 +570,6 @@ body {
 }
 
 @media (max-width: 1548px) {
-    #container {
-        width: 90%;
-    }
-
-    #rightBox {
-        width: 35%;
-    }
 }
 
 @media (max-width: 1200px) {
@@ -710,28 +581,12 @@ body {
         width: 70%;
     }
 
-    #container {
-        width: 95%;
-    }
-
-    #rightBox {
-        width: 35%;
-    }
-
     .article-info {
         padding: 1em 2.2em 3em !important
-    }
-
-    #rightBox section {
-        padding: 50px 25px 60px !important;
     }
 }
 
 @media (max-width: 980px) {
-    #container {
-        margin-top: 0px;
-        width: 90%;
-    }
 
     #loginBox {
         width: 90%;
@@ -771,8 +626,13 @@ body {
         line-height: 3rem;
     }
 
-    #leftBox {
+    #leftBox{
         width: 100%;
+        margin: 0px auto;
+    }
+
+    #leftBox section{
+        padding: 0px 5%;
     }
 
     #leftBox .content article .article-meta span {
@@ -789,10 +649,6 @@ body {
 
     #leftBox .content article .article-info .readArticle {
         padding: 2.2em 0 0;
-    }
-
-    #rightBox {
-        display: none;
     }
 
     #backTop_box {
@@ -1048,10 +904,10 @@ body {
 /* menu-----start */
 /*==================================*/
 
-.st-content {
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
+/*.st-content {*/
+    /*overflow-y: scroll;*/
+    /*overflow-x: hidden;*/
+/*}*/
 
 .st-content,
 .st-content-inner {

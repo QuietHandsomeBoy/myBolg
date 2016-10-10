@@ -2,22 +2,20 @@
  * Created by hxpeng on 2016/6/22.
  */
 
-define(['baseutil',"jqueryAniview"], function () {
+define(['baseutil','jqueryAniview'], function () {
 
     var init = function () {
+
+        //$("#st-content").scrollTop(0);
 
         $('.aniview').AniView();
 
         $("article").find(".article_link").on("click",function(){
-            $.cookie("scrollTo",$("#leftBox").offset().top);
-            console.log($("#leftBox").offset().top);
+            $.cookie("scrollTo",$("#container").scrollTop());
         })
 
-
-        //var last = $("#leftBox");
-        //$("#st-content").scroll(function(){
-        //    var top = last.offset().top;
-        //    console.log(top);
+        //$("#container").scroll(function(){
+        //    console.log($("#container").scrollTop());
         //});
 
     }

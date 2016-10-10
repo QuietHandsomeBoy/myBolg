@@ -41,7 +41,7 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <article class="animated fadeIn">
+                            <article av-animation="fadeInUp" class="aniview fast">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">${tbHxpArticle.articleTitle}</a></h2>

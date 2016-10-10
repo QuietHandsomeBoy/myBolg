@@ -237,7 +237,6 @@
                                 <thead>
                                 <tr>
                                     <th>操作人</th>
-                                    <th>日志类型</th>
                                     <th>操作方法</th>
                                     <th>操作描述</th>
                                     <th>IP地址</th>
@@ -251,11 +250,6 @@
                                 <c:forEach items="${logsList}" var="log">
                                     <tr>
                                         <td class="log-user-name">${log.operationUserName}</td>
-                                        <td>
-                                            <label class="label label-biji">
-                                                <t:translate source="${logTypeEnum}" value="${log.logType}" sourceKey="logType"/>
-                                            </label>
-                                        </td>
                                         <td>${log.operationMethod}</td>
                                         <td>${log.operationContent}</td>
                                         <td>${log.operationIp}</td>

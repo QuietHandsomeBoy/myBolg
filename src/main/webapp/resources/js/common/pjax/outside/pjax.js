@@ -194,9 +194,9 @@
                 }
             }
 
-            if (typeof scrollTo == "number") {
-                $(window).scrollTop(scrollTo)
-            }
+            //if (typeof scrollTo == "number") {
+            //    $(window).scrollTop(scrollTo)
+            //}
             fire("pjax:success", [data, status, xhr, options])
         };
         if (!pjax.state) {
@@ -266,9 +266,9 @@
             if(state.url.indexOf("admin") > 0){
                 contents = false;
             }
-            //else{
-            //    contents = cache[1];
-            //}
+            else{
+                contents = cache[1];
+            }
             if (container.length) {
                 if (previousState) {
                     cachePop(direction, previousState.id, cloneContents(container))
@@ -303,11 +303,10 @@
 
                 //從cookie中找出上一頁的下拉條位置
                 var leftBoxScrollTo = $.cookie("scrollTo");
-                if(container.find("article").length > 1 && leftBoxScrollTo){
-                    $("#leftBox").offset({top:leftBoxScrollTo});
+                if(container.find("article").length > 0 && typeof leftBoxScrollTo != "undefined"){
+                    $("#container").animate({scrollTop:leftBoxScrollTo},10);
                 }
 
-                container[0].offsetHeight
             } else {
                 locationReplace(location.href)
             }

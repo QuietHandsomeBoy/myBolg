@@ -32,11 +32,8 @@ require.config({
 require(['nprogress'],function(NProgress){
     require(['jQuery', 'jqueryAniview', 'pjax','sidebar','jqueryCookie'], function() {
 
-        $.pjax.defaults.scrollTo = false;
-        $(document).pjax('a', '#leftBox', {fragment:'#leftBox', timeout:5000})
+        $(document).pjax('a', '#leftBox', {fragment:'#leftBox', timeout:5000, scrollTo:false})
             .on("pjax:click", function(){
-
-                alert($("#leftBox").offset().top);
             })
             .on("pjax:timeout", function (event) {
                 event.preventDefault()
@@ -51,7 +48,6 @@ require(['nprogress'],function(NProgress){
             .on("pjax:popstate",function(){
             })
             .on("pjax:end",function(){
-                //$('#leftBox .aniview').AniView();
             })
             .on("pjax:complete",function(){
                 setTimeout(function(){NProgress.done();}, 500);

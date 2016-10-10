@@ -230,9 +230,13 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
         $(".wysiwyg-editor").blur();
         // 加入自定义功能   【全屏/插入代码/插入图片】
-        var orderBtn = "<a onclick='insertCode()' href='javascript:;' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
+        var orderBtn = "<a id='insertCodeLink' class='wysiwyg-toolbar-icon' title='插入代码'><i class='fa fa-code'></i></a>";
         $(".wysiwyg-toolbar").append(orderBtn);
 
+
+        $("#insertCodeLink").click(function(){
+            insertCode();
+        })
 
     }
 
@@ -672,6 +676,54 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             'padding-left': $('#choosed-tags-box').width()
         });
     }
+
+
+    var insertCode = function (){
+        var obj = {
+            tipsId : (new Date()).getTime(),
+            operateType : "",
+        }
+
+
+        var html =
+                '<div class="tips-div" id="' + obj.tipsId + '">' +
+            '<div class="operate-content">' +
+            '<h3>插入代码</h3>' +
+            '<div class="choose-tags-sources-box">' +
+            '<div>' +
+            '<span>编程语言: </span><select class="selectpicker" id="tagTypeSelect"><option>java</option></select>' +
+            '</div>' +
+            '<div class="insert-code-box"><div class="pagination-loading" style="display: none;"></div><div class="insert-code-box">' +
+            '<textarea id="summary" name="articleIntroduced"></textarea></div></div>' +
+            '</div>' +
+            '<div style="overflow: auto; padding: 10px 0;">' +
+            '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips(' + "'" + obj.tipsId + "'" + ')">Close me!</button>' +
+            '<button class="btn btn-default pull-right choose-it" id="insert">Choose it!</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '<div class="tips-background-div"></div>';
+        $("body").append(html);
+
+        $('.selectpicker').selectpicker({
+            showIcon: true,
+            showTick: true,
+            style: 'select-btn'
+        });
+
+        $(".bootstrap-select").css("cssText","margin:0px!important");
+
+        $("#insert").click(function(){
+
+        })
+
+
+        setTimeout(function () {
+            $("#" + obj.tipsId).addClass("tips-show");
+        }, 100);
+    }
+
 
 
     return {

@@ -31,6 +31,15 @@
     var create_editor = function( $textarea, classes, placeholder, toolbar_position, toolbar_buttons, toolbar_submit, label_dropfileclick,
                                   placeholder_url, max_imagesize, onImageUpload, onKeyEnter )
     {
+        //插入代码功能块 方法
+        //
+        //var wysiwygeditor_insertcode = function( wysiwygeditor, url , name){
+        //}
+        //
+        //var content_insertcode = function( wysiwygeditor ){
+        //}
+
+
         // Content: Insert link
         var wysiwygeditor_insertLink = function( wysiwygeditor, url , name)
         {
@@ -42,6 +51,7 @@
             var html = '<a target="_blank" href="' + url.replace(/"/,'&quot;') + '">' + name + '</a>';
             return wysiwygeditor.insertHTML( html );
         };
+
         var content_insertlink = function(wysiwygeditor, $modify_link)
         {
             var $button = toolbar_button( toolbar_submit );
@@ -294,6 +304,13 @@
                     return function( target ) {
                         popup_callback( content_insertimage(wysiwygeditor), target );
                     };
+                //case 'insertcode':
+                //    if( ! popup_callback )
+                //        return null;
+                //    return function( target ) {
+                //        popup_callback( content_insertcode(wysiwygeditor), target );
+                //    }
+
                 case 'insertlink':
                     if( ! popup_callback )
                         return null;
@@ -423,6 +440,17 @@
                         // Give the focus back to the editor. Technically not necessary
                         if( get_toolbar_handler(key) ) // only if not a popup-handler
                             wysiwygeditor.getElement().focus();
+
+
+                        //给加粗/斜体/下划线/中线加上动态删除添加active
+                        if(key == "bold" || key == "italic" || key == "underline" || key == "strikethrough"){
+                            if($(this).hasClass("active")){
+                                $(this).removeClass("active");
+                            }else{
+                                $(this).addClass("active");
+                            }
+                        }
+
                         event.stopPropagation();
                         event.preventDefault();
                         return false;

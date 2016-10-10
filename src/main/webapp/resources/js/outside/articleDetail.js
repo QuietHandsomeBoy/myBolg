@@ -5,10 +5,9 @@
 define(['baseutil',"jqueryAniview"], function () {
 
     var init = function () {
+        $('.aniview').AniView();
 
-        //alert(($("#container").offset().top));
-        //$('.aniview').AniView();
-
+        $("#container").scrollTop(0);
     }
 
 
