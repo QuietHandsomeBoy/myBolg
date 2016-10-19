@@ -4,9 +4,7 @@ package com.pro.test.web.outside.controller;
 import com.pro.test.core.common.mybatis.ContextData;
 import com.pro.test.core.common.mybatis.entity.Pagination;
 import com.pro.test.core.common.springmvc.entity.RequestResolver;
-import com.pro.test.core.enumdata.ArticleRights;
-import com.pro.test.core.util.EhcacheUtils;
-import com.pro.test.web.entity.TbHxpArticle;
+import com.pro.test.core.vo.TbHxpArticleVo;
 import com.pro.test.web.outside.service.TbHxpArticleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -43,17 +40,17 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(RequestResolver requestResolver, Pagination pagination) {
         ContextData contextData = new ContextData(pagination);
-        List<TbHxpArticle> list = tbHxpArticleManager.findPage(contextData);
-        try {
-            Map<String, Object> articleRightsEnum = (Map<String, Object>) EhcacheUtils.getValue("articleEnumCache", "articleRightsEnum");
-            if (articleRightsEnum == null) {
-                articleRightsEnum = ArticleRights.getArticleRightsEnum();
-                EhcacheUtils.setValue("articleEnumCache", "articleRightsEnum", articleRightsEnum);
-            }
-            requestResolver.setAttribute("articleRightsEnumMap", articleRightsEnum);
-        } catch (Exception e) {
-            logger.error("获取articleRights缓存异常：" + e);
-        }
+        List<TbHxpArticleVo> list = tbHxpArticleManager.findArticleVoPage(contextData);
+//        try {
+//            Map<String, Object> articleRightsEnum = (Map<String, Object>) EhcacheUtils.getValue("articleEnumCache", "articleRightsEnum");
+//            if (articleRightsEnum == null) {
+//                articleRightsEnum = ArticleRights.getArticleRightsEnum();
+//                EhcacheUtils.setValue("articleEnumCache", "articleRightsEnum", articleRightsEnum);
+//            }
+//            requestResolver.setAttribute("articleRightsEnumMap", articleRightsEnum);
+//        } catch (Exception e) {
+//            logger.error("获取articleRights缓存异常：" + e);
+//        }
 
         requestResolver.setAttribute("articleList", list);
         return "outside/index";
@@ -73,11 +70,5 @@ public class MainController {
         System.out.println(userName + "++" + userPwd);
         System.out.println("进来了！！！");
     }
-
-    @RequestMapping(value = "articleDetail.html")
-    public String article(RequestResolver requestResolver) {
-        return "outside/article/articleDetail";
-    }
-
 
 }

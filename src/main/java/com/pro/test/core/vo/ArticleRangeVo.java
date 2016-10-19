@@ -7,8 +7,7 @@ import java.io.Serializable;
  */
 public class ArticleRangeVo implements Serializable,Comparable {
 
-
-    private static final long serialVersionUID = 7573937216403789528L;
+    private static final long serialVersionUID = 1130719404117232333L;
 
     private String articleRange;
 

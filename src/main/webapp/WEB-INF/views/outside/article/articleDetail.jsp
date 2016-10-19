@@ -41,12 +41,12 @@
                 <div id="leftBox" class="leftBox">
                     <section>
                         <div id="content" class="content">
-                            <article av-animation="fadeInUp" class="aniview fast">
+                            <article class="detail-section animated fadeIn">
                                 <div class="article-info">
                                     <div class="article-content">
                                         <h2 class="article_title"><a href="javascript:;" rel="bookmark">${tbHxpArticle.articleTitle}</a></h2>
                                         <div class="article-meta">
-                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>XXX,XXXXX,XX</span>
+                                            <span class="article_meta_tags"><i class="fa fa-tags"></i>${tbHxpArticle.articleTagsStr}</span>
                                             <span><i class="fa fa-clock-o"></i><fmt:formatDate value="${tbHxpArticle.createDate}" pattern="yyyy/MM/dd"/></span>
                                             <span><i class="fa fa-comments"></i>3</span>
                                             <div class="clear"></div>
@@ -54,20 +54,14 @@
                                         <div class="article_about">
                                             ${tbHxpArticleContent.articleContent}
                                         </div>
-                                        <div class="readArticle">
-                                            <p><a href="javascript:;">Read More</a></p>
-                                        </div>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                             </article>
                         </div>
 
-                        <div class="pagination_box">
-
-                        </div>
+                        <div class="pagination_box"></div>
                     </section>
-
                     <script>
                         var ctx = '${_Weburl}';
                         require(["articleDetail"], function (common) {

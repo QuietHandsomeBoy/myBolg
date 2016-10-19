@@ -26,7 +26,15 @@ require.config({
         "insertArticle": 'admin/insertArticle',
         "baseutil": 'common/util/base-util',
         "tagsList": 'admin/tagsList',
-        "logsList": 'admin/logsList'
+        "logsList": 'admin/logsList',
+        "ace": 'admin/ace/ace',
+        "language_tools": 'admin/ace/ext/language_tools',
+        "highlight": 'common/highlight/highlight.pack'
+    },
+    map: {
+        '*': {
+            'css': 'common/require/css'
+        }
     },
     shim: {
         "bootstrap": ['jQuery'],
@@ -44,11 +52,13 @@ require.config({
         "icheck": ['jQuery'],
         "ajaxfileupload":['jQuery'],
         "toastr":['jQuery'],
-        "baseutil":['jQuery']
+        "baseutil":['jQuery'],
+        "ace":['jQuery'],
+        "highlight":['jQuery']
     },
-    urlArgs: "bust=" + (new Date()).getTime()
+    //urlArgs: "bust=" + (new Date()).getTime(),
+    waitSeconds: 0
 });
-
 
 
 var toastr;

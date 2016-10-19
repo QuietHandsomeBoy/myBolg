@@ -18,6 +18,22 @@ public enum ArticleStatus {
         this.value = value;
     }
 
+    public static ArticleStatus getArticleStatus(String key){
+        switch (key)
+        {
+            case "normal":
+                return normal;
+            case "draft":
+                return draft;
+            case "deleted":
+                return deleted;
+            case "secret":
+                return secret;
+        }
+        return null;
+    }
+
+
     public String getKey() {
         return key;
     }

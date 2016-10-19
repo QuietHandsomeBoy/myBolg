@@ -2,9 +2,11 @@
  * Created by hxpeng on 2016/7/15.
  */
 
-define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor", "toastr", "baseutil"], function () {
+define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor", "toastr", "baseutil", "ace", "language_tools", "highlight", "css!../css/highlight/github.css"], function () {
 
     var publicUtil = PublicUtil;
+
+    var ace = require("ace");
 
     var init = function () {
 
@@ -686,15 +688,15 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
 
         var html =
-                '<div class="tips-div" id="' + obj.tipsId + '">' +
+            '<div class="tips-div" id="' + obj.tipsId + '">' +
             '<div class="operate-content">' +
             '<h3>插入代码</h3>' +
             '<div class="choose-tags-sources-box">' +
             '<div>' +
-            '<span>编程语言: </span><select class="selectpicker" id="tagTypeSelect"><option>java</option></select>' +
-            '</div>' +
+            '<span>编程语言: </span><select class="selectpicker" id="tagTypeSelect"><option value="java">java</option><option value="javascript">javascript</option>' +
+            '<option value="sql">sql</option><option value="markdown">markdown</option><option value="html">html</option></select></div>' +
             '<div class="insert-code-box"><div class="pagination-loading" style="display: none;"></div><div class="insert-code-box">' +
-            '<textarea id="summary" name="articleIntroduced"></textarea></div></div>' +
+            '<div class="code-div" id="codeContent" >function test(){} </div></div></div>' +
             '</div>' +
             '<div style="overflow: auto; padding: 10px 0;">' +
             '<button class="btn btn-default pull-right" id="closeTipsBox" onclick="closeTips(' + "'" + obj.tipsId + "'" + ')">Close me!</button>' +
@@ -706,7 +708,22 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
             '<div class="tips-background-div"></div>';
         $("body").append(html);
 
-        $('.selectpicker').selectpicker({
+
+        ace.require("language_tools");
+        var editor = ace.edit("codeContent");
+        editor.getSession().setMode("admin/ace/mode/javascript");
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+
+
+        $("#tagTypeSelect").on("change",function(){
+            editor.getSession().setMode("admin/ace/mode/" + $(this).val());
+        })
+
+        $('#tagTypeSelect').selectpicker({
             showIcon: true,
             showTick: true,
             style: 'select-btn'
@@ -716,11 +733,23 @@ define(['bootstrapSelect', 'icheck', 'ajaxfileupload', "wysiwyg", "wysiwygEditor
 
         $("#insert").click(function(){
 
+            var value = editor.getValue();
+
+            if(publicUtil.isNotEmpty(value)){
+
+                value = hljs.highlight($("#tagTypeSelect").val(),value,null,null).value;
+
+
+                var html = "<pre><code class='"+$("#tagTypeSelect").val()+"' spellcheck='false'>"+value+"</code></pre>";
+                $(".wysiwyg-editor").append(html);
+            }
+            $("#closeTipsBox").click();
+            //hljs.initHighlightingOnLoad();
         })
-
-
         setTimeout(function () {
             $("#" + obj.tipsId).addClass("tips-show");
+
+
         }, 100);
     }
 

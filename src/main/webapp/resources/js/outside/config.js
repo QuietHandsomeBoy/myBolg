@@ -17,6 +17,11 @@ require.config({
         "index":"outside/index",
         "articleDetail":"outside/articleDetail"
     },
+    map: {
+        '*': {
+            'css': 'common/require/css'
+        }
+    },
     shim : {
         "jqueryAniview":['jQuery'],
         "pjax":['jQuery'],

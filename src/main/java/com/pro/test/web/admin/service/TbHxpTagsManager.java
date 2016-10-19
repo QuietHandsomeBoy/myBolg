@@ -22,4 +22,5 @@ public class TbHxpTagsManager extends SimpleManager<TbHxpTags, TbHxpTagsDao> {
     public TbHxpTags findOneByID(String id) throws Exception {
         return this.dao.findOneById(id);
     }
+
 }
