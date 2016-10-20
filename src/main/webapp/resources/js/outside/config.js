@@ -37,6 +37,7 @@ require.config({
 require(['nprogress'],function(NProgress){
     require(['jQuery', 'jqueryAniview', 'pjax','sidebar','jqueryCookie'], function() {
 
+
         $(document).pjax('a', '#leftBox', {fragment:'#leftBox', timeout:5000, scrollTo:false})
             .on("pjax:click", function(){
             })
@@ -46,6 +47,8 @@ require(['nprogress'],function(NProgress){
             .on("pjax:start", function () {
             })
             .on("pjax:send", function () {
+                //替换之前，销毁已存在的滚动监听
+                $("#container").off(".myScroll");
                 NProgress.start();
             })
             .on("pjax:success", function () {
@@ -55,6 +58,26 @@ require(['nprogress'],function(NProgress){
             .on("pjax:end",function(){
             })
             .on("pjax:complete",function(){
+                //替换完成重新监听滚动，完成基本操作
+                var $container = $("#container");
+                var headerBox = $("#header-box");
+                if(headerBox.hasClass("show")){
+                    $("#header-box").removeClass("show");
+                }
+                $container.scrollTop($(".index-introduce-box").outerHeight());
+
+                var containerScrollTop;
+                $container.on("scroll.myScroll",function() {
+                    containerScrollTop = $("#container").scrollTop();
+                    if (containerScrollTop < 1) {
+                        headerBox.removeClass("show");
+                    } else if (oldContainerScrollTop > containerScrollTop) {
+                        headerBox.addClass("show");
+                    } else if (oldContainerScrollTop < containerScrollTop) {
+                        headerBox.removeClass("show");
+                    }
+                    oldContainerScrollTop = containerScrollTop;
+                });
                 setTimeout(function(){NProgress.done();}, 500);
             })
             .on("pjax:beforeReplace",function(){
@@ -105,4 +128,3 @@ require(['nprogress'],function(NProgress){
         //})
     });
 })
-

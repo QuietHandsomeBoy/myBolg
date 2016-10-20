@@ -8,7 +8,8 @@ public enum ArticleStatus {
     normal("normal", "正常"),
     draft("draft", "草稿"),
     deleted("deleted", "已删除"),
-    secret("secret", "私人");
+    secret("secret", "私人"),
+    other("other", "其他");
 
     private String key;
     private String value;
@@ -30,7 +31,7 @@ public enum ArticleStatus {
             case "secret":
                 return secret;
         }
-        return null;
+        return other;
     }
 
 

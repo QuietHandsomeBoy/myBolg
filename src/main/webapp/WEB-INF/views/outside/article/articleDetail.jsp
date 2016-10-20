@@ -17,7 +17,7 @@
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/main.css">
     <link type="text/css" rel="stylesheet" href="${_cssUrl}/animate.min.css">
     <script data-main="${_outsideJsUrl}/config" src="${_commonJsUrl}/require/require.js"></script>
-    <title>There is something in the New York air that makes sleep useless</title>
+    <title>${tbHxpArticle.articleTitle}</title>
 </head>
 <body>
 <div id="st-container" class="st-container">
@@ -39,6 +39,7 @@
                     <button id="mobileMenuBtn" data-effect="st-effect-3"><i class="fa fa-navicon"></i></button>
                 </div>
                 <div id="leftBox" class="leftBox">
+                    <input type="hidden" value="0" id="oldContainerScrollTop"/>
                     <section>
                         <div id="content" class="content">
                             <article class="detail-section animated fadeIn">

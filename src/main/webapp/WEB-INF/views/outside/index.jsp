@@ -36,11 +36,20 @@
         </nav>
         <div class="st-content" id="st-content">
             <div id="container" class="container">
-                <div id="st-trigger-effects" class="column">
+                <div id="header-box"></div>
+                <div id="st-trigger-effects" class="column show-left-menu-btn">
                     <button id="mobileMenuBtn" data-effect="st-effect-3"><i class="fa fa-navicon"></i></button>
                 </div>
+                <div class="index-introduce-box">
+                    <div class="introduce-box">
+                        <div class="introduce-p-box">
+                            <p>我也不知道这里该说些什么? 就随便写一句话撑一下，空空的不好看。</p>
+                        </div>
+                    </div>
+                    <div class="bg-box"></div>
+                </div>
                 <div id="leftBox" class="leftBox">
-                    <input type="hidden" value="1" id="currentPage">
+                    <input type="hidden" value="1" id="currentPage"/>
                     <section>
                         <div id="content" class="content data-box">
                             <c:forEach items="${articleList}" var="article" varStatus="status">

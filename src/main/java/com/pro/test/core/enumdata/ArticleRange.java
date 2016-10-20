@@ -45,10 +45,8 @@ public enum ArticleRange {
                 return diary;
             case "tabloid":
                 return tabloid;
-            case "other":
-                return other;
         }
-        return null;
+        return other;
     }
 
     public static Map<String, Object> getArticleRangeEnum() {

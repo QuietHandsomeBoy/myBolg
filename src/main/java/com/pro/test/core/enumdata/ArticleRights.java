@@ -46,10 +46,8 @@ public enum ArticleRights {
                 return reprint;
             case "translate":
                 return translate;
-            case "other":
-                return other;
         }
-        return null;
+        return other;
     }
 
     public static Map<String,Object> getArticleRightsEnum(){
