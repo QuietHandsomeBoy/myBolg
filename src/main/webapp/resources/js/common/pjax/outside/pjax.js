@@ -302,9 +302,10 @@
                 }
 
                 //從cookie中找出上一頁的下拉條位置
-                var leftBoxScrollTo = $.cookie("scrollTo");
-                if(container.find("article").length > 0 && typeof leftBoxScrollTo != "undefined"){
-                    $("#container").animate({scrollTop:leftBoxScrollTo},10);
+                var windowScrollTo = $.cookie("scrollTo");
+                console.log(windowScrollTo);
+                if(container.find("article").length > 0 && typeof windowScrollTo != "undefined"){
+                    $(window).scrollTop(windowScrollTo);
                 }
 
             } else {
