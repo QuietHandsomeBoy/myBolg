@@ -46,7 +46,6 @@ a {
 }
 
 
-
 @media (min-width: 992px) {
     #header .navbar {
         overflow: visible;
@@ -303,6 +302,12 @@ a {
     }
 }
 
+@media (max-width: 1450px) {
+    #backTop_box{
+        right: 0!important;
+    }
+}
+
 
 @media (max-width: 1200px){
     #main-content article .article-info {
@@ -339,6 +344,10 @@ a {
         left: 0	!important;
         right: 0 !important;
     }
+
+    #backTop_box{
+        display: none!important;
+    }
 }
 
 @media (max-width: 980px) {
@@ -358,11 +367,13 @@ a {
         padding: 5px 0 0px;
     }
 }
-@media (max-width: 750px) {
+@media (max-width: 770px) {
 
     #main-content section{
         padding: 0px 15px;
     }
+}
+@media (max-width: 750px) {
 
     #main-content article {
         font-size: 1.4rem;
@@ -420,11 +431,10 @@ pre::-webkit-scrollbar-thumb {
 
 #backTop_box {
     position: fixed;
-    display: block;
     z-index: 999;
     height: 100%;
     right: 60px;
-    bottom: 100%;
+    bottom: 150%;
     -webkit-transition: all 500ms;
     -moz-transition: all 500ms;
     -ms-transition: all 500ms;

@@ -108,7 +108,7 @@ var hxp = {
             if($(window).scrollTop() > 1500){
                 $("#backTop_box").css("bottom","50px");
             }else{
-                $("#backTop_box").css("bottom","100%");
+                $("#backTop_box").css("bottom","150%");
             }
 
 
@@ -155,7 +155,7 @@ var hxp = {
     backToTop: function(){
         $("body").on("click",".backTopBtn",function(){
             $("#backTop_box").css("bottom","-10px");
-            setTimeout(function(){$("body").animate({scrollTop:0},500)},500);
+            setTimeout(function(){$("body").animate({scrollTop:0},500);},500);
         })
     },
     init: function () {
