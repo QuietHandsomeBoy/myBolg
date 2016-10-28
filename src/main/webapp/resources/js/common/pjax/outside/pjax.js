@@ -303,7 +303,6 @@
 
                 //從cookie中找出上一頁的下拉條位置
                 var windowScrollTo = $.cookie("scrollTo");
-                console.log(windowScrollTo);
                 if(container.find("article").length > 0 && typeof windowScrollTo != "undefined"){
                     $(window).scrollTop(windowScrollTo);
                 }

@@ -33,6 +33,8 @@ var hxp = {
         $.fn.resizeComplete = function (e, t, n) {
             var i = 0;
             this.resize(function () {
+                $("#sidebar").css("width",$("#sidebar").parent().width());
+
                 clearTimeout(i),
                     i = setTimeout(e, t)
             }),
@@ -43,6 +45,14 @@ var hxp = {
 
     },
     header: function () {
+        console.log("111");
+        var mainCon = $("#main-content");
+        var mainConPT = mainCon.innerHeight() - mainCon.height();
+        var $header = $("header");
+        var $sidebar = $("#sidebar");
+        var isSidebarHide = false;
+        var sidebarWidth = $("#sidebar").parent().width();
+        $sidebar.css("width",sidebarWidth);
 
         function e(e, t) {
             return e.length ? parseInt(e.removeAttr("style").css(t), 10) : 0
@@ -67,8 +77,18 @@ var hxp = {
         }
         aniviewSet.AniView();
 
-
         function t() {
+
+            isSidebarHide = Number($("#main-content section").offset().top - $(window).scrollTop() - $header.outerHeight()) > 0 ? false : true;
+
+            //右侧工具栏 悬浮
+            //if(isSidebarHide){
+            //    $sidebar.addClass("fixed");
+            //    $sidebar.css("top",$header.outerHeight()+"px");
+            //}else{
+            //    $sidebar.removeClass("fixed");
+            //    $sidebar.css("top","0");
+            //}
 
             //滚动显示
             $.each(aniviewSet,function (a, n) {
@@ -84,6 +104,11 @@ var hxp = {
                 $(".navbar-inner").css("margin-top","30px");
                 $("#main-menu li").css("padding-bottom","30px");
                 $(".logo").css("height","40px");
+            }
+            if($(window).scrollTop() > 1500){
+                $("#backTop_box").css("bottom","50px");
+            }else{
+                $("#backTop_box").css("bottom","100%");
             }
 
 
@@ -127,13 +152,20 @@ var hxp = {
         }
         setInterval(a, 10000);
     },
+    backToTop: function(){
+        $("body").on("click",".backTopBtn",function(){
+            $("#backTop_box").css("bottom","-10px");
+            setTimeout(function(){$("body").animate({scrollTop:0},500)},500);
+        })
+    },
     init: function () {
         var e = this;
         this.begin(),
             $(function () {
                 e.header(),
                     e.banner(),
-                    e.navigation()
+                    e.navigation(),
+                    e.backToTop()
             })
     }
 

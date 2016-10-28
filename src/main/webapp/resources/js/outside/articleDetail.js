@@ -5,7 +5,9 @@
 define(['baseutil',"jqueryAniview","css!../css/highlight/googlecode.css"], function () {
 
     var init = function () {
-        $(window).scrollTop(Number($("article").offset().top - $("header").outerHeight() - 20));
+
+        $("body").animate({scrollTop:0},500)
+        //$(window).scrollTop(Number($("article").offset().top - $("header").outerHeight() - 20));
     }
 
     return {

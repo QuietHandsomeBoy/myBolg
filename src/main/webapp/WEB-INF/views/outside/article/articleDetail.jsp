@@ -33,7 +33,8 @@
                     </a>
                     <ul id="mobile-menu">
                         <li>
-                            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                    data-target=".navbar-collapse">
                                 <i class="fa fa-reorder"></i>
                             </button>
                         </li>
@@ -41,7 +42,7 @@
 
                     <ul id="main-menu" class="navbar-collapse nav slide collapse">
                         <li><a href="javascript:;">首页</a></li>
-                        <li><a href="javascript:;">目录</a></li>
+                        <li><a href="javascript:;">标签</a></li>
                         <li><a href="javascript:;">关于</a></li>
                     </ul>
                 </div>
@@ -57,59 +58,68 @@
                 <div style="background-image: url('${_imagesUrl}/bg-three.jpg')"></div>
             </div>
         </div>
-        <div class="banner-mask">
-            <div class="page-info aniview" av-animation="fadeInUp" >
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ul class="breadcrumb">
-                                <li>Home</li>
-                                <li>Pages</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>Custom Header</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="banner-mask"></div>
     </div>
-    <div class="main">
-        <div id="main-content" class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <section>
-                        <article class="detail-section animated fadeIn">
-                            <div class="article-info">
-                                <div class="article-content">
-                                    <h2 class="article_title"><a href="javascript:;" rel="bookmark">${tbHxpArticle.articleTitle}</a></h2>
-                                    <div class="article-meta">
-                                        <span class="article_meta_tags"><i class="fa fa-tags"></i>${tbHxpArticle.articleTagsStr}</span>
-                                        <span><i class="fa fa-clock-o"></i><fmt:formatDate value="${tbHxpArticle.createDate}" pattern="yyyy/MM/dd"/></span>
-                                        <span><i class="fa fa-comments"></i>3</span>
-                                        <div class="clear"></div>
-                                    </div>
-                                    <div class="article_about">
-                                        ${tbHxpArticleContent.articleContent}
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </article>
-                    </section>
+    <div class="main" id="main-box">
+        <div class="page-info animated fadeInUp">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li>首页</li>
+                            <li>笔记</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>${tbHxpArticle.articleTitle}</h2>
+                    </div>
+                </div>
             </div>
-            <script>
-                var ctx = '${_Weburl}';
-                require(["articleDetail"], function (common) {
-                    common.init();
-                });
-            </script>
         </div>
+        <div style="overflow:hidden;">
+            <div id="main-content" class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section>
+                            <article class="detail-section animated fadeIn">
+                                <div class="article-info">
+                                    <div class="article-content">
+                                        <%--<h2 class="article_title"><a href="javascript:;" rel="bookmark">${tbHxpArticle.articleTitle}</a></h2>--%>
+                                        <div class="article_about">
+                                            ${tbHxpArticleContent.articleContent}
+                                        </div>
+                                        <div class="article-meta">
+                                            <span class="article_meta_tags"><i
+                                                    class="fa fa-tags"></i>${tbHxpArticle.articleTagsStr}</span>
+                                            <span><i class="fa fa-clock-o"></i><fmt:formatDate
+                                                    value="${tbHxpArticle.createDate}" pattern="yyyy/MM/dd"/></span>
+                                            <span><i class="fa fa-comments"></i>3</span>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </article>
+                        </section>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div id="backTop_box">
+            <div class="backTop">
+                <img src="${_imagesUrl}/back-top.png">
+                <button class="backTopBtn">&nbsp;</button>
+            </div>
+        </div>
+        <script>
+            var ctx = '${_Weburl}';
+            require(["articleDetail"], function (common) {
+                common.init();
+            });
+        </script>
     </div>
 </div>
 </body>

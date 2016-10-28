@@ -38,18 +38,19 @@ require.config({
 });
 
 require(['nprogress'],function(NProgress){
-    require(['jQuery', 'jqueryAniview', 'pjax','sidebar','jqueryCookie'], function() {
+    require(['jQuery', 'jqueryAniview', 'pjax','sidebar','jqueryCookie',"commonJS"], function() {
 
-        $(document).pjax('a', '#main-content', {fragment:'#main-content', timeout:5000, scrollTo:false})
+        hxp.init();
+
+        $(document).pjax('a', '#main-box', {fragment:'#main-box', timeout:5000, scrollTo:false})
             .on("pjax:click", function(){
             })
             .on("pjax:timeout", function (event) {
-                event.preventDefault()
+                event.preventDefault();
             })
             .on("pjax:start", function () {
             })
             .on("pjax:send", function () {
-                //替换之前，销毁已存在的滚动监听
                 NProgress.start();
             })
             .on("pjax:success", function () {
@@ -57,6 +58,7 @@ require(['nprogress'],function(NProgress){
             .on("pjax:popstate",function(){
             })
             .on("pjax:end",function(){
+                hxp.header();
             })
             .on("pjax:complete",function(){
                 setTimeout(function(){NProgress.done();}, 500);
